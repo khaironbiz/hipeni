@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             DistrictsSeeder::class,
             VillagesSeeder::class,
             UserOrganizationSeeder::class,
+            TrainingSeeder::class,
         ]);
     }
 }

@@ -33,7 +33,7 @@
                     <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
                 </div>
                 <div class="col-lg-4 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="icon"><i class="fas fa-wheelchair"></i></div>
+                    <div class="icon"><i class="fas fa-wheelchair"></i> </div>
                     <h4 class="title"><a href="">Nemo Enim</a></h4>
                     <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
                 </div>
