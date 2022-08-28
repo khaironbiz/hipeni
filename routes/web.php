@@ -173,3 +173,14 @@ Route::post('admin/video/category/delete/{id}', [\App\Http\Controllers\VideoCate
 Route::get('admin/video', [\App\Http\Controllers\VideoController::class, 'index'])->name('admin.video')->middleware('auth');
 Route::post('admin/video/store', [\App\Http\Controllers\VideoController::class, 'store'])->name('admin.video.store')->middleware('auth');
 Route::get('admin/video/detail/{slug}', [\App\Http\Controllers\VideoController::class, 'show'])->name('admin.video.show')->middleware('auth');
+
+//user job
+Route::get('profile/job/create', [\App\Http\Controllers\UserJobController::class, 'create'])->name('user.job.create')->middleware('auth');
+Route::post('profile/job/store', [\App\Http\Controllers\UserJobController::class, 'store'])->name('user.job.store')->middleware('auth');
+Route::get('profile/job/edit/{slug}', [\App\Http\Controllers\UserJobController::class, 'edit'])->name('user.job.edit')->middleware('auth');
+Route::post('job/update/{slug}', [\App\Http\Controllers\UserJobController::class, 'update'])->name('job.update')->middleware('auth');
+Route::get('profile/job/delete/{slug}', [\App\Http\Controllers\UserJobController::class, 'delete'])->name('user.job.delete')->middleware('auth');
+Route::post('job/destroy/{id}', [\App\Http\Controllers\UserJobController::class, 'destroy'])->name('job.destroy')->middleware('auth');
+
+//user organisasi
+Route::get('profile/organisasi/create', [\App\Http\Controllers\UserOrganizationController::class, 'create'])->name('user.organisasi.create')->middleware('auth');

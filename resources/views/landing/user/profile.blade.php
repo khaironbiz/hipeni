@@ -46,7 +46,7 @@
                                     <div class="col-md-3 col-4">
                                         <label>Jenis Kelamin</label>
                                     </div>
-                                    <div class="col-md-9 col-8">: @if($user->jk==1) Laki-laki @elseif($user->jk==1) Perempuan @else Lainnya @endif</div>
+                                    <div class="col-md-9 col-8">: @if($user->jk=1) Laki-laki @elseif($user->jk=2) Perempuan @else Lainnya @endif</div>
                                 </div>
 
                                 <div class="row mb-2">
@@ -107,13 +107,30 @@
                             </div>
 
                         </div>
-                        <div class="card mb-2">
+                        <div class="card mb-2" id="pekerjaan">
                             <div class="card-header">
                                 <b>Riwayat Pekerjaan</b>
                             </div>
                             <div class="card-body">
+                                <a href="{{route('user.job.create')}}" class="btn btn-sm btn-primary mb-2">Tambah</a>
                                 <table class="table table-striped" id="example1">
+                                    <thead>
+                                    <th>#</th>
+                                    <th>Periode</th>
+                                    <th>Posisi</th>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($user_job as $data )
 
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$data->mulai}} <br> {{$data->selesai}}</td>
+                                                <td><a href="{{route('user.job.edit', ['slug' => $data->slug])}}"> {{$data->posisi}} <br> {{$data->perusahaan}} </a></td>
+                                            </tr>
+
+
+                                    @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -122,8 +139,29 @@
                                 <b>Riwayat Organisasi</b>
                             </div>
                             <div class="card-body">
+                                <a href="{{route('user.organisasi.create')}}" class="btn btn-sm btn-primary">Tambah</a>
                                 <table class="table table-striped" id="example1">
-
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Periode</th>
+                                        <th>Organisasi</th>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($organisasi as $data)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$data->mulai}} <br> {{$data->selesai}}</td>
+                                            <td>
+                                                @if($data->sebagai==1) Anggota
+                                                @else
+                                                    Pengurus
+                                                @endif
+                                                    <br>
+                                                {{$data->nama_organisasi}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
                                 </table>
                             </div>
 

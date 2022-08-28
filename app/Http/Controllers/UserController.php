@@ -6,6 +6,8 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Education_user;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use App\Models\User_job;
+use App\Models\User_organization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -34,13 +36,19 @@ class UserController extends Controller
             ->where('user_id', Auth::user()->id)
             ->orderBy('tahun_lulus', 'ASC')
             ->get();
+        $user_organisasi = User_organization::where('user_id', Auth::user()->id)
+            ->orderBy('mulai', 'ASC')->get();
+        $user_job = User_job::where('user_id', Auth::user()->id)
+            ->orderBy('mulai', 'ASC')->get();
         $data = [
             'title'     => "Profile Karyawan",
             'class'     => 'User',
             'sub_class' => 'profile',
             'navbar'    => 'profile',
             'user'      => Auth::user(),
-            'pendidikan'=> $pendidikan
+            'pendidikan'=> $pendidikan,
+            'user_job'  => $user_job,
+            'organisasi'=> $user_organisasi
         ];
         return view('landing.user.profile', $data);
     }
