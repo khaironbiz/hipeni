@@ -13,7 +13,7 @@ class StoreUser_organizationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreUser_organizationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'mulai'             => 'required|date',
+            'sebagai'           => 'required',
+            'nama_organisasi'   => 'required|min:3',
+            'active'            => 'required',
+            'keterangan'        => 'required',
+
         ];
     }
 }

@@ -134,7 +134,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card mb-2">
+                        <div class="card mb-2" id="organisasi">
                             <div class="card-header">
                                 <b>Riwayat Organisasi</b>
                             </div>
@@ -145,12 +145,13 @@
                                         <th>#</th>
                                         <th>Periode</th>
                                         <th>Organisasi</th>
+                                        <th>Aksi</th>
                                     </thead>
                                     <tbody>
                                     @foreach($organisasi as $data)
-                                        <tr>
+                                        <tr @if($data->selesai != NULL) @else class="bg-info" @endif>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$data->mulai}} <br> {{$data->selesai}}</td>
+                                            <td>{{$data->mulai}} <br> @if($data->selesai != NULL) {{$data->selesai}} @else Sekarang @endif</td>
                                             <td>
                                                 @if($data->sebagai==1) Anggota
                                                 @else
@@ -158,6 +159,9 @@
                                                 @endif
                                                     <br>
                                                 {{$data->nama_organisasi}}
+                                            </td>
+                                            <td>
+                                                <a href="{{route('user.organisasi.edit', ['slug' => $data->slug])}}" class="btn btn-sm btn-success">Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach

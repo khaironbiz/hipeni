@@ -15,7 +15,7 @@
                     @include('layouts.landing.navbar.user')
                 </div>
                 <div class="col-md-8 d-flex">
-                    <form action="{{route('user.job.store')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('user.organisasi.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         @include('landing.user.organisasi._form')
                     </form>

@@ -184,3 +184,9 @@ Route::post('job/destroy/{id}', [\App\Http\Controllers\UserJobController::class,
 
 //user organisasi
 Route::get('profile/organisasi/create', [\App\Http\Controllers\UserOrganizationController::class, 'create'])->name('user.organisasi.create')->middleware('auth');
+Route::post('profile/organisasi/store', [\App\Http\Controllers\UserOrganizationController::class, 'store'])->name('user.organisasi.store')->middleware('auth');
+Route::get('profile/organisasi/show', [\App\Http\Controllers\UserOrganizationController::class, 'show'])->name('user.organisasi.show')->middleware('auth');
+Route::get('profile/organisasi/edit/{slug}', [\App\Http\Controllers\UserOrganizationController::class, 'edit'])->name('user.organisasi.edit')->middleware('auth');
+Route::get('profile/organisasi/delete/{slug}', [\App\Http\Controllers\UserOrganizationController::class, 'delete'])->name('user.organisasi.delete')->middleware('auth');
+Route::post('profile/organisasi/update/{slug}', [\App\Http\Controllers\UserOrganizationController::class, 'update'])->name('user.organisasi.update')->middleware('auth');
+Route::post('profile/organisasi/destroy/{id}', [\App\Http\Controllers\UserOrganizationController::class, 'destroy'])->name('user.organisasi.destroy')->middleware('auth');

@@ -15,9 +15,9 @@
                     @include('layouts.landing.navbar.user')
                 </div>
                 <div class="col-md-8 d-flex">
-                    <form action="{{route('job.destroy', ['id' => $user_job->id])}}" method="post">
+                    <form action="{{route('user.organisasi.destroy', ['id' => $organisasi->id])}}" method="post">
                         @csrf
-                        @include('landing.user.job._form_delete')
+                        @include('landing.user.organisasi._form_delete')
                     </form>
                 </div>
             </div>

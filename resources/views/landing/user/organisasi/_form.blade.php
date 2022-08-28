@@ -42,10 +42,10 @@
                     <select class="form-select"
                             id="floatingSelect"
                             aria-label="Floating label select example"
-                            name="active">
-                        <option value="" @if($organisasi->sebagai === "") selected @endif>----pilih----</option>
-                        <option value="0" @if($organisasi->sebagai === 0) selected @endif>Anggota</option>
-                        <option value="1" @if($organisasi->sebagai === 1) selected @endif>Pengurus</option>
+                            name="sebagai">
+                        <option value="" @if($organisasi->sebagai == "" | old('sebagai')=="") selected @endif>----pilih----</option>
+                        <option value="0" @if($organisasi->sebagai == 0 | old('sebagai')==0) selected @endif>Anggota</option>
+                        <option value="1" @if($organisasi->sebagai == 1 | old('sebagai')==1) selected @endif>Pengurus</option>
                     </select>
                     <label for="floatingInput">Sebagai</label>
                 </div>
@@ -58,47 +58,54 @@
             <div class="col-md-6 mb-3">
                 <div class="form-floating">
                     <input type="text"
-                           class="form-control @error('perusahaan') is-invalid @enderror""
+                           class="form-control @error('nama_organisasi') is-invalid @enderror"
                            id="floatingInput"
                            placeholder="Perusahaan"
-                           name="perusahaan"
-                           value="{{old('perusahaan', $organisasi->nama_organisasi)}}">
+                           name="nama_organisasi"
+                           value="{{old('nama_organisasi', $organisasi->nama_organisasi)}}">
                     <label for="floatingInput">Nama Organisasi</label>
                 </div>
-                @error('perusahaan')
+                @error('nama_organisasi')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
 
             </div>
             <div class="col-md-6 mb-3">
                 <div class="form-floating">
-                    <select class="form-select"
+                    <select class="form-select @error('active') is-invalid @enderror"
                             id="floatingSelect"
                             aria-label="Floating label select example"
                             name="active">
-                        <option value="" @if($organisasi->active === "") selected @endif>----pilih----</option>
-                        <option value="0" @if($organisasi->active === 0) selected @endif>Tidak Aktif</option>
-                        <option value="1" @if($organisasi->active === 1) selected @endif>Aktif</option>
+                        <option value="" @if($organisasi->active == "" or old('active') =="") selected @endif>----pilih----</option>
+                        <option value="0" @if($organisasi->active == 0 or old('active') ==0) selected @endif>Tidak Aktif</option>
+                        <option value="1" @if($organisasi->active == 1 or old('active') ==1) selected @endif>Aktif</option>
                     </select>
                     <label for="floatingSelect">Status</label>
                 </div>
+                @error('active')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
             <div class="col-md-6 mb-3">
                 <div class="form-floating">
-                    <input type="file"
-                           class="form-control"
+                    <input type="text"
+                           class="form-control @error('keterangan') is-invalid @enderror"
                            id="floatingInput"
-                           name="file">
-                    <label for="floatingInput">Data Dukung</label>
+                           name="keterangan" value="{{$organisasi->keterangan}}">
+                    <label for="floatingInput">Keterangan</label>
                 </div>
+                @error('keterangan')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
+
         </div>
     </div>
     <div class="card-footer text-center mt-5">
-        <a href="{{route('profile')}}#pekerjaan" class="btn btn-info">Back</a>
+        <a href="{{route('profile')}}#organisasi" class="btn btn-info">Back</a>
         <button type="submit" class="btn @if($submit ==='Update') btn-success @else btn-primary @endif">{{$submit}}</button>
         @if($submit ==='Update')
-            <a href="{{route('user.job.delete', ['slug'=>$user_job->slug])}}" class="btn btn-danger">Delete</a>
+            <a href="{{route('user.organisasi.delete', ['slug' => $organisasi->slug])}}" class="btn btn-danger">Delete</a>
         @endif
     </div>
 </div>

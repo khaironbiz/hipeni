@@ -15,9 +15,9 @@
                     @include('layouts.landing.navbar.user')
                 </div>
                 <div class="col-md-8 d-flex">
-                    <form action="{{route('job.update', ['slug' => $user_job->slug])}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('user.organisasi.update', ['slug' => $organisasi->slug])}}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @include('landing.user.job._form')
+                        @include('landing.user.organisasi._form')
                     </form>
                 </div>
             </div>
