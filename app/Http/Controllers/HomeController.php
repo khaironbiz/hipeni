@@ -8,6 +8,7 @@ use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
+use App\Models\Training;
 use App\Models\Web;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreHomeRequest;
@@ -60,7 +61,7 @@ class HomeController extends Controller
     }
     public function services()
     {
-        $product = Education_level::where('education_type_id', 7)->get();
+        $product = Training::all();
         $data = [
             'title'     => 'Services',
             'navbar'    => 'services',
