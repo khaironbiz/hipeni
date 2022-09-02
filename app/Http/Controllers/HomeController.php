@@ -9,6 +9,7 @@ use App\Models\Kota;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Models\Training;
+use App\Models\Video;
 use App\Models\Web;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreHomeRequest;
@@ -89,10 +90,11 @@ class HomeController extends Controller
     }
     public function video()
     {
-
+        $videos = Video::all();
         $data = [
             'title'     => 'Media Video',
             'navbar'    => 'media',
+            'videos'    => $videos
         ];
         return view('landing.video.video', $data);
     }
