@@ -40,6 +40,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.video')}}" class="nav-link @if($class==='video') active @endif"><i class="far fa-circle nav-icon"></i> Videos</a>
                 </li>
+
                 <hr>
                 <li class="nav-item text-center">
                     <form action="/logout" method="post">

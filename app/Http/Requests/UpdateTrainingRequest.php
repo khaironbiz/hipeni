@@ -13,7 +13,7 @@ class UpdateTrainingRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,9 @@ class UpdateTrainingRequest extends FormRequest
     {
         return [
             //
+            'nama_training'     => 'required',
+            'icon'              => 'required',
+            'education_level'   => 'required'
         ];
     }
 }

@@ -2,85 +2,92 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Education_level;
+use App\Models\Education_type;
 use App\Models\Training;
 use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $sifat_pendidikan           = 2;
+        $education_type             = Education_type::where('sifat', $sifat_pendidikan)->first();
+        $education_level            = Education_level::where('education_type_id', $education_type->id)->get();
+        $product                    = Training::all();
+        $data = [
+            'title'             => "Training Management",
+            'class'             => 'trainings',
+            'sub_class'         => 'trainings',
+            'product'           => $product,
+            'education_level'   => $education_level
+        ];
+        return view('admin.training.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreTrainingRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreTrainingRequest $request)
     {
-        //
+
+        $data                       = $request->validated();
+        $data['slug']               = uniqid();
+        $data['created_by']         = Auth::id();
+        $training                   = new Training();
+        $new_data                   = $training->create($data);
+        if($new_data){
+            return redirect()->route('admin.training')->with('success', 'Data berhasil disimpan') ;
+        }
+        return back()->with('error', 'Data gagal disimpan') ;
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Training  $training
-     * @return \Illuminate\Http\Response
-     */
     public function show(Training $training)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Training  $training
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Training $training)
+    public function edit($slug)
     {
         //
+        $sifat_pendidikan   = 2;
+        $education_type     = Education_type::where('sifat', $sifat_pendidikan)->first();
+        $education_level    = Education_level::where('education_type_id', $education_type->id)->get();
+        $training           = Training::where('slug', $slug)->first();
+        $data = [
+            'title'             => "Update Data",
+            'class'             => 'trainings',
+            'sub_class'         => 'trainings',
+            'training'          => $training,
+            'education_level'   => $education_level
+        ];
+        return view('admin.training.edit', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateTrainingRequest  $request
-     * @param  \App\Models\Training  $training
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateTrainingRequest $request, Training $training)
+    public function update(UpdateTrainingRequest $request, $slug)
     {
         //
+        $data       = $request->validated();
+        $training   = Training::where('slug', $slug)->first();
+        $update     = $training->update($data);
+        if($update){
+           return redirect()->route('admin.training')->with('success', 'Data berhasil diupdate') ;
+        }
+        return back()->with('error', 'Data gagal diupdate') ;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Training  $training
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Training $training)
+    public function destroy($slug)
     {
-        //
+        $training       = Training::where('slug', $slug)->first();
+        User::destroy($training->id);
+        return redirect()->route('admin.training')->with('success', 'Data has been deleted');
     }
 }

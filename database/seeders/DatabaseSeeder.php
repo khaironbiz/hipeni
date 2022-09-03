@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             VillagesSeeder::class,
             UserOrganizationSeeder::class,
             TrainingSeeder::class,
+            MateriTypeSeeder::class,
         ]);
     }
 }

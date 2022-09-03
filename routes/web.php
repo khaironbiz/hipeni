@@ -190,3 +190,14 @@ Route::get('profile/organisasi/edit/{slug}', [\App\Http\Controllers\UserOrganiza
 Route::get('profile/organisasi/delete/{slug}', [\App\Http\Controllers\UserOrganizationController::class, 'delete'])->name('user.organisasi.delete')->middleware('auth');
 Route::post('profile/organisasi/update/{slug}', [\App\Http\Controllers\UserOrganizationController::class, 'update'])->name('user.organisasi.update')->middleware('auth');
 Route::post('profile/organisasi/destroy/{id}', [\App\Http\Controllers\UserOrganizationController::class, 'destroy'])->name('user.organisasi.destroy')->middleware('auth');
+
+//trainings
+Route::get('admin/trainings', [\App\Http\Controllers\TrainingController::class, 'index'])->name('admin.training')->middleware('auth');
+Route::post('admin/training/store', [\App\Http\Controllers\TrainingController::class, 'store'])->name('admin.training.store')->middleware('auth');
+Route::get('admin/training/edit/{slug}', [\App\Http\Controllers\TrainingController::class, 'edit'])->name('admin.training.edit')->middleware('auth');
+Route::post('admin/training/update/{slug}', [\App\Http\Controllers\TrainingController::class, 'update'])->name('admin.training.update')->middleware('auth');
+Route::post('admin/training/destroy/{slug}', [\App\Http\Controllers\TrainingController::class, 'destroy'])->name('admin.training.destroy')->middleware('auth');
+
+//materi type
+Route::get('admin/materi/type', [\App\Http\Controllers\MateriTypeController::class, 'index'])->name('admin.materi.type')->middleware('auth');
+Route::post('admin/materi/type/store', [\App\Http\Controllers\MateriTypeController::class, 'store'])->name('admin.materi.type.store')->middleware('auth');
