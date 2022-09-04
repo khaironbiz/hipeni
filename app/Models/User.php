@@ -54,5 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Education_user::class,'user_id','id');
     }
+    public function materi_type()
+    {
+        return $this->hasMany(Materi_type::class,'created_at','id');
+    }
 
 }

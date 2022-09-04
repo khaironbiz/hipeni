@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMeteengTypeRequest extends FormRequest
+class StoreKurikulumRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class StoreMeteengTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-            'materi_type'   => 'required|unique:materi_type,materi_type'
+            'topik'         => 'required',
+            'penjelasan'    => 'required',
+            'training_id'   => 'required',
+            'materi_type'   => 'required'
         ];
     }
 }

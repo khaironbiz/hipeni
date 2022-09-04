@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMeteengTypeRequest extends FormRequest
+class StoreStudy_methodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class StoreMeteengTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-            'materi_type'   => 'required|unique:materi_type,materi_type'
+            'study_method'  => 'required'
         ];
     }
 }

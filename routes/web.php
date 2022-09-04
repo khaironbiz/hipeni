@@ -201,3 +201,17 @@ Route::post('admin/training/destroy/{slug}', [\App\Http\Controllers\TrainingCont
 //materi type
 Route::get('admin/materi/type', [\App\Http\Controllers\MateriTypeController::class, 'index'])->name('admin.materi.type')->middleware('auth');
 Route::post('admin/materi/type/store', [\App\Http\Controllers\MateriTypeController::class, 'store'])->name('admin.materi.type.store')->middleware('auth');
+Route::get('admin/materi/type/edit/{slug}', [\App\Http\Controllers\MateriTypeController::class, 'edit'])->name('admin.materi.type.edit')->middleware('auth');
+Route::post('admin/materi/type/update/{slug}', [\App\Http\Controllers\MateriTypeController::class, 'update'])->name('admin.materi.type.update')->middleware('auth');
+Route::post('admin/materi/type/delete/{slug}', [\App\Http\Controllers\MateriTypeController::class, 'destroy'])->name('admin.materi.type.destroy')->middleware('auth');
+
+//study method
+Route::get('admin/study/methode', [\App\Http\Controllers\StudyMethodController::class, 'index'])->name('admin.study.methode')->middleware('auth');
+Route::post('admin/study/methode/store', [\App\Http\Controllers\StudyMethodController::class, 'store'])->name('admin.study.methode.store')->middleware('auth');
+Route::get('admin/study/methode/edit/{slug}', [\App\Http\Controllers\StudyMethodController::class, 'edit'])->name('admin.study.methode.edit')->middleware('auth');
+Route::post('admin/study/methode/update/{slug}', [\App\Http\Controllers\StudyMethodController::class, 'update'])->name('admin.study.methode.update')->middleware('auth');
+Route::post('admin/study/methode/destroy/{slug}', [\App\Http\Controllers\StudyMethodController::class, 'destroy'])->name('admin.study.methode.destroy')->middleware('auth');
+
+// kurikulum
+Route::get('admin/kurikulum', [\App\Http\Controllers\KurikulumController::class, 'index'])->name('admin.kurikulum')->middleware('auth');
+Route::post('admin/kurikulum/store', [\App\Http\Controllers\KurikulumController::class, 'store'])->name('admin.kurikulum.store')->middleware('auth');

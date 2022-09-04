@@ -24,7 +24,15 @@ class StorePartnerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id_pj'         => 'required',
+            'nama_partner'  => 'required',
+            'singkatan'     => 'required',
+            'email'         => 'required|email:rfc,dns',
+            'hp'            => 'required|numeric',
+            'website'       => 'required',
+            'nomor_sk'      => 'required',
+            'tanggal_sk'    => 'required|date',
+            'valid_to'      => 'required|date',
         ];
     }
 }

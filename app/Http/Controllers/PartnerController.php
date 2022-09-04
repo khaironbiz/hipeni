@@ -60,34 +60,32 @@ class PartnerController extends Controller
      */
     public function store(StorePartnerRequest $request)
     {
-        $data               = new Partner();
+
         $user               = User::find($request->id_pj);
-        $data->nama_partner =$request->nama_partner;
-        $data->singkatan    =$request->singkatan;
-        $data->email        =$request->email;
-        $data->hp           =$request->hp;
-        $data->website      =$request->website;
-        $data->id_pj        =$request->id_pj;
-        $data->nama_pj      =$user->nama_lengkap;
-        $data->slug         =md5(uniqid());
-        $data->nomor_sk     ='';
-        $data->tanggal_sk   ='2022-12-12';
-        $data->valid_to     ='2022-12-12';
+        $input              = $request->validated();
+        $input['nama_pj']   = $user->nama_lengkap;
+        $input['slug']      = md5(uniqid());
+        $data               = new Partner();
         //aksi ambil logo
         $file               = $request->file('file');
-        // isi dengan nama folder tempat kemana file diupload
-        $tujuan_upload      = 'assets/upload/images/partners/';
-        $extension          = $request->file->extension();
-        // upload file
-        $nama_file_baru     = uniqid().".".$extension;
-        //memberi nama logo
-        $data->logo         = $nama_file_baru;
-        $tambah_data        = $data->save();
-        if($tambah_data){
+        if($file !=''){
+            $validated = $request->validate([
+                'file' => 'required|image'
+            ]);
+            // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload      = 'assets/upload/images/partners/';
+            $extension          = $request->file->extension();
+            // upload file
+            $nama_file_baru     = uniqid().".".$extension;
+            $input['logo']      = $nama_file_baru;
             $file->move($tujuan_upload,$nama_file_baru);
+        }
+        $tambah_data = $data->create($input);
+        if($tambah_data){
             return redirect()->route('admin.partner.list')->with(['success'=>'Data berhasil disimpan']);
         }else{
-            return redirect()->route('admin.partner.create')->with(['error'=>'Data gagal disimpan']);
+            unlink($tujuan_upload.$nama_file_baru);
+            return back()->withInput()->with(['error'=>'Data gagal disimpan']);
         }
     }
 
@@ -130,21 +128,14 @@ class PartnerController extends Controller
         ];
         return view('admin.partner.edit', $data);
     }
-    public function update_partner(Request $request, $id)
+    public function update_partner(UpdatePartnerRequest $request, $id)
     {
-        $data               = Partner::find($id);
+        $partner            = Partner::find($id);
         $user               = User::find($request->id_pj);
-        $data->nama_partner = $request->nama_partner;
-        $data->singkatan    = $request->singkatan;
-        $data->email        = $request->email;
-        $data->hp           = $request->hp;
-        $data->website      = $request->website;
-        $data->id_pj        = $request->id_pj;
-        $data->nama_pj      = $user->nama_lengkap;
-        $data->slug         = md5(uniqid());
-        $data->nomor_sk     = $request->nomor_sk;
-        $data->tanggal_sk   = '2022-12-12';
-        $data->valid_to     = '2022-12-12';
+        $input              = $request->validated();
+        $input['slug']      = md5(uniqid());
+        $input['nama_pj']   = $user->nama_lengkap;
+
         //aksi ambil logo
         $file               = $request->file('file');
         if($file !=''){
@@ -154,17 +145,22 @@ class PartnerController extends Controller
             // upload file
             $nama_file_baru     = uniqid().".".$extension;
             //memberi nama logo
-            $file_lama          = $tujuan_upload.$data->logo;
-            $data->logo         = $nama_file_baru;
-            unlink($file_lama);
+            $file_lama          = $tujuan_upload.$partner->logo;
+            $input['logo']      = $nama_file_baru;
+            if (file_exists($file_lama)) {
+                unlink($file_lama);
+            } else {
+                echo "The file does not exist";
+            }
+
             $file->move($tujuan_upload,$nama_file_baru);
         }
 
-        $tambah_data        = $data->save();
-        if($tambah_data){
+        $update = $partner->update($input);
+        if($update){
             return redirect()->route('admin.partner.list')->with(['success'=>'Data berhasil disimpan']);
         }else{
-            return redirect()->route('admin.partner.create')->with(['error'=>'Data gagal disimpan']);
+            return dd('ggaal');
         }
     }
     public function edit(Partner $partner)
@@ -200,7 +196,7 @@ class PartnerController extends Controller
             if(file_exists($lokasi_file)){
                 unlink($lokasi_file);
             }
-            return redirect('admin.partner.list')->with(['success'=>'Data berhasil dihapus']);
+            return redirect()->route('admin.partner.list')->with(['success'=>'Data berhasil dihapus']);
 
         }
     }

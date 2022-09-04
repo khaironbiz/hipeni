@@ -64,13 +64,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($materi_type as $data)
+                                @foreach($methode as $data)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$data->materi_type}}</td>
-                                    <td>{{$data->user->nama_lengkap}}</td>
+                                    <td>{{$data->study_method}}</td>
+                                    <td>{{$data->slug}}</td>
                                     <td></td>
-                                    <td><a href="{{route('admin.materi.type.edit', ['slug'=>$data->slug])}}" class="btn btn-sm btn-info">Detail</a></td>
+                                    <td><a href="{{route('admin.study.methode.edit', ['slug' =>$data->slug])}}" class="btn btn-sm btn-info">Detail</a></td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -86,14 +86,14 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form form id="quickForm" action="{{route('admin.materi.type.store')}}" method="POST">
+                                            <form form id="quickForm" action="{{route('admin.study.methode.store')}}" method="POST">
                                                 @csrf
                                                 <div class="modal-body">
 
                                                     <div class="row mb-1">
-                                                        <label class="col-sm-4 col-form-label">Training</label>
+                                                        <label class="col-sm-4 col-form-label">Study Methode</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text"class="form-control" name="materi_type" value="{{old('materi_type')}}">
+                                                            <input type="text"class="form-control" name="study_method" value="{{old('study_method')}}">
                                                         </div>
                                                     </div>
                                                 </div>

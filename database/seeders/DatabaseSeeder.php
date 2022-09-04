@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Education_level;
 use App\Models\Education_type;
 use App\Models\Education_user;
+use App\Models\Study_method;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -43,6 +44,7 @@ class DatabaseSeeder extends Seeder
             UserOrganizationSeeder::class,
             TrainingSeeder::class,
             MateriTypeSeeder::class,
+            StudyMethodSeeder::class
         ]);
     }
 }

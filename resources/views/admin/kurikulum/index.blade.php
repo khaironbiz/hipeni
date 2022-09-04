@@ -57,20 +57,20 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Type</th>
-                                    <th>Created By</th>
-                                    <th>Count</th>
+                                    <th>Topik</th>
+                                    <th>Penjelasan</th>
                                     <th>Aksi</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($materi_type as $data)
+                                @foreach($kurikulum as $data)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$data->materi_type}}</td>
-                                    <td>{{$data->user->nama_lengkap}}</td>
+                                    <td>{{$data->topik}}</td>
+                                    <td>{{$data->penjelasan}}</td>
                                     <td></td>
-                                    <td><a href="{{route('admin.materi.type.edit', ['slug'=>$data->slug])}}" class="btn btn-sm btn-info">Detail</a></td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -86,16 +86,36 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form form id="quickForm" action="{{route('admin.materi.type.store')}}" method="POST">
+                                            <form form id="quickForm" action="{{route('admin.kurikulum.store')}}" method="POST">
                                                 @csrf
                                                 <div class="modal-body">
-
                                                     <div class="row mb-1">
-                                                        <label class="col-sm-4 col-form-label">Training</label>
-                                                        <div class="col-sm-8">
-                                                            <input type="text"class="form-control" name="materi_type" value="{{old('materi_type')}}">
-                                                        </div>
+                                                        <label>Training</label>
+                                                       <select class="form-control" name="training_id">
+                                                           <option value="">----</option>
+                                                           @foreach($training as $data)
+                                                           <option value="{{$data->id}}">{{$data->nama_training}}</option>
+                                                           @endforeach
+                                                       </select>
                                                     </div>
+                                                    <div class="row mb-1">
+                                                        <label>Type Materi</label>
+                                                        <select class="form-control" name="materi_type">
+                                                            <option value="">----</option>
+                                                            @foreach($materi_type as $data)
+                                                                <option value="{{$data->id}}">{{$data->materi_type}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="row mb-1">
+                                                        <label>Topik</label>
+                                                        <input type="text"class="form-control" name="topik" value="{{old('topik')}}">
+                                                    </div>
+                                                    <div class="row mb-1">
+                                                        <label>Penjelasan</label>
+                                                        <textarea class="form-control" rows="3" name="penjelasan">{{old('penjelasan')}}</textarea>
+                                                    </div>
+
                                                 </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

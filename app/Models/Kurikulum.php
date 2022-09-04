@@ -5,12 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Partner extends Model
+class Kurikulum extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function event()
-    {
-        return $this->hasMany(Event::class,'id_penyelenggara','id');
-    }
 }

@@ -31,7 +31,25 @@
                             <form action="{{route('admin.partner.store')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                             <div class="card-body">
-                                <div class="row">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                @if(\Session::has('success'))
+
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {!! \Session::get('success') !!}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+                                <div class="row justify-content-center">
                                     <div class="col-md-6">
                                         <label>Nama Perusaan</label>
                                         <input type="text" class="form-control" name="nama_partner" value="{{old('nama_partner')}}">
@@ -57,9 +75,21 @@
                                         <select class="form-control" name="id_pj">
                                             <option value="">------</option>
                                             @foreach($user as $user)
-                                                <option value="{{$user->id}}" @if(old('id_pj')===$user->id) selected @endif>{{$user->nama_lengkap}}</option>
+                                                <option value="{{$user->id}}" @if(old('id_pj')==$user->id) selected @endif>{{$user->nama_lengkap}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Nomor SK</label>
+                                        <input type="text" class="form-control" name="nomor_sk" value="{{old('nomor_sk')}}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Tanggal SK</label>
+                                        <input type="date" class="form-control" name="tanggal_sk" value="{{old('tanggal_sk')}}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Valid To</label>
+                                        <input type="date" class="form-control" name="valid_to" value="{{old('valid_to')}}">
                                     </div>
                                     <div class="col-md-6">
                                         <label>Logo</label>

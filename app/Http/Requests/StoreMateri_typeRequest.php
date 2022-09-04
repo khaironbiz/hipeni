@@ -13,7 +13,7 @@ class StoreMateri_typeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreMateri_typeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'materi_type'   => 'required|unique:materi_types,materi_type'
         ];
     }
 }
