@@ -44,10 +44,9 @@ class TrainingController extends Controller
         $training                   = new Training();
         $new_data                   = $training->create($data);
         if($new_data){
-            return redirect()->route('admin.training')->with('success', 'Data berhasil disimpan') ;
+            return back()->with('success', 'Data berhasil disimpan') ;
         }
         return back()->with('error', 'Data gagal disimpan') ;
-
     }
 
     public function show(Training $training)

@@ -9,4 +9,8 @@ class Training extends Model
 {
     use HasFactory;
     protected $fillable = ['education_level','nama_training', 'slug', 'icon', 'created_by'];
+    public function kurikulum()
+    {
+        return $this->hasMany(Kurikulum::class,'training_id','id');
+    }
 }

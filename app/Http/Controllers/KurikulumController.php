@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Education_level;
+use App\Models\Education_type;
 use App\Models\Kurikulum;
 use App\Http\Requests\StoreKurikulumRequest;
 use App\Http\Requests\UpdateKurikulumRequest;
@@ -18,6 +20,21 @@ class KurikulumController extends Controller
      */
     public function index()
     {
+        $sifat_pendidikan           = 2;
+        $education_type             = Education_type::where('sifat', $sifat_pendidikan)->first();
+        $education_level            = Education_level::where('education_type_id', $education_type->id)->get();
+        $training                   = Training::all();
+        $data       = [
+            'title'         => "Metode Pembelajaran",
+            'class'         => 'trainings',
+            'sub_class'     => 'trainings',
+            'education_level'=> $education_level,
+            'training'      => $training
+        ];
+        return view('admin.kurikulum.index', $data);
+    }
+    public function materi()
+    {
         $kurikulum  = Kurikulum::all();
         $training   = Training::all();
         $materi_type= Materi_type::all();
@@ -29,7 +46,7 @@ class KurikulumController extends Controller
             'training'      => $training,
             'materi_type'   => $materi_type
         ];
-        return view('admin.kurikulum.index', $data);
+        return view('admin.kurikulum.materi', $data);
     }
 
     /**
@@ -57,7 +74,7 @@ class KurikulumController extends Controller
         $kurikulum          = new Kurikulum();
         $add                = $kurikulum->create($data);
         if($add){
-            return redirect()->route('admin.kurikulum')->with('success', 'Data berhasil disimpan');
+            return back()->with('success', 'Data berhasil disimpan');
         }else{
             return back()->with('error', 'Data gagal disimpan');
         }

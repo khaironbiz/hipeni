@@ -9,8 +9,8 @@
             <div class="navbar-nav">
                 <a class="nav-link text-white <?php if($class == 'User'){echo 'active';}?>" href="{{route('admin.materi.type')}}">Tipe Materi</a>
                 <a class="nav-link text-white <?php if($class == 'Profesi'){echo 'active';}?>" href="{{route('admin.study.methode')}}">Metode Belajar</a>
-                <a class="nav-link text-white <?php if($class == 'Organisasi'){echo 'active';}?>" href="{{url('admin/organisasi')}}">Organisasi</a>
-                <a class="nav-link text-white @if($class == 'website') active text-danger @else text-white @endif" href="/admin/website">Website</a>
+                <a class="nav-link text-white <?php if($class == 'Organisasi'){echo 'active';}?>" href="{{route('admin.kurikulum')}}">Kurikulum</a>
+                <a class="nav-link text-white @if($class == 'website') active text-danger @else text-white @endif" href="{{route('admin.kurikulum.materi')}}">Materi</a>
                 <a class="nav-link @if($class == 'categories') active text-danger @else text-white @endif" href="{{route('admin.video.categoty')}}">Video Categories</a>
             </div>
         </div>

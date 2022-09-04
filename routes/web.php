@@ -214,4 +214,7 @@ Route::post('admin/study/methode/destroy/{slug}', [\App\Http\Controllers\StudyMe
 
 // kurikulum
 Route::get('admin/kurikulum', [\App\Http\Controllers\KurikulumController::class, 'index'])->name('admin.kurikulum')->middleware('auth');
+Route::get('admin/kurikulum/materi', [\App\Http\Controllers\KurikulumController::class, 'materi'])->name('admin.kurikulum.materi')->middleware('auth');
+Route::get('admin/kurikulum/show/{slug}', [\App\Http\Controllers\KurikulumController::class, 'show'])->name('admin.kurikulum.show')->middleware('auth');
+
 Route::post('admin/kurikulum/store', [\App\Http\Controllers\KurikulumController::class, 'store'])->name('admin.kurikulum.store')->middleware('auth');

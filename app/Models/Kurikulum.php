@@ -9,4 +9,8 @@ class Kurikulum extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    public function training()
+    {
+        return $this->belongsTo(Kota::class,'training_id','id');
+    }
 }
