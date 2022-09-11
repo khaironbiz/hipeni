@@ -39,7 +39,7 @@ class KurikulumController extends Controller
         $training   = Training::all();
         $materi_type= Materi_type::all();
         $data       = [
-            'title'         => "Metode Pembelajaran",
+            'title'         => "Materi Pembelajaran",
             'class'         => 'trainings',
             'sub_class'     => 'trainings',
             'kurikulum'     => $kurikulum,
@@ -87,9 +87,21 @@ class KurikulumController extends Controller
      * @param  \App\Models\Kurikulum  $kurikulum
      * @return \Illuminate\Http\Response
      */
-    public function show(Kurikulum $kurikulum)
+    public function show($slug)
     {
-        //
+        $training = Training::where('slug', $slug)->first();
+//        dd( $training->id);
+        $kurikulum = Kurikulum::where('training_id', $training->id)->OrderBy('materi_type', 'ASC')->OrderBy('topik', 'ASC')->get();
+        $materi_type= Materi_type::all();
+        $data = [
+            'title'     => 'Kurikulum '.$training->nama_training,
+            'class'     => 'Kurikulum',
+            'sub_class' => 'Detail Kurikulum',
+            'kurikulum' => $kurikulum,
+            'training'  => $training,
+            'materi_type'   => $materi_type
+        ];
+        return view('admin.kurikulum.materi-detail', $data);
     }
 
     /**

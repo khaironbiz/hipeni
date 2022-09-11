@@ -11,6 +11,10 @@ class Kurikulum extends Model
     protected $guarded = ['id'];
     public function training()
     {
-        return $this->belongsTo(Kota::class,'training_id','id');
+        return $this->belongsTo(Training::class,'training_id','id');
+    }
+    public function materi_type()
+    {
+        return $this->belongsTo(Materi_type::class,'materi_type','id');
     }
 }

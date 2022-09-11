@@ -13,4 +13,8 @@ class Materi_type extends Model
     {
         return $this->belongsTo(User::class,'created_by','id');
     }
+    public function kurikulum()
+    {
+        return $this->hasMany(Kurikulum::class,'materi_type','id');
+    }
 }

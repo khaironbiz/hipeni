@@ -2,7 +2,7 @@
 <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-        <a href="{{route('root')}}" class="logo me-auto"><img src="{{asset('medicio/assets/img/logo.png')}}" alt=""></a>
+        <a href="{{route('root')}}" class="logo me-auto"><img src="{{asset('assets/img/hipeni.png')}}" alt=""></a>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <h1 class="logo me-auto"><a href="index.html">Medicio</a></h1> -->
 

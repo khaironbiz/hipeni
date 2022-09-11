@@ -15,9 +15,9 @@
 
             <div class="row d-flex">
                 @foreach($partners as $p)
-                <div class="col-md-3 mb-3">
+                <div class="col-md-3" >
                     <a href="{{route('partner')}}" class="w-100">
-                        <div class="card">
+                        <div class="card mb-3 bg-dark">
                             <img src="{{asset('assets/upload/images/partners/'.$p->logo)}}" class="w-100">
                             <div class="card-header">{{$p->singkatan}}</div>
                             <div class="card-body">{{$p->nama_partner}}</div>
