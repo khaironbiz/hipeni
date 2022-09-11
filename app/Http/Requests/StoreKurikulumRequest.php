@@ -24,10 +24,10 @@ class StoreKurikulumRequest extends FormRequest
     public function rules()
     {
         return [
-            'topik'         => 'required',
-            'penjelasan'    => 'required',
-            'training_id'   => 'required',
-            'materi_type'   => 'required'
+            'topik'             => 'required',
+            'penjelasan'        => 'required',
+            'training_id'       => 'required',
+            'materi_type_id'    => 'required'
         ];
     }
 }

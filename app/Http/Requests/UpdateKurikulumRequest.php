@@ -13,7 +13,7 @@ class UpdateKurikulumRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class UpdateKurikulumRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'materi_type_id'=> 'required',
+            'training_id'   => 'required',
+            'topik'         => 'required',
+            'penjelasan'    => 'required'
         ];
     }
 }

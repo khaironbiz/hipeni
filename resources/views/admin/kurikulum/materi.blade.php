@@ -67,7 +67,7 @@
                                 @foreach($kurikulum as $data)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$data->materi_type}}</td>
+                                    <td>{{$data->materi_type->materi_type}}</td>
                                     <td>{{$data->topik}}</td>
                                     <td>{{$data->penjelasan}}</td>
                                     <td><a href="" class="btn btn-sm btn-info">Detail</a></td>
@@ -100,7 +100,7 @@
                                                     </div>
                                                     <div class="row mb-1">
                                                         <label>Type Materi</label>
-                                                        <select class="form-control" name="materi_type">
+                                                        <select class="form-control" name="materi_type_id">
                                                             <option value="">----</option>
                                                             @foreach($materi_type as $data)
                                                                 <option value="{{$data->id}}">{{$data->materi_type}}</option>

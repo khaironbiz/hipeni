@@ -28,7 +28,6 @@
                         <!-- /.card -->
 
                         <div class="card">
-                            @include('admin.sub_menu.user')
 
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -41,33 +40,63 @@
                                         </button>
                                     </div>
                                 @endif
-                                <div class="row">
-                                    <label class="col-sm-2">Nama</label>
-                                    <div class="col-sm-10">: {{$user->name}}</div>
-                                </div>
                                     <div class="row">
-                                        <label class="col-sm-2">UserName</label>
-                                        <div class="col-sm-10">: {{$user->username}}</div>
+                                        <label class="col-sm-2">Training</label>
+                                        <div class="col-sm-10">: {{$training->nama_training}}</div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2">Email</label>
-                                        <div class="col-sm-10">: {{$user->email}}</div>
+                                        <label class="col-sm-2">Topik</label>
+                                        <div class="col-sm-10">: {{$kurikulum->topik}}</div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-sm-2">Foto</label>
-                                        <div class="col-sm-10"> <img src="{{url('assets/upload/images/user/'.$user->foto)}}" class="w-25"></div>
+                                        <label class="col-sm-2">Tipe Materi</label>
+                                        <div class="col-sm-10">: {{$kurikulum->materi_type->materi_type}}</div>
                                     </div>
-
+                                    <div class="row">
+                                        <label class="col-sm-2">Penjelasan</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-10">{!! $kurikulum->penjelasan !!}</div>
+                                    </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer text-center">
-                                <a href="/admin/user/" class="btn btn-info btn-sm">Back</a>
-                                <a href="/admin/user/edit/{{$user->username}}" class="btn btn-success btn-sm">Edit</a>
-                                <form action="/admin/user/delete/{{$user->id}}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Apakah anda akan memghapus ???')">Delete</button>
-                                </form>
+                                <a href="{{route('admin.kurikulum.show',['slug'=>$training->slug])}}" class="btn btn-info btn-sm">Back</a>
+                                <a href="{{route('admin.kurikulum.edit', ['slug' => $kurikulum->slug])}}" class="btn btn-success btn-sm">Edit</a>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#staticBackdrop">
+                                    Delete
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{{route('admin.kurikulum.destroy', ['slug' => $kurikulum->slug])}}" method="post">
+                                                @csrf
+                                            <div class="modal-header bg-danger">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Konfirmasi hapus data</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <label>Topik</label>
+                                                    <b>{{$kurikulum->topik}}</b>
+                                                </div>
+                                                <div class="row">
+                                                    <input type="checkbox">  Setuju untuk menghapus data ini
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card -->

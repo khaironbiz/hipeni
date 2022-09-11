@@ -15,6 +15,6 @@ class Materi_type extends Model
     }
     public function kurikulum()
     {
-        return $this->hasMany(Kurikulum::class,'materi_type','id');
+        return $this->hasMany(Kurikulum::class);
     }
 }

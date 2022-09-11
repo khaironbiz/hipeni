@@ -24,15 +24,20 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-
-                        <!-- /.card -->
-
                         <div class="card">
-                            @include('admin.sub_menu.user')
-
-                            <!-- /.card-header -->
+                            <div class="card-header"><b>{{$training_ini->nama_training}}</b></div>
+                            <form form id="quickForm" action="{{route('admin.kurikulum.store')}}" method="POST">
+                                @csrf
                             <div class="card-body">
-
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 @if(\Session::has('success'))
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         {!! \Session::get('success') !!}
@@ -41,33 +46,16 @@
                                         </button>
                                     </div>
                                 @endif
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body text-center">
-                                                <img src="{{url('assets/upload/images/user/'.$user->foto)}}" class="w-50"><br>
-                                                <b>{{$user->name}}</b><br>
-                                                {{$user->phone_cell}}<br>
-                                                {{$user->email}}
-
-                                            </div>
-                                            <div class="card-footer text-center">
-
-                                                <a href="/admin/user/edit/{{$user->username}}" class="btn btn-success btn-sm">Edit Profile</a>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-
+                                    @include('admin.kurikulum._form')
 
                             </div>
-                            <!-- /.card-body -->
-
+                            <div class="card-footer">
+                                <a href="{{route('admin.kurikulum.show', ['slug'=>$training_ini->slug])}}" class="btn btn-warning">Back</a>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                            </form>
                         </div>
-                        <!-- /.card -->
+
                     </div>
                     <!-- /.col -->
                 </div>
@@ -78,4 +66,5 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
 @endsection

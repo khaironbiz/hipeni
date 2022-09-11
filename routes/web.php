@@ -215,6 +215,10 @@ Route::post('admin/study/methode/destroy/{slug}', [\App\Http\Controllers\StudyMe
 // kurikulum
 Route::get('admin/kurikulum', [\App\Http\Controllers\KurikulumController::class, 'index'])->name('admin.kurikulum')->middleware('auth');
 Route::get('admin/kurikulum/materi', [\App\Http\Controllers\KurikulumController::class, 'materi'])->name('admin.kurikulum.materi')->middleware('auth');
+Route::get('admin/kurikulum/create/{slug}', [\App\Http\Controllers\KurikulumController::class, 'create'])->name('admin.kurikulum.create')->middleware('auth');
 Route::get('admin/kurikulum/show/{slug}', [\App\Http\Controllers\KurikulumController::class, 'show'])->name('admin.kurikulum.show')->middleware('auth');
-
 Route::post('admin/kurikulum/store', [\App\Http\Controllers\KurikulumController::class, 'store'])->name('admin.kurikulum.store')->middleware('auth');
+Route::get('admin/kurikulum/detail/{slug}', [\App\Http\Controllers\KurikulumController::class, 'detail'])->name('admin.kurikulum.detail')->middleware('auth');
+Route::get('admin/kurikulum/edit/{slug}', [\App\Http\Controllers\KurikulumController::class, 'edit'])->name('admin.kurikulum.edit')->middleware('auth');
+Route::post('admin/kurikulum/update/{slug}', [\App\Http\Controllers\KurikulumController::class, 'update'])->name('admin.kurikulum.update')->middleware('auth');
+Route::post('admin/kurikulum/destroy/{slug}', [\App\Http\Controllers\KurikulumController::class, 'destroy'])->name('admin.kurikulum.destroy')->middleware('auth');

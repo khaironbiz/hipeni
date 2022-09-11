@@ -155,9 +155,4 @@
     </section><!-- End Services Section -->
 
 @endsection
-@push('scripts')
-    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace('my-editor');
-    </script>
-@endpush
+

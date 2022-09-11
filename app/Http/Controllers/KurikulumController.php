@@ -23,9 +23,9 @@ class KurikulumController extends Controller
         $sifat_pendidikan           = 2;
         $education_type             = Education_type::where('sifat', $sifat_pendidikan)->first();
         $education_level            = Education_level::where('education_type_id', $education_type->id)->get();
-        $training                   = Training::all();
+        $training                   = Training::with('kurikulum')->get();
         $data       = [
-            'title'         => "Metode Pembelajaran",
+            'title'         => "Kurikulum",
             'class'         => 'trainings',
             'sub_class'     => 'trainings',
             'education_level'=> $education_level,
@@ -35,7 +35,7 @@ class KurikulumController extends Controller
     }
     public function materi()
     {
-        $kurikulum  = Kurikulum::all();
+        $kurikulum  = Kurikulum::with('materi_type')->get();
         $training   = Training::all();
         $materi_type= Materi_type::all();
         $data       = [
@@ -48,23 +48,23 @@ class KurikulumController extends Controller
         ];
         return view('admin.kurikulum.materi', $data);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create($slug)
     {
-        //
+        $training_ini   = Training::where('slug', $slug)->first();
+        $training_all   = Training::all();
+        $materi_type    = Materi_type::all();
+        $data       = [
+            'title'         => "Materi Pembelajaran",
+            'class'         => 'trainings',
+            'sub_class'     => 'trainings',
+            'training_ini'  => $training_ini,
+            'training_all'  => $training_all,
+            'materi_type'   => $materi_type,
+            'kurikulum'     => new Kurikulum(),
+        ];
+        return view('admin.kurikulum.create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreKurikulumRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreKurikulumRequest $request)
     {
         //
@@ -81,17 +81,11 @@ class KurikulumController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Kurikulum  $kurikulum
-     * @return \Illuminate\Http\Response
-     */
     public function show($slug)
     {
         $training = Training::where('slug', $slug)->first();
 //        dd( $training->id);
-        $kurikulum = Kurikulum::where('training_id', $training->id)->OrderBy('materi_type', 'ASC')->OrderBy('topik', 'ASC')->get();
+        $kurikulum = Kurikulum::where('training_id', $training->id)->with('materi_type')->get();
         $materi_type= Materi_type::all();
         $data = [
             'title'     => 'Kurikulum '.$training->nama_training,
@@ -104,27 +98,45 @@ class KurikulumController extends Controller
         return view('admin.kurikulum.materi-detail', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Kurikulum  $kurikulum
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Kurikulum $kurikulum)
+    public function detail($slug){
+        $kurikulum  = Kurikulum::with('materi_type')->where('slug', $slug)->first();
+        $training   = Training::find($kurikulum->training_id);
+        $data = [
+            'title'     => 'Kurikulum',
+            'class'     => 'Kurikulum',
+            'sub_class' => 'Detail Kurikulum',
+            'kurikulum' => $kurikulum,
+            'training'  => $training,
+        ];
+        return view('admin.kurikulum.detail', $data);
+    }
+    public function edit($slug)
     {
+        $kurikulum      = Kurikulum::where('slug', $slug)->first();
+        $training_all   = Training::all();
+        $training_ini   = Training::find($kurikulum->training_id);
+        $materi_type    = Materi_type::all();
+        $data = [
+            'title'         => 'Kurikulum ',
+            'class'         => 'Kurikulum',
+            'sub_class'     => 'Detail Kurikulum',
+            'kurikulum'     => $kurikulum,
+            'training_all'  => $training_all,
+            'training_ini'  => $training_ini,
+            'materi_type'   => $materi_type
+        ];
+        return view('admin.kurikulum.edit', $data);
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateKurikulumRequest  $request
-     * @param  \App\Models\Kurikulum  $kurikulum
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateKurikulumRequest $request, Kurikulum $kurikulum)
+    public function update(UpdateKurikulumRequest $request, $slug)
     {
-        //
+        $kurikulum  = Kurikulum::where('slug', $slug)->first();
+        $data       = $request->validated();
+        $update     = $kurikulum->update($data);
+        if($update){
+            return back()->with('success', 'Data berhasil diupdate');
+        }
     }
 
     /**
@@ -133,8 +145,14 @@ class KurikulumController extends Controller
      * @param  \App\Models\Kurikulum  $kurikulum
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kurikulum $kurikulum)
+    public function destroy($slug)
     {
-        //
+        $kurikulum  = Kurikulum::where('slug', $slug)->first();
+        $delete     = $kurikulum->destroy($kurikulum->id);
+        if($delete){
+            return redirect()->route('admin.kurikulum')->with('success', 'Data berhasil dihapus');
+        }else{
+            return redirect()->route('admin.kurikulum')->with('error', 'Data gagal dihapus');
+        }
     }
 }

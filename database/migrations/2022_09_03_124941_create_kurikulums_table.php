@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('kurikulums', function (Blueprint $table) {
             $table->id();
             $table->foreignId('training_id');
-            $table->foreignId('materi_type');
+            $table->foreignId('materi_type_id');
             $table->string('topik');
             $table->text('penjelasan');
             $table->string('slug');

@@ -15,6 +15,6 @@ class Kurikulum extends Model
     }
     public function materi_type()
     {
-        return $this->belongsTo(Materi_type::class,'materi_type','id');
+        return $this->belongsTo(Materi_type::class);
     }
 }
