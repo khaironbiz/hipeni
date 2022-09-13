@@ -86,7 +86,7 @@ class KurikulumController extends Controller
     {
         $training = Training::where('slug', $slug)->first();
 //        dd( $training->id);
-        $kurikulum = Kurikulum::where('training_id', $training->id)->with('materi_type')->get();
+        $kurikulum = Kurikulum::where('training_id', $training->id)->with('materi_type')->OrderBy('materi_type_id', 'ASC')->OrderBy('topik', 'ASC')->get();
         $materi_type= Materi_type::all();
         $data = [
             'title'     => 'Kurikulum '.$training->nama_training,

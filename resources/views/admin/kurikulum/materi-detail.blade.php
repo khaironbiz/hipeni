@@ -50,14 +50,14 @@
                             @endif
                             <a href="{{route('admin.kurikulum.create', ['slug'=>$training->slug])}}" class="btn btn-primary mb-2">Tambah</a>
 
-                            <table id="example1" class="table table-bordered table-striped table-sm">
+                            <table class="table table-bordered table-striped table-sm">
                                 <thead>
                                 <tr>
                                     <th>No.</th>
                                     <th>Type</th>
                                     <th>Topik</th>
+                                    <th>JPL</th>
                                     <th>Aksi</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -66,6 +66,7 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$data->materi_type->materi_type}}</td>
                                     <td>{{$data->topik}}</td>
+                                    <td>{{$data->kurikulum_detail->sum('jpl')}}</td>
                                     <td><a href="{{route('admin.kurikulum.detail', ['slug'=>$data->slug])}}" class="btn btn-sm btn-info">Detail</a></td>
                                 </tr>
                                 @endforeach
