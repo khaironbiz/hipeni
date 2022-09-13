@@ -24,7 +24,8 @@ class UpdateStudy_methodRequest extends FormRequest
     public function rules()
     {
         return [
-            'study_method'  => 'required'
+            'study_method'  => 'required',
+            'durasi'  => 'required|numeric'
         ];
     }
 }

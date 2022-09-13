@@ -50,12 +50,19 @@
                                                         </button>
                                                     </div>
                                                 @endif
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2">Materi Type</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" name="study_method" value="{{$methode->study_method}}">
+                                                    <div class="row mb-1">
+                                                        <label class="col-sm-2">Materi Type</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" name="study_method" value="{{$methode->study_method}}">
+                                                        </div>
+
                                                     </div>
-                                                </div>
+                                                    <div class="row mb-1 mt-2">
+                                                        <label class="col-sm-2">Durasi</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" name="durasi" value="{{$methode->durasi}}">
+                                                        </div>
+                                                    </div>
 
                                             </div>
                                             <!-- /.card-body -->

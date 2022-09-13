@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('study_methods', function (Blueprint $table) {
+        Schema::create('kurikulum_details', function (Blueprint $table) {
             $table->id();
-            $table->string('study_method');
+            $table->foreignId('kurikulum_id');
+            $table->foreignId('study_method_id');
+            $table->integer('jpl');
             $table->string('slug');
-            $table->integer('durasi');
-            $table->foreignId('created_by');
+            $table->integer('created_by')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('study_methods');
+        Schema::dropIfExists('kurikulum_details');
     }
 };

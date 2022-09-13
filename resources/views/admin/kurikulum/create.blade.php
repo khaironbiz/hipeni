@@ -25,6 +25,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            @include('admin.sub_menu.training')
                             <div class="card-header"><b>{{$training_ini->nama_training}}</b></div>
                             <form form id="quickForm" action="{{route('admin.kurikulum.store')}}" method="POST">
                                 @csrf

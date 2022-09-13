@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreStudy_methodRequest extends FormRequest
+class StoreKurikulum_detailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class StoreStudy_methodRequest extends FormRequest
     public function rules()
     {
         return [
-            'study_method'  => 'required',
-            'durasi'        => 'required|numeric'
+            'kurikulum_id'      => 'required',
+            'study_method_id'   => 'required',
+            'jpl'               => 'required',
         ];
     }
 }

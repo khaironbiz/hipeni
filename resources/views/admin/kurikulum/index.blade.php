@@ -66,7 +66,7 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$data->nama_training}}</td>
                                     <td>{{$data->kurikulum->count()}}</td>
-                                    <td></td>
+                                    <td>{{$data->kurikulum_detail->sum('jpl')}}</td>
                                     <td><a href="{{route('admin.kurikulum.show',['slug'=>$data->slug])}}" class="btn btn-sm btn-info">Detail</a></td>
                                 </tr>
                                 @endforeach

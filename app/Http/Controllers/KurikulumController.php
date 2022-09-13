@@ -7,7 +7,9 @@ use App\Models\Education_type;
 use App\Models\Kurikulum;
 use App\Http\Requests\StoreKurikulumRequest;
 use App\Http\Requests\UpdateKurikulumRequest;
+use App\Models\Kurikulum_detail;
 use App\Models\Materi_type;
+use App\Models\Study_method;
 use App\Models\Training;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,7 +80,6 @@ class KurikulumController extends Controller
         }else{
             return back()->with('error', 'Data gagal disimpan');
         }
-
     }
 
     public function show($slug)
@@ -99,14 +100,19 @@ class KurikulumController extends Controller
     }
 
     public function detail($slug){
-        $kurikulum  = Kurikulum::with('materi_type')->where('slug', $slug)->first();
-        $training   = Training::find($kurikulum->training_id);
+        $metode             = Study_method::all();
+        $kurikulum          = Kurikulum::with('materi_type')->where('slug', $slug)->first();
+        $training           = Training::find($kurikulum->training_id);
+        $kurikulum_detail   = Kurikulum_detail::where('kurikulum_id', $kurikulum->id)->get();
         $data = [
-            'title'     => 'Kurikulum',
-            'class'     => 'Kurikulum',
-            'sub_class' => 'Detail Kurikulum',
-            'kurikulum' => $kurikulum,
-            'training'  => $training,
+            'title'             => 'Kurikulum',
+            'class'             => 'Kurikulum',
+            'sub_class'         => 'Detail Kurikulum',
+            'kurikulum'         => $kurikulum,
+            'training'          => $training,
+            'metode'            => $metode,
+            'kurikulum_detail'  => $kurikulum_detail
+
         ];
         return view('admin.kurikulum.detail', $data);
     }

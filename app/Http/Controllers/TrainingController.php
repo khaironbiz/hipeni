@@ -37,7 +37,6 @@ class TrainingController extends Controller
 
     public function store(StoreTrainingRequest $request)
     {
-
         $data                       = $request->validated();
         $data['slug']               = uniqid();
         $data['created_by']         = Auth::id();

@@ -57,7 +57,8 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Type</th>
-                                    <th>Created By</th>
+                                    <th>Durasi (menit)</th>
+                                    <th>Slug</th>
                                     <th>Count</th>
                                     <th>Aksi</th>
 
@@ -68,8 +69,9 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$data->study_method}}</td>
+                                    <td>{{$data->durasi}}</td>
                                     <td>{{$data->slug}}</td>
-                                    <td></td>
+                                    <td>{{$data->kurikulum_detail->count()}}</td>
                                     <td><a href="{{route('admin.study.methode.edit', ['slug' =>$data->slug])}}" class="btn btn-sm btn-info">Detail</a></td>
                                 </tr>
                                 @endforeach
@@ -89,11 +91,16 @@
                                             <form form id="quickForm" action="{{route('admin.study.methode.store')}}" method="POST">
                                                 @csrf
                                                 <div class="modal-body">
-
                                                     <div class="row mb-1">
                                                         <label class="col-sm-4 col-form-label">Study Methode</label>
                                                         <div class="col-sm-8">
                                                             <input type="text"class="form-control" name="study_method" value="{{old('study_method')}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-1">
+                                                        <label class="col-sm-4 col-form-label">Durasi (menit)</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="number"class="form-control" name="durasi" value="{{old('durasi')}}">
                                                         </div>
                                                     </div>
                                                 </div>
