@@ -55,9 +55,17 @@ class KurikulumDetailController extends Controller
      * @param  \App\Models\Kurikulum_detail  $kurikulum_detail
      * @return \Illuminate\Http\Response
      */
-    public function show(Kurikulum_detail $kurikulum_detail)
+    public function show($slug)
     {
-        //
+        $kurikulum_detail = Kurikulum_detail::with('kurikulum')->with('study_method')->where('slug', $slug)->first();
+        $data = [
+            'title'             => 'Kurikulum detail',
+            'class'             => 'Kurikulum',
+            'sub_class'         => 'Detail Kurikulum',
+            'kurikulum_detail'  => $kurikulum_detail,
+
+        ];
+        return view('admin.kurikulum.detail.detail', $data);
     }
 
     /**

@@ -114,7 +114,7 @@
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$data->study_method->study_method}}</td>
                                                 <td>{{$data->jpl}}</td>
-                                                <td><a href="" class="btn btn-sm btn-info">Detail</a></td>
+                                                <td><a href="{{route('admin.kurikulum.detail.show', ['slug'=>$data->slug])}}" class="btn btn-sm btn-info">Detail</a></td>
                                             </tr>
                                             @endforeach
                                             </tbody>
