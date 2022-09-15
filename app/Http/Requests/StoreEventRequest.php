@@ -25,7 +25,7 @@ class StoreEventRequest extends FormRequest
     {
         return [
             'id_penyelenggara'  => 'required',
-            'education_level'   => 'required',
+            'training_id'       => 'required',
             'judul'             => 'required',
             'ringkasan'         => 'required',
             'isi'               => 'required',

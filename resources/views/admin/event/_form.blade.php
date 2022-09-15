@@ -1,23 +1,23 @@
 <div class="col-md-8">
     <div class="row mb-2">
         <div class="col-md-6">
+            <label>Training</label><br>
+            <select class="form-control @error('training_id') is-invalid text-danger @enderror" name="training_id">
+                <option value="" @if(old('training_id', $event->education_level) == "") selected @endif>-----------</option>
+                @foreach($training as $data)
+                    <option value="{{$data->id}}" @if(old('training_id', $event->training_id) == $data->id) selected @endif>{{$data->nama_training}}</option>
+                @endforeach
+            </select>
+            @error('training_id')
+            <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+        <div class="col-md-6">
             <label>Penyedia</label><br>
             <select class="form-control @error('id_penyelenggara') is-invalid text-danger @enderror" name="id_penyelenggara">
                 <option value="" @if(old('id_penyelenggara', $event->id_penyelenggara) == "") selected @endif>-----------</option>
                 @foreach($partner as $data)
                     <option value="{{$data->id}}" @if(old('id_penyelenggara', $event->id_penyelenggara) == $data->id) selected @endif>{{$data->nama_partner}}</option>
-                @endforeach
-            </select>
-            @error('id_penyelenggara')
-            <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
-        <div class="col-md-6">
-            <label>Jenis PKB</label><br>
-            <select class="form-control @error('education_level') is-invalid text-danger @enderror" name="education_level">
-                <option value="" @if(old('education_level', $event->education_level) == "") selected @endif>-----------</option>
-                @foreach($education as $data)
-                    <option value="{{$data->id}}" @if(old('education_level', $event->education_level) == $data->id) selected @endif>{{$data->education_level}}</option>
                 @endforeach
             </select>
             @error('id_penyelenggara')
