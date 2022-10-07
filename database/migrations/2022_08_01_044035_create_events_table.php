@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->integer('id_penyelenggara');
+            $table->foreignId('training_id');
             $table->foreignId('education_level');
             $table->string('judul');
             $table->string('ringkasan');

@@ -227,7 +227,11 @@ Route::post('admin/kurikulum/destroy/{slug}', [\App\Http\Controllers\KurikulumCo
 
 //kurikulum detail
 Route::post('admin/kurikulum/detail/store', [\App\Http\Controllers\KurikulumDetailController::class, 'store'])->name('admin.kurikulum.detail.store')->middleware('auth');
+<<<<<<< HEAD
 
 
 //test email
 Route::get('/kirimemail',[\App\Http\Controllers\AuthController::class, 'email']);
+=======
+Route::get('admin/kurikulum/detail/show/{slug}', [\App\Http\Controllers\KurikulumDetailController::class, 'show'])->name('admin.kurikulum.detail.show')->middleware('auth');
+>>>>>>> 0e251325e4a75165ce01c5709798a69f3542512b

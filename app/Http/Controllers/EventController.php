@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Partner;
+use App\Models\Training;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -51,11 +52,11 @@ class EventController extends Controller
     }
     public function create()
     {
-        $education_level = Education_level::all();
+        $training = Training::all();
         $data = [
             'title'     => 'Event',
             'navbar'    => 'events',
-            'education' => $education_level
+            'training'  => $training
         ];
         return view('landing.events.kontributor.create', $data);
     }
@@ -84,20 +85,17 @@ class EventController extends Controller
             'sub_class' => 'create',
             'partner'   => $partner,
             'event'     => new Event(),
-            'education' => $education_level
+            'training'  => Training::OrderBy('nama_training', 'ASC')->get()
 
         ];
         return view('admin.event.create', $data);
     }
     public function store(StoreEventRequest $request)
     {
-        $file = $request->file('banner');
-        // isi dengan nama folder tempat kemana file diupload
-        $tujuan_upload = 'assets/upload/images/event/';
-        // upload file
-        $nama_file_baru = uniqid().$file->getClientOriginalName();
-
-        $data = $request->validated();
+        $file               = $request->file('banner');
+        $tujuan_upload      = 'assets/upload/images/event/';// isi dengan nama folder tempat kemana file diupload
+        $nama_file_baru     = uniqid().$file->getClientOriginalName();// upload file
+        $data               = $request->validated();
         $data['banner']     = $nama_file_baru;
         $data['slug']       = md5(uniqid());
         $data['created_by'] = Auth::user()->id;
