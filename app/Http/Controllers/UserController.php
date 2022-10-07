@@ -86,7 +86,6 @@ class UserController extends Controller
         }
     }
     public function show($username){
-
         $data = [
             'title'     => "Detail User",
             'class'     => 'User',

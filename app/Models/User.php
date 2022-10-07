@@ -26,6 +26,7 @@ class User extends Authenticatable
         'jenis_kelamin',
         'nik', 'nira',
         'username',
+        'password',
         'email',
         'foto',
         'phone_cell',

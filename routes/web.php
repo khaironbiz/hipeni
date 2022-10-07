@@ -37,6 +37,8 @@ Route::get('/login',[App\Http\Controllers\AuthController::class,'index'])->name(
 Route::post('/auth',[App\Http\Controllers\AuthController::class,'login'])->name('auth');
 Route::get('/registration',[App\Http\Controllers\AuthController::class,'registration'])->name('registration')->middleware('guest');
 Route::post('/register',[App\Http\Controllers\AuthController::class,'register'])->name('register');
+Route::get('/activate/{username}',[App\Http\Controllers\AuthController::class,'activate'])->name('activate');
+Route::post('/activate/{username}',[App\Http\Controllers\AuthController::class,'aktifkan'])->name('aktifkan');
 Route::get('/forgot',[App\Http\Controllers\AuthController::class,'forgot'])->name('forgot')->middleware('guest');
 Route::post('/forgot',[App\Http\Controllers\AuthController::class,'call_user'])->name('call_user')->middleware('guest');
 Route::post('/logout',[App\Http\Controllers\AuthController::class,'logout'])->name('logout');
@@ -225,3 +227,7 @@ Route::post('admin/kurikulum/destroy/{slug}', [\App\Http\Controllers\KurikulumCo
 
 //kurikulum detail
 Route::post('admin/kurikulum/detail/store', [\App\Http\Controllers\KurikulumDetailController::class, 'store'])->name('admin.kurikulum.detail.store')->middleware('auth');
+
+
+//test email
+Route::get('/kirimemail',[\App\Http\Controllers\AuthController::class, 'email']);
