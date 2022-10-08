@@ -12,4 +12,5 @@ class Customer extends Model
     protected $fillable = [
         'nama_depan', 'nama_belakang', 'nik','jk','tl','status','username','email', 'hp','alamat', 'password', 'foto',
     ];
+
 }

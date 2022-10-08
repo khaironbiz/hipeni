@@ -41,6 +41,9 @@ Route::get('/activate/{username}',[App\Http\Controllers\AuthController::class,'a
 Route::post('/activate/{username}',[App\Http\Controllers\AuthController::class,'aktifkan'])->name('aktifkan');
 Route::get('/forgot',[App\Http\Controllers\AuthController::class,'forgot'])->name('forgot')->middleware('guest');
 Route::post('/forgot',[App\Http\Controllers\AuthController::class,'call_user'])->name('call_user')->middleware('guest');
+
+Route::get('/reset/{username}',[App\Http\Controllers\AuthController::class,'reset'])->name('reset_akun')->middleware('guest');
+Route::post('/reset/{username}',[App\Http\Controllers\AuthController::class,'reset_password'])->name('reset_password')->middleware('guest');
 Route::post('/logout',[App\Http\Controllers\AuthController::class,'logout'])->name('logout');
 
 //user
@@ -227,11 +230,3 @@ Route::post('admin/kurikulum/destroy/{slug}', [\App\Http\Controllers\KurikulumCo
 
 //kurikulum detail
 Route::post('admin/kurikulum/detail/store', [\App\Http\Controllers\KurikulumDetailController::class, 'store'])->name('admin.kurikulum.detail.store')->middleware('auth');
-<<<<<<< HEAD
-
-
-//test email
-Route::get('/kirimemail',[\App\Http\Controllers\AuthController::class, 'email']);
-=======
-Route::get('admin/kurikulum/detail/show/{slug}', [\App\Http\Controllers\KurikulumDetailController::class, 'show'])->name('admin.kurikulum.detail.show')->middleware('auth');
->>>>>>> 0e251325e4a75165ce01c5709798a69f3542512b
