@@ -92,11 +92,14 @@ class EventController extends Controller
     }
     public function store(StoreEventRequest $request)
     {
+
         $file               = $request->file('banner');
         $tujuan_upload      = 'assets/upload/images/event/';// isi dengan nama folder tempat kemana file diupload
         $nama_file_baru     = uniqid().$file->getClientOriginalName();// upload file
         $data               = $request->validated();
+        $training           = Training::find($request->training_id);
         $data['banner']     = $nama_file_baru;
+        $data['education_level']= $training->education_level;
         $data['slug']       = md5(uniqid());
         $data['created_by'] = Auth::user()->id;
         $data['created_at'] = now();
@@ -128,8 +131,8 @@ class EventController extends Controller
     {
         $education_type     = Education_type::where('sifat',2)->first();
         $education_level    = Education_level::where('education_type_id', $education_type->id)->get();
-        $event      = Event::firstwhere('slug', $slug);
-        $partner    = Partner::all();
+        $event              = Event::firstwhere('slug', $slug);
+        $partner            = Partner::all();
         $data       = [
             'title'     => 'Edit Event',
             'navbar'    => 'events',
@@ -137,7 +140,8 @@ class EventController extends Controller
             'sub_class' => 'detail',
             'event'     => $event,
             'partner'   => $partner,
-            'education' => $education_level
+            'education' => $education_level,
+            'training'  => Training::OrderBy('nama_training', 'ASC')->get()
         ];
         return view('admin.event.edit', $data);
     }

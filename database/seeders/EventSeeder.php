@@ -16,6 +16,7 @@ class EventSeeder extends Seeder
     {
         $data =[
             [
+                'training_id'       => 1,
                 'id_penyelenggara'  => 1,
                 'judul'             => 'Pelatihan BNLS',
                 'education_level'   => 17,

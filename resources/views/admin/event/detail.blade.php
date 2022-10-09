@@ -102,10 +102,131 @@
                                         </div>
 
                                         <div class="row">
+                                            <div class="col-md-12">
+                                                <b>Materi Pelatihan</b><br>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                                    Input Materi
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Input Materi</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <button class="btn btn-primary btn-sm">Input dari Kurikulum</button>
+                                                                <button class="btn btn-success btn-sm">Input Manual</button>
+                                                            </div>
 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <table class="table table-striped table-sm mt-2">
+                                                    <thead>
+                                                    <th>#</th>
+                                                    <th>Materi</th>
+                                                    <th>JPL</th>
+                                                    <th>Aksi</th>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <b>Akreditasi Prtofesi (SKP)</b><br>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#SKP">
+                                                    Input SKP
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="SKP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Input SKP</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                       <b>Organisasi Profesi</b>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-4">
+                                                                        <b>SKP</b>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <input type="number" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-4">
+                                                                        <b>Nomor SKP</b>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-4">
+                                                                        <b>Tanggal SKP</b>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <input type="date" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-4">
+                                                                        <b>Keterangan</b>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <table class="table table-striped table-sm mt-2">
+                                                    <thead>
+                                                    <th>#</th>
+                                                    <th>Materi</th>
+                                                    <th>JPL</th>
+                                                    <th>Aksi</th>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>

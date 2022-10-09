@@ -100,6 +100,7 @@ class KurikulumController extends Controller
     }
 
     public function detail($slug){
+//        dd('sukses');
         $metode             = Study_method::all();
         $kurikulum          = Kurikulum::with('materi_type')->where('slug', $slug)->first();
         $training           = Training::find($kurikulum->training_id);

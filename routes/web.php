@@ -229,4 +229,5 @@ Route::post('admin/kurikulum/update/{slug}', [\App\Http\Controllers\KurikulumCon
 Route::post('admin/kurikulum/destroy/{slug}', [\App\Http\Controllers\KurikulumController::class, 'destroy'])->name('admin.kurikulum.destroy')->middleware('auth');
 
 //kurikulum detail
+Route::get('admin/kurikulum/detail/show/{slug}', [\App\Http\Controllers\KurikulumDetailController::class, 'show'])->name('admin.kurikulum.detail.show')->middleware('auth');
 Route::post('admin/kurikulum/detail/store', [\App\Http\Controllers\KurikulumDetailController::class, 'store'])->name('admin.kurikulum.detail.store')->middleware('auth');

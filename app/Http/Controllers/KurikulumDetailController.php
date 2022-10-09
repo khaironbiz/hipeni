@@ -57,6 +57,7 @@ class KurikulumDetailController extends Controller
      */
     public function show($slug)
     {
+//        dd('sukses');
         $kurikulum_detail = Kurikulum_detail::with('kurikulum')->with('study_method')->where('slug', $slug)->first();
         $data = [
             'title'             => 'Kurikulum detail',

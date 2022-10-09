@@ -69,9 +69,12 @@
                                     <td>{{$data->kurikulum_detail->sum('jpl')}}</td>
                                     <td><a href="{{route('admin.kurikulum.detail', ['slug'=>$data->slug])}}" class="btn btn-sm btn-info">Detail</a></td>
                                 </tr>
+
                                 @endforeach
                                 </tbody>
+
                             </table>
+
                         </div>
                         <!-- /.card-body -->
                     </div>
