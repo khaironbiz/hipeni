@@ -11,4 +11,7 @@ class Organisasi_profesi extends Model
     public function profesi(){
         return $this->belongsTo(Profesi::class, 'id_profesi', 'id');
     }
+    public function skp(){
+        return $this->hasMany(Accreditation::class, 'organisasi_profesi_id', 'id');
+    }
 }

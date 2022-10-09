@@ -94,6 +94,9 @@ Route::get('event/edit',[EventController::class,'edit'])->name('event.edit')->mi
 Route::post('event/update/{slug}',[EventController::class,'update'])->name('event.update')->middleware('auth');
 Route::post('event/delete/{slug}',[EventController::class,'delete'])->name('event.delete')->middleware('auth');
 
+
+
+
 //manage by admin
 Route::get('/admin/events',[EventController::class,'all'])->name('admin.event')->middleware('auth');
 Route::get('/admin/event/add',[EventController::class,'add'])->name('admin.event.add')->middleware('auth');
@@ -102,6 +105,10 @@ Route::get('/admin/event/detail/{slug}',[EventController::class,'detail_event'])
 Route::get('/admin/event/edit/{slug}',[EventController::class,'edit_event'])->name('admin.event.edit_event')->middleware('auth');
 Route::post('/admin/event/update/{slug}',[EventController::class,'update'])->name('admin.event.update_event')->middleware('auth');
 
+//skp event
+Route::post('admin/event/skp/store', [\App\Http\Controllers\AccreditationController::class, 'store'])->name('event.skp.store')->middleware('auth');
+
+//end of event
 
 //admin area menggunakan theme admin LTE
 //user

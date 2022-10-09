@@ -94,7 +94,7 @@
 
                                             <div class="col-md-4">
                                                 <label>Status</label><br>
-                                                @if($event->status == 1)Publish <br>
+                                                @if($event->status == 1)Publish ---
                                                 {{$event->date_publish}}
                                                 @else Blokir @endif
                                             </div>
@@ -153,30 +153,72 @@
                                                     Input SKP
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="SKP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="SKP" tabindex="-1" aria-labelledby="SKPLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Input SKP</h5>
+                                                                <h5 class="modal-title" id="SKPLabel">Input SKP</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
+                                                            <form action="{{ route('event.skp.store') }}" method="post">
+                                                              @csrf
                                                             <div class="modal-body">
-                                                                <div class="row">
+                                                                <div class="row mt-1">
                                                                     <div class="col-md-4">
-                                                                       <b>Organisasi Profesi</b>
+                                                                        <b>Event</b>
                                                                     </div>
                                                                     <div class="col-md-8">
-                                                                        <input type="text" class="form-control">
+                                                                        <select class="form-control form-control-sm" name="event_id">
+                                                                            <option value="{{ $event->id }}">{{$event->judul}}</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-1">
                                                                     <div class="col-md-4">
-                                                                        <b>SKP</b>
+                                                                       <b>Organisasi Profesi</b>
                                                                     </div>
                                                                     <div class="col-md-8">
-                                                                        <input type="number" class="form-control">
+                                                                        <select class="form-control form-control-sm" name="organisasi_profesi_id" required>
+                                                                            <option value="">----</option>
+                                                                            @foreach($op as $op)
+                                                                            <option value="{{$op->id}}">{{ $op->singkatan }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-4">
+                                                                        <b>Peserta</b>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <input type="number" class="form-control form-control-sm" name="peserta" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-4">
+                                                                        <b>Pembicara</b>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <input type="number" class="form-control form-control-sm" name="pembicara" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-4">
+                                                                        <b>Moderator</b>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <input type="number" class="form-control form-control-sm" name="moderator" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-4">
+                                                                        <b>Panitia</b>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <input type="number" class="form-control form-control-sm" name="panitia" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-1">
@@ -184,7 +226,7 @@
                                                                         <b>Nomor SKP</b>
                                                                     </div>
                                                                     <div class="col-md-8">
-                                                                        <input type="text" class="form-control">
+                                                                        <input type="text" class="form-control form-control-sm" name="no_skp" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-1">
@@ -192,7 +234,7 @@
                                                                         <b>Tanggal SKP</b>
                                                                     </div>
                                                                     <div class="col-md-8">
-                                                                        <input type="date" class="form-control">
+                                                                        <input type="date" class="form-control form-control-sm" name="tgl_skp" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-1">
@@ -200,30 +242,50 @@
                                                                         <b>Keterangan</b>
                                                                     </div>
                                                                     <div class="col-md-8">
-                                                                        <input type="text" class="form-control">
+                                                                        <input type="text" class="form-control form-control-sm" name="keterangan">
                                                                     </div>
                                                                 </div>
                                                             </div>
-
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <table class="table table-striped table-sm mt-2">
-                                                    <thead>
-                                                    <th>#</th>
-                                                    <th>Materi</th>
-                                                    <th>JPL</th>
-                                                    <th>Aksi</th>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-sm mt-2">
+                                                        <thead>
+                                                        <th>#</th>
+                                                        <th>Organisasi Profesi</th>
+                                                        <th>Kredit Profesi</th>
+
+                                                        <th>Aksi</th>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($skp as $skp)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>
+                                                                    {{ $skp->op->singkatan }} <br>
+                                                                    {{ $skp->no_skp }} <br> {{ $skp->tgl_skp  }} <br> {{$skp->keterangan}} <br>
+                                                                </td>
+                                                                <td>
+                                                                    Peserta : {{$skp->peserta}} <br>
+                                                                    Pembicara : {{$skp->pembicara}} <br>
+                                                                    Moderator : {{$skp->moderator}} <br>
+                                                                    Panitia : {{$skp->panitia}}
+                                                                </td>
+
+                                                                <td>
+                                                                    <a href="" class="btn btn-sm btn-info">Detail</a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
                                             </div>
 
                                         </div>

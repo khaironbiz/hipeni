@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Accreditation;
 use App\Models\Education_level;
 use App\Models\Education_type;
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Models\Organisasi_profesi;
 use App\Models\Partner;
 use App\Models\Training;
 use App\Models\User;
@@ -123,7 +125,9 @@ class EventController extends Controller
             'navbar'    => 'events',
             'class'     => 'event',
             'sub_class' => 'detail',
-            'event'     => $event
+            'event'     => $event,
+            'skp'       => Accreditation::where('event_id', $event->id)->orderby('organisasi_profesi_id')->get(),
+            'op'        => Organisasi_profesi::all()
         ];
         return view('admin.event.detail', $data);
     }
