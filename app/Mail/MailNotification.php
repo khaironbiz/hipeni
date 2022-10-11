@@ -7,9 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MailActivation extends Mailable
+class MailNotification extends Mailable
 {
-
     public $data_email;
     use Queueable, SerializesModels;
 
@@ -31,7 +30,7 @@ class MailActivation extends Mailable
     public function build()
     {
         return $this->from('admin@ovon.my.id')
-            ->subject($this->data_email->subject)
-            ->view('email.activation');
+            ->subject('Notifikasi')
+            ->view('email.notification');
     }
 }

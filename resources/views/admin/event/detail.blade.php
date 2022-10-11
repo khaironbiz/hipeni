@@ -134,12 +134,14 @@
                                                     <th>Aksi</th>
                                                     </thead>
                                                     <tbody>
+                                                    @foreach($kurikulum as $kurikulum)
                                                     <tr>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $kurikulum->topik }}</td>
                                                         <td></td>
                                                         <td></td>
                                                     </tr>
+                                                    @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>

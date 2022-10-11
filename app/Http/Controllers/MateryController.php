@@ -2,20 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Accreditation;
+use App\Models\Event;
+use App\Models\Kurikulum;
 use App\Models\Matery;
 use App\Http\Requests\StoreMateryRequest;
 use App\Http\Requests\UpdateMateryRequest;
+use App\Models\Organisasi_profesi;
 
 class MateryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
+    }
+    public function kurikulum($slug)
+    {
+        $event      = Event::firstwhere('slug', $slug);
+        $kurikulum  = Kurikulum::where('event_id', $event->id)->get();
+        $data   = [
+            'title'     => 'Detail Event',
+            'navbar'    => 'events',
+            'class'     => 'event',
+            'sub_class' => 'detail',
+            'kurikulum' => $kurikulum
+        ];
+        return view('admin.kurikulum.show', $data);
     }
 
     /**

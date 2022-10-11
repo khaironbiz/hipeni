@@ -27,14 +27,16 @@
                                 <h6 class="mt-3">Tempat</h6>
                                 {{$event->tempat}}
                                 <h6 class="mt-3">Akreditasi</h6>
+                                @foreach($skp as $skp)
                                 <div class="row">
                                     <div class="col-4">
-                                        <label>PPNI</label>
+                                        <label>{{ $skp->op->singkatan }}</label>
                                     </div>
-                                    <div class="col-4">: 3 SKP
+                                    <div class="col-4">: {{ $skp->peserta }} SKP
                                     </div>
                                 </div>
-                                <h6 class="mt-3">Fasilitas</h6>
+                                @endforeach
+
                             </div>
 
                         </div>

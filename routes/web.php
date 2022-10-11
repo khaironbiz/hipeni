@@ -71,6 +71,7 @@ Route::post('/education/type/store',[\App\Http\Controllers\EducationTypeControll
 Route::get('/education/level',[\App\Http\Controllers\EducationLevelController::class,'index'])->name('education.level')->middleware('auth');
 Route::post('/education/level/store',[\App\Http\Controllers\EducationLevelController::class,'store'])->name('education.level.store')->middleware('auth');
 
+
 //wilayah indonesia
 Route::get('/provinsi',[App\Http\Controllers\ProvinsiController::class,'index'])->name('home.wilayah');
 Route::get('/provinsi/{code}',[App\Http\Controllers\ProvinsiController::class,'kota'])->name('home.wilayah.kota');

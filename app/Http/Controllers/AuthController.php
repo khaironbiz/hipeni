@@ -8,6 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Mail\MailActivation;
 use App\Mail\MailLoginNotification;
+use App\Mail\MailNotification;
 use App\Mail\MailRegistration;
 use App\Mail\MailResetPassword;
 use App\Models\Log;
@@ -154,7 +155,7 @@ class AuthController extends Controller
                 'link'      => $link
             ];
             Mail::to($user->email)->send(new MailResetPassword($data_email));
-            return redirect()->route('login')->with(['success' => 'Permohonan reset password telah dikirim ke email yang terdaftar, silahkan periksa email anda']);
+            return redirect()->route('login')->with(['success' => 'Reset password has been send to email']);
         }else{
             return back()->with(['warning' => 'Acount not found']);
         }
@@ -190,7 +191,18 @@ class AuthController extends Controller
         $data['username']   = $username_baru;
         $user               = User::where('username', $username)->first();
         $update             = $user->update($data);
-        return redirect()->route('reset_akun', $username_baru);
+        if($update){
+            $pesan = "Terimaksih, password akun anda berhasil dirubah, silahkan login.";
+            $data_email = [
+                'penerima'  => $user->nama_lengkap,
+                'subject'   => "Password berhasil diubah",
+                'pesan'      => $pesan,
+            ];
+            Mail::to($user->email)->send(new MailNotification($data_email));
+
+            return redirect()->route('login')->with('success', 'Recover password has been successfully');
+        }
+
     }
 
     public function destroy(Request $request, $id)
@@ -210,9 +222,7 @@ class AuthController extends Controller
 
         return redirect()->route('root')->with(['success' => 'Silahkan login kembali']);
     }
-    public function email(){
-        Mail::to("khaironbiz@gmail.com")->send(new MailRegistration());
-    }
+
     private function log(){
         $log = new Log();
         $pengunjung = [
@@ -223,4 +233,5 @@ class AuthController extends Controller
         ];
         $log->create($pengunjung);
     }
+
 }

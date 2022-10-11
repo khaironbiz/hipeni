@@ -8,6 +8,7 @@ use App\Models\Education_type;
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Models\Kurikulum;
 use App\Models\Organisasi_profesi;
 use App\Models\Partner;
 use App\Models\Training;
@@ -37,7 +38,8 @@ class EventController extends Controller
             'class'     => 'event',
             'sub_class' => 'detail',
             'navbar'    => 'events',
-            'event'     => $event
+            'event'     => $event,
+            'skp'       => Accreditation::where('event_id', $event->id)->get()
         ];
         return view('landing.events.detail', $data);
     }
@@ -119,7 +121,8 @@ class EventController extends Controller
 
     public function detail_event($slug)
     {
-        $event = Event::firstwhere('slug', $slug);
+        $event = Event::where('slug', $slug)->first();
+        $kurikulum = Kurikulum::where('training_id', $event->training_id)->get();
         $data   = [
             'title'     => 'Detail Event',
             'navbar'    => 'events',
@@ -127,8 +130,10 @@ class EventController extends Controller
             'sub_class' => 'detail',
             'event'     => $event,
             'skp'       => Accreditation::where('event_id', $event->id)->orderby('organisasi_profesi_id')->get(),
-            'op'        => Organisasi_profesi::all()
+            'op'        => Organisasi_profesi::all(),
+            'kurikulum' => $kurikulum
         ];
+//        dd($kurikulum);
         return view('admin.event.detail', $data);
     }
     public function edit_event($slug)
