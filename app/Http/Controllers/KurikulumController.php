@@ -89,11 +89,11 @@ class KurikulumController extends Controller
         $kurikulum = Kurikulum::where('training_id', $training->id)->with('materi_type')->OrderBy('materi_type_id', 'ASC')->OrderBy('topik', 'ASC')->get();
         $materi_type= Materi_type::all();
         $data = [
-            'title'     => 'Kurikulum '.$training->nama_training,
-            'class'     => 'Kurikulum',
-            'sub_class' => 'Detail Kurikulum',
-            'kurikulum' => $kurikulum,
-            'training'  => $training,
+            'title'         => 'Kurikulum '.$training->nama_training,
+            'class'         => 'Kurikulum',
+            'sub_class'     => 'Detail Kurikulum',
+            'kurikulum'     => $kurikulum,
+            'training'      => $training,
             'materi_type'   => $materi_type
         ];
         return view('admin.kurikulum.materi-detail', $data);

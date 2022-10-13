@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Kurikulum;
+use App\Models\Matery;
 use App\Models\Organisasi_profesi;
 use App\Models\Partner;
 use App\Models\Training;
@@ -117,13 +118,12 @@ class EventController extends Controller
         }
 
     }
-
-
     public function detail_event($slug)
     {
-        $event = Event::where('slug', $slug)->first();
-        $kurikulum = Kurikulum::where('training_id', $event->training_id)->get();
-        $data   = [
+        $event      = Event::where('slug', $slug)->first();
+        $kurikulum  = Kurikulum::where('training_id', $event->training_id)->get();
+        $materi     = Matery::where('event_id', $event->id)->get();
+        $data       = [
             'title'     => 'Detail Event',
             'navbar'    => 'events',
             'class'     => 'event',
@@ -131,9 +131,9 @@ class EventController extends Controller
             'event'     => $event,
             'skp'       => Accreditation::where('event_id', $event->id)->orderby('organisasi_profesi_id')->get(),
             'op'        => Organisasi_profesi::all(),
-            'kurikulum' => $kurikulum
+            'kurikulum' => $kurikulum,
+            'materi'    => $materi,
         ];
-//        dd($kurikulum);
         return view('admin.event.detail', $data);
     }
     public function edit_event($slug)
@@ -154,14 +154,6 @@ class EventController extends Controller
         ];
         return view('admin.event.edit', $data);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateEventRequest  $request
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateEventRequest $request, $slug)
     {
         $event          = Event::where('slug', $slug)->first();
@@ -174,26 +166,16 @@ class EventController extends Controller
             $data['banner'] = $nama_file_baru;
             $file->move($tujuan_upload,$nama_file_baru);
             unlink($tujuan_upload.$event->banner);
-
         }
         //update data event
 
         $event_update = $event->update($data);
         if($event_update){
-
             return back()->with('success', 'Data berhasil diupdate');
         }else{
             return back()->with('error', 'Data gagal diupdate');
         }
-
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Event $event)
     {
         //

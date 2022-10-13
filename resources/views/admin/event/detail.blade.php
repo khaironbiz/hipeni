@@ -110,7 +110,7 @@
                                                 </button>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
+                                                    <div class="modal-dialog modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">Input Materi</h5>
@@ -118,11 +118,30 @@
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <div class="modal-body">
-                                                                <button class="btn btn-primary btn-sm">Input dari Kurikulum</button>
-                                                                <button class="btn btn-success btn-sm">Input Manual</button>
-                                                            </div>
-
+                                                            <form action="{{ route('admin.materi.store', ['slug'=>$event->slug]) }}" method="post">
+                                                                @csrf
+                                                                <div class="modal-body">
+                                                                    <table class="table table-sm">
+                                                                        <thead>
+                                                                        <th>#</th>
+                                                                        <th>Materi</th>
+                                                                        <th>Aksi</th>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        @foreach($kurikulum as $kurikulum)
+                                                                        <tr>
+                                                                            <td>{{ $loop->iteration }}</td>
+                                                                            <td><input type="checkbox" checked name="kurikulum_id[]" value="{{ $kurikulum->id }}"> {{ $kurikulum->topik }}</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -134,13 +153,13 @@
                                                     <th>Aksi</th>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($kurikulum as $kurikulum)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $kurikulum->topik }}</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
+                                                    @foreach($materi as $materi)
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
                                                     @endforeach
                                                     </tbody>
                                                 </table>

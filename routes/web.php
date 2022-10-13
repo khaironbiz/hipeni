@@ -239,3 +239,6 @@ Route::post('admin/kurikulum/destroy/{slug}', [\App\Http\Controllers\KurikulumCo
 //kurikulum detail
 Route::get('admin/kurikulum/detail/show/{slug}', [\App\Http\Controllers\KurikulumDetailController::class, 'show'])->name('admin.kurikulum.detail.show')->middleware('auth');
 Route::post('admin/kurikulum/detail/store', [\App\Http\Controllers\KurikulumDetailController::class, 'store'])->name('admin.kurikulum.detail.store')->middleware('auth');
+
+//materi pada event
+Route::post('admin/materi/store/{slug}', [\App\Http\Controllers\MateryController::class, 'store'])->name('admin.materi.store')->middleware('auth');
