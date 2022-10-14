@@ -21,4 +21,9 @@ class Kurikulum extends Model
     {
         return $this->hasMany(Kurikulum_detail::class);
     }
+    public function materi()
+    {
+        return $this->hasMany(Matery::class);
+    }
+
 }

@@ -16,8 +16,9 @@ class TrainingSeeder extends Seeder
     {
         $data = [
             [
+
                 'education_level'   => 17,
-                'nama_training'     => 'Basic Neurology Life Support',
+                'nama_training'     => 'Basic Neurology Life Support Versi 2022',
                 'slug'              => uniqid(),
                 'created_by'        => 1,
                 'icon'              => 'fas fa-heartbeat',
@@ -25,6 +26,17 @@ class TrainingSeeder extends Seeder
                 'updated_at'        => now()
             ],
             [
+
+                'education_level'   => 17,
+                'nama_training'     => 'Basic Neurology Life Support For Student',
+                'slug'              => uniqid(),
+                'created_by'        => 1,
+                'icon'              => 'fas fa-heartbeat',
+                'created_at'        => now(),
+                'updated_at'        => now()
+            ],
+            [
+
                 'education_level'   => 17,
                 'nama_training'     => 'Askep Stroke Dasar',
                 'slug'              => uniqid(),
@@ -34,6 +46,7 @@ class TrainingSeeder extends Seeder
                 'updated_at'        => now()
             ],
             [
+
                 'education_level'   => 17,
                 'nama_training'     => 'Askep Stroke Komprehensif',
                 'slug'              => uniqid(),
@@ -43,6 +56,7 @@ class TrainingSeeder extends Seeder
                 'updated_at'        => now()
             ],
             [
+
                 'education_level'   => 17,
                 'nama_training'     => 'Askep Neurologi Dasar',
                 'slug'              => uniqid(),
@@ -52,6 +66,7 @@ class TrainingSeeder extends Seeder
                 'updated_at'        => now()
             ],
             [
+
                 'education_level'   => 17,
                 'nama_training'     => 'Perioperatif Bedah Saraf',
                 'slug'              => uniqid(),
@@ -61,6 +76,7 @@ class TrainingSeeder extends Seeder
                 'updated_at'        => now()
             ],
             [
+
                 'education_level'   => 17,
                 'nama_training'     => 'Intra Operatif Bedah Saraf',
                 'slug'              => uniqid(),
@@ -70,6 +86,7 @@ class TrainingSeeder extends Seeder
                 'updated_at'        => now()
             ],
             [
+               
                 'education_level'   => 17,
                 'nama_training'     => 'Epilepsi dan Kedaruratan Kejang',
                 'slug'              => uniqid(),

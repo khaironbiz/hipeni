@@ -9,4 +9,8 @@ class Matery extends Model
 {
     protected $guarded = ['id'];
     use HasFactory;
+    public function kurikulum()
+    {
+        return $this->belongsTo(Kurikulum::class,'kurikulum_id','id');
+    }
 }

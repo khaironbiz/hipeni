@@ -156,7 +156,7 @@
                                                     @foreach($materi as $materi)
                                                         <tr>
                                                             <td>{{$loop->iteration}}</td>
-                                                            <td></td>
+                                                            <td>{{ $materi->kurikulum->topik }}</td>
                                                             <td></td>
                                                             <td></td>
                                                         </tr>

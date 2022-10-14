@@ -16,6 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $user = User::all();
+
         $data = [
             'status' => 'status',
             'user'  => $user

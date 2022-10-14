@@ -121,8 +121,8 @@ class EventController extends Controller
     public function detail_event($slug)
     {
         $event      = Event::where('slug', $slug)->first();
-        $kurikulum  = Kurikulum::where('training_id', $event->training_id)->get();
-        $materi     = Matery::where('event_id', $event->id)->get();
+        $kurikulum  = Kurikulum::with('training')->where('training_id', $event->training_id)->get();
+        $materi     = Matery::with('kurikulum')->where('event_id', $event->id)->get();
         $data       = [
             'title'     => 'Detail Event',
             'navbar'    => 'events',

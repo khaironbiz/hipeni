@@ -44,7 +44,8 @@ class DatabaseSeeder extends Seeder
             UserOrganizationSeeder::class,
             TrainingSeeder::class,
             MateriTypeSeeder::class,
-            StudyMethodSeeder::class
+            StudyMethodSeeder::class,
+            KurikulumSeeder::class
         ]);
     }
 }
