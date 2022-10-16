@@ -40,7 +40,9 @@ class EventController extends Controller
             'sub_class' => 'detail',
             'navbar'    => 'events',
             'event'     => $event,
-            'skp'       => Accreditation::where('event_id', $event->id)->get()
+            'skp'       => Accreditation::where('event_id', $event->id)->get(),
+            'pendaftar' => 29,
+            'user'      => Auth::user()
         ];
         return view('landing.events.detail', $data);
     }

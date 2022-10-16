@@ -242,3 +242,10 @@ Route::post('admin/kurikulum/detail/store', [\App\Http\Controllers\KurikulumDeta
 
 //materi pada event
 Route::post('admin/materi/store/{slug}', [\App\Http\Controllers\MateryController::class, 'store'])->name('admin.materi.store')->middleware('auth');
+
+
+//Pendaftaran peserta
+Route::post('participant/store/{slug}', [\App\Http\Controllers\ParticipantController::class, 'store'])->name('participant.store');
+
+//Transaksi
+Route::post('transaksi/store', [\App\Http\Controllers\TransactionController::class, 'store'])->name('transaction.store');
