@@ -225,9 +225,14 @@ class AuthController extends Controller
 
     private function log(){
         $log = new Log();
+        if(Auth::id() !='') {
+            $user_id = Auth::id();
+        }else{
+            $user_id = 0;
+        }
         $pengunjung = [
             'ip'        => \Request::getClientIp(true),
-            'user_id'   => 0,
+            'user_id'   => $user_id,
             'url'       => url()->full(),
             'time'      => time(),
         ];

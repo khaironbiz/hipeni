@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Kurikulum;
+use App\Models\Log;
 use App\Models\Matery;
 use App\Models\Organisasi_profesi;
 use App\Models\Partner;
@@ -23,6 +24,7 @@ class EventController extends Controller
     //tampil di landing page
     public function index()
     {
+        $this->log();
         $events = Event::all();
         $data = [
             'title'     => 'Events',
@@ -33,6 +35,7 @@ class EventController extends Controller
     }
     public function detail($slug)
     {
+        $this->log();
         $event = Event::where('slug', $slug)->first();
         $data = [
             'title'     => 'Event',
@@ -49,6 +52,7 @@ class EventController extends Controller
     //by kontributor
     public function list()
     {
+        $this->log();
         $event  = Event::all();
         $data   = [
             'title'     => 'Event',
@@ -59,6 +63,7 @@ class EventController extends Controller
     }
     public function create()
     {
+        $this->log();
         $training = Training::all();
         $data = [
             'title'     => 'Event',
@@ -70,6 +75,7 @@ class EventController extends Controller
     //tampil di admin
     public function all()
     {
+        $this->log();
         $events = Event::all();
         $data = [
             'title'     => 'Events',
@@ -82,6 +88,7 @@ class EventController extends Controller
     }
     public function add()
     {
+        $this->log();
         $education_type     = Education_type::where('sifat',2)->first();
         $education_level    = Education_level::where('education_type_id', $education_type->id)->get();
         $partner            = Partner::all();
@@ -99,7 +106,7 @@ class EventController extends Controller
     }
     public function store(StoreEventRequest $request)
     {
-
+        $this->log();
         $file               = $request->file('banner');
         $tujuan_upload      = 'assets/upload/images/event/';// isi dengan nama folder tempat kemana file diupload
         $nama_file_baru     = uniqid().$file->getClientOriginalName();// upload file
@@ -122,6 +129,7 @@ class EventController extends Controller
     }
     public function detail_event($slug)
     {
+        $this->log();
         $event      = Event::where('slug', $slug)->first();
         $kurikulum  = Kurikulum::with('training')->where('training_id', $event->training_id)->get();
         $materi     = Matery::with('kurikulum')->where('event_id', $event->id)->get();
@@ -140,6 +148,7 @@ class EventController extends Controller
     }
     public function edit_event($slug)
     {
+        $this->log();
         $education_type     = Education_type::where('sifat',2)->first();
         $education_level    = Education_level::where('education_type_id', $education_type->id)->get();
         $event              = Event::firstwhere('slug', $slug);
@@ -158,6 +167,7 @@ class EventController extends Controller
     }
     public function update(UpdateEventRequest $request, $slug)
     {
+        $this->log();
         $event          = Event::where('slug', $slug)->first();
         $data           = $request->validated();
         //jika update banner maka jalankan script berikut
@@ -181,5 +191,20 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+    private function log(){
+        $log = new Log();
+        if(Auth::id() !='') {
+            $user_id = Auth::id();
+        }else{
+            $user_id = 0;
+        }
+        $pengunjung = [
+            'ip'        => \Request::getClientIp(true),
+            'user_id'   => $user_id,
+            'url'       => url()->full(),
+            'time'      => time(),
+        ];
+        $log->create($pengunjung);
     }
 }

@@ -31,7 +31,7 @@ class MailLoginNotification extends Mailable
     {
 
         return $this->from('admin@ovon.my.id')
-            ->subject('registrasi')
+            ->subject('Login Notification')
             ->view('email.mail_login');
     }
 }
