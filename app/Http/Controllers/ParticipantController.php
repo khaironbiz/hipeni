@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\Participant;
 use App\Http\Requests\StoreParticipantRequest;
 use App\Http\Requests\UpdateParticipantRequest;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -45,7 +46,8 @@ class ParticipantController extends Controller
         $data               = $request->validated();
         $data['event_id']   = $event->id;
         $data['harga']      = $event->harga;
-        $data['slug']       = md5(uniqid());
+        $slug               = uniqid().random_int(1000,9999);
+        $data['slug']       = md5($slug);
         $event_id           = $event->id;
         $email              = $request->email;
         $partcipant_check   = Participant::where(
@@ -58,14 +60,25 @@ class ParticipantController extends Controller
         $participant_detail = $partcipant_check->first();
         if($participant_count <1){
             if(Auth::id()!= ''){
-                $data['user_id']= Auth::id();
-                $slug           = uniqid().random_int(1000,9999);
-                $data['invoice_id']= $slug;
+                $user_id    = Auth::id();
             }else{
-                $data['user_id']= 0;
+                $user_id    = 0;
             }
+            $data['user_id']    = $user_id;
+
+            $data['invoice_id'] = $slug;
             $participant        = new Participant();
             $add                = $participant->create($data);
+            $transactions       = new Transaction();
+            $data_trx           = [
+                'user_id'       => $user_id,
+                'nama'          => $request->nama,
+                'email'         => $request->email,
+                'hp'            => $request->hp,
+                'invoice_id'    => $slug,
+                'tagihan'       => $event->harga,
+            ];
+            $create_trx         = $transactions->create($data_trx);
             $pesan      = "
             <table>
                 <tr>
@@ -101,15 +114,21 @@ class ParticipantController extends Controller
                 'subject'   => "Registrasi Acara",
                 'pesan'      => $pesan,
             ];
-            Mail::to($email)->send(new MailRegistrasiAcara($data_email));
+//            Mail::to($email)->send(new MailRegistrasiAcara($data_email));
             if($add){
-                return back()->with('success', 'Saved data');
+                $tansaksi = Transaction::where('invoice_id', $slug)->first();
+                return redirect()->route('participant.transaksi', ['slug'=>md5($slug)])->with('success', 'Saved data');
             }else{
 
             }
         }else{
-            return back()->with('error', 'You are registered by email '. $participant_detail->email);
+            return redirect()->route('participant.transaksi', ['slug'=>$participant_detail->slug]);
         }
+    }
+    public function transaksi($slug){
+        $participan     = Participant::where('slug', $slug)->first();
+        $transaction    = Transaction::where('invoice_id', $participan->invoice_id)->first();
+
     }
 
     /**
