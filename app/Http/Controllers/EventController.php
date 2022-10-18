@@ -12,6 +12,7 @@ use App\Models\Kurikulum;
 use App\Models\Log;
 use App\Models\Matery;
 use App\Models\Organisasi_profesi;
+use App\Models\Participant;
 use App\Models\Partner;
 use App\Models\Training;
 use App\Models\User;
@@ -133,16 +134,18 @@ class EventController extends Controller
         $event      = Event::where('slug', $slug)->first();
         $kurikulum  = Kurikulum::with('training')->where('training_id', $event->training_id)->get();
         $materi     = Matery::with('kurikulum')->where('event_id', $event->id)->get();
+        $participants   = Participant::where('event_id', $event->id)->get();
         $data       = [
-            'title'     => 'Detail Event',
-            'navbar'    => 'events',
-            'class'     => 'event',
-            'sub_class' => 'detail',
-            'event'     => $event,
-            'skp'       => Accreditation::where('event_id', $event->id)->orderby('organisasi_profesi_id')->get(),
-            'op'        => Organisasi_profesi::all(),
-            'kurikulum' => $kurikulum,
-            'materi'    => $materi,
+            'title'         => 'Detail Event',
+            'navbar'        => 'events',
+            'class'         => 'event',
+            'sub_class'     => 'detail',
+            'event'         => $event,
+            'skp'           => Accreditation::where('event_id', $event->id)->orderby('organisasi_profesi_id')->get(),
+            'op'            => Organisasi_profesi::all(),
+            'kurikulum'     => $kurikulum,
+            'materi'        => $materi,
+            'participants'  => $participants
         ];
         return view('admin.event.detail', $data);
     }

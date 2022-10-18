@@ -69,6 +69,27 @@
                                                 {{$event->tempat}}
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Peserta</label><br>
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                    <th>#</th>
+                                                    <th>Nama</th>
+                                                    <th>Detail</th>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($participants as $peserta)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{  $peserta->nama }}</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
 
                                     </div>
                                     <div class="col-md-8">
