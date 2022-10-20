@@ -16,81 +16,111 @@
                 </div>
                 <div class="col-md-8 d-flex">
                     <div class="card w-100">
-                        <form action="{{route('profile.update', ['id'=>$user->id])}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('profile.update', ['id'=>$user->username])}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="row justify-content-center">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control is-invalid text-danger" id="floatingInput" placeholder="Nama Depan" name="nama_depan" value="{{$user->nama_depan}}">
+                                            <input type="text" class="form-control @error('nama_depan') is-invalid text-danger @enderror" id="floatingInput" placeholder="Nama Depan" name="nama_depan" value="{{$user->nama_depan}}">
                                             <label for="floatingInput">Nama Depan</label>
                                         </div>
+                                        @error('nama_depan')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="floatingInput" placeholder="Nama Belakang" name="nama_belakang" value="{{$user->nama_belakang}}">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control @error('nama_belakang') is-invalid text-danger @enderror" id="floatingInput" placeholder="Nama Belakang" name="nama_belakang" value="{{$user->nama_belakang}}">
                                             <label for="floatingInput">Nama Belakang</label>
                                         </div>
+                                        @error('nama_belakang')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="floatingInput" placeholder="Gelar Depan" name="gelar_depan" value="{{$user->gelar_depan}}">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control @error('gelar_depan') is-invalid text-danger @enderror" id="floatingInput" placeholder="Gelar Depan" name="gelar_depan" value="{{$user->gelar_depan}}">
                                             <label for="floatingInput">Gelar Depan</label>
                                         </div>
+                                        @error('gelar_depan')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="floatingInput" placeholder="Gelar Belakang" name="gelar_belakang" value="{{$user->gelar_belakang}}">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control @error('gelar_belakang') is-invalid text-danger @enderror" id="floatingInput" placeholder="Gelar Belakang" name="gelar_belakang" value="{{$user->gelar_belakang}}">
                                             <label for="floatingInput">Gelar Belakang</label>
                                         </div>
+                                        @error('gelar_belakang')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="jk">
-                                                <option selected>---Pilih---</option>
-                                                <option value="1" {{ $user->jk == 1 ? 'selected' : '' }}>Laki-laki</option>
-                                                <option value="2" {{ $user->jk == 2 ? 'selected' : '' }}>Perempuan</option>
-                                                <option value="3" {{ $user->jk == 3 ? 'selected' : '' }}>Lainnya</option>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select @error('jenis_kelamin') is-invalid text-danger @enderror" id="floatingSelect" aria-label="Floating label select example" name="jenis_kelamin">
+                                                <option value="1" @if($user->jenis_kelamin == 1) selected @endif>Laki-laki</option>
+                                                <option value="2" @if($user->jenis_kelamin == 2) selected  @endif>Perempuan</option>
+                                                <option value="3" @if($user->jenis_kelamin == 3) selected @endif>Lainnya</option>
                                             </select>
                                             <label for="floatingSelect">Jenis Kelamin</label>
                                         </div>
+                                        @error('jenis_kelamin')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com" name="tgl_lahir" value="{{$user->tgl_lahir}}">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="date" class="form-control @error('tgl_lahir') is-invalid text-danger @enderror" id="floatingInput" placeholder="tanggal lahir" name="tgl_lahir" value="{{$user->tgl_lahir}}">
                                             <label for="floatingInput">Tanggal Lahir</label>
                                         </div>
+                                        @error('tgl_lahir')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com" name="nik" value="{{$user->nik}}">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control @error('nik') is-invalid text-danger @enderror" id="floatingInput" placeholder="nik" name="nik" value="{{ old('nik', $user->nik)}}">
                                             <label for="floatingInput">NIK</label>
                                         </div>
+                                        @error('nik')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="number" class="form-control" id="floatingInput" placeholder="nira" name="nira" value="{{$user->nira}}">
-                                            <label for="floatingInput">Nira</label>
+                                    <div class="col-md-6  mb-3">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control @error('nira') is-invalid text-danger @enderror" id="floatingInput" placeholder="nira" name="nira" value="{{ old('nira', $user->nira)}}">
+                                            <label for="floatingInput">NIRA</label>
                                         </div>
+                                        @error('nira')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" value="{{$user->email}}">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control @error('email') is-invalid text-danger @enderror" id="floatingInput" placeholder="email" name="email" value="{{$user->email}}">
                                             <label for="floatingInput">Email</label>
                                         </div>
+                                        @error('email')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com" name="phone_cell" value="{{$user->phone_cell}}">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control @error('phone_cell') is-invalid text-danger @enderror" id="floatingInput" placeholder="hp" name="phone_cell" value="{{$user->phone_cell}}">
                                             <label for="floatingInput">HP</label>
                                         </div>
+                                        @error('phone_cell')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3">
                                             <input type="file" class="form-control" id="floatingInput" name="file">
                                             <label for="floatingInput">Foto</label>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

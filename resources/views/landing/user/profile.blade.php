@@ -46,7 +46,7 @@
                                     <div class="col-md-3 col-4">
                                         <label>Jenis Kelamin</label>
                                     </div>
-                                    <div class="col-md-9 col-8">: @if($user->jk=1) Laki-laki @elseif($user->jk=2) Perempuan @else Lainnya @endif</div>
+                                    <div class="col-md-9 col-8">: @if($user->jenis_kelamin == 1) Laki-laki @elseif($user->jenis_kelamin == 2) Perempuan @else Lainnya @endif</div>
                                 </div>
 
                                 <div class="row mb-2">

@@ -26,7 +26,7 @@
 
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{ url('/admin/user')}}" class="nav-link @if($class==='User') active @endif"><i class="far fa-user nav-icon"></i> Data Karyawan</a>
+                    <a href="{{ url('/admin/user')}}" class="nav-link @if($class==='User') active @endif"><i class="far fa-user nav-icon"></i> Users</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('/admin/customer')}}" class="nav-link @if($class==='customer') active @endif"><i class="far fa-circle nav-icon"></i> Data Nasabah</a>

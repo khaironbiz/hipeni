@@ -31,7 +31,7 @@ class MailActivation extends Mailable
     public function build()
     {
         return $this->from('admin@ovon.my.id')
-            ->subject($this->data_email->subject)
+            ->subject('Aktifasi akun')
             ->view('email.activation');
     }
 }

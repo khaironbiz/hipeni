@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="col-md-10">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control @error('password') is-invalid text-danger @enderror" id="floatingPassword" placeholder="password" name="password">
+                                        <input type="password" class="form-control @error('password') is-invalid text-danger @enderror" id="floatingPassword" placeholder="password" name="password">
                                         <label for="hp">Password</label>
                                     </div>
                                     @error('password')

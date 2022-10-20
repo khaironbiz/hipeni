@@ -119,91 +119,77 @@ class UserController extends Controller
         $data = $request->all();
         $data['nama_lengkap']   = $request->gelar_depan." ".$request->nama_depan." ".$request->nama_belakang.", ".$request->gelar_belakang;
         $data['username']       = uniqid();
-        dd($data);
-//        if($request->file('file') !=''){
-//            $file = $request->file('file');
-//            // isi dengan nama folder tempat kemana file diupload
-//            $tujuan_upload  = 'assets/upload/images/user/';
-//            $resize         = 'assets/upload/images/user/resize/';
-//            $file_resize    = $resize.Auth::user()->foto;
-//            $file_lama     = $tujuan_upload.Auth::user()->foto;
-////                unlink($file_lama);
-////                unlink($file_resize);
-//            //resize image
-//            $filename = time() . '.' . $file->getClientOriginalExtension();
-//            $img = Image::make($file);
-//            if (Image::make($file)->width() > 100) {
-//                $img->resize(100, null, function ($constraint) {
-//                    $constraint->aspectRatio();
-//                });
-//            }
-//            $img->save(public_path($resize) . $filename);
-//            // upload file
-//            $nama_file_baru = uniqid().$file->getClientOriginalName();
-//            $file->move($tujuan_upload,$nama_file_baru);
-//            $data['foto'] = $nama_file_baru;
-//        }
-//        $update_user = Auth::user()->update($data);
-//        if ($update_user) {
-//            dd($update_user);
-////            return redirect()->route('profile')->with(['success' => 'Data berhasil diupdate']);
-//        } else {
-//            dd('gagal');
-////                return redirect()->route('profile.edit')->with(['error' => 'data gagal tersimpan']);
-//        }
-    }
-
-    public function update(Request $request, $id){
-        $validator = Validator::make($request->all(), [
-            'nama'      => 'required',
-            'username'  => 'required|alpha_num',
-            'email'     => 'required|email:rfc,dns',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->route('profesi')
-                ->withErrors($validator)
-                ->withInput();
-        }else {
-            // menyimpan data file yang diupload ke variabel $file
+//        dd($data);
+        if($request->file('file') !=''){
             $file = $request->file('file');
-            $data = User::find($id);
-            //ambil data dari form
-            $data->name     = $request->nama;
-            $data->username = Str::slug($request->username, '-');
-            $data->email    = $request->email;
-            //jika ada gambar yang diupload
-            if($file !=''){
-                // isi dengan nama folder tempat kemana file diupload
-                $tujuan_upload  = 'assets/upload/images/user/';
-                $resize         = 'assets/upload/images/user/resize/';
-                $file_resize    = $resize.$data->foto;
-                $file_lama     = $tujuan_upload.$data->foto;
+            // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload  = 'assets/upload/images/user/';
+            $resize         = 'assets/upload/images/user/resize/';
+            $file_resize    = $resize.Auth::user()->foto;
+            $file_lama     = $tujuan_upload.Auth::user()->foto;
 //                unlink($file_lama);
 //                unlink($file_resize);
-                //resize image
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-                $img = Image::make($file);
-                if (Image::make($file)->width() > 100) {
-                    $img->resize(100, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                }
-                $img->save(public_path($resize) . $filename);
-                // upload file
-                $nama_file_baru = uniqid().$file->getClientOriginalName();
-                $file->move($tujuan_upload,$nama_file_baru);
-                $data->foto = $nama_file_baru;
-                $data->save();
-            }else{
-                //jika tidak ada gambar
-                $data->save();
+            //resize image
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $img = Image::make($file);
+            if (Image::make($file)->width() > 100) {
+                $img->resize(100, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
             }
-            if ($data) {
-                return redirect()->route('user')->with(['success' => 'data anda tersimpan']);
-            } else {
-                return redirect()->route('user')->with(['error' => 'data gagal tersimpan']);
-            }
+            $img->save(public_path($resize) . $filename);
+            // upload file
+            $nama_file_baru = uniqid().$file->getClientOriginalName();
+            $file->move($tujuan_upload,$nama_file_baru);
+            $data['foto'] = $nama_file_baru;
         }
+        $update_user = Auth::user()->update($data);
+        if ($update_user) {
+//            dd($update_user);
+            return redirect()->route('profile')->with(['success' => 'Data berhasil diupdate']);
+        } else {
+//            dd('gagal');
+                return redirect()->route('profile.edit')->with(['error' => 'data gagal tersimpan']);
+        }
+    }
+
+    public function update(UpdateUserRequest $request, $username){
+        $input  = $request->validated();
+        $data   = User::where('username', $username)->first();
+        $file   = $request->file('file');
+        //jika ada gambar yang diupload
+        if($file !='') {
+            // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload  = 'assets/upload/images/user/';
+            $resize         = 'assets/upload/images/user/resize/';
+            $file_resize    = $resize . $data->foto;
+            $file_lama      = $tujuan_upload . $data->foto;
+//                unlink($file_lama);
+//                unlink($file_resize);
+            //resize image
+            $filename       = time() . '.' . $file->getClientOriginalExtension();
+            $req->validate([
+                'file' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
+            ]);
+            $fileModel = new File;
+            if($req->file()) {
+                $fileName = time().'_'.$req->file->getClientOriginalName();
+                $filePath = $req->file('file')->storeAs('uploads', $fileName, 'public');
+                $fileModel->name = time().'_'.$req->file->getClientOriginalName();
+                $fileModel->file_path = '/storage/' . $filePath;
+                $fileModel->save();
+                return back()
+                    ->with('success','File has been uploaded.')
+                    ->with('file', $fileName);
+            }
+
+        }else{
+            $update = $data->update($input);
+        }
+        if($update){
+            return redirect()->route('user')->with(['success' => 'data anda tersimpan']);
+        }
+        return redirect()->route('user')->with(['error' => 'data gagal tersimpan']);
     }
     public function delete($id){
         $user       = User::find($id);
