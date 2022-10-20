@@ -121,7 +121,6 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Buy Ticket</button>
                 </div>
-
                 </form>
             </div>
         </div>

@@ -15,12 +15,16 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id', 25)->nullable();
+            $table->integer('user_id')->default(0);
+            $table->string('nama')->nullable();
+            $table->string('email')->nullable();
+            $table->string('hp', 25)->nullable();
             $table->string('invoice')->nullable();
             $table->string('channel');
             $table->integer('tagihan');
             $table->integer('ppn')->default(0);
             $table->integer('biaya')->default(0);
+            $table->integer('komisi')->default(0);
             $table->integer('total')->default(0);
             $table->string('status')->nullable();
             $table->string('slug')->default(md5(uniqid()));

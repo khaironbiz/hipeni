@@ -246,6 +246,9 @@ Route::post('admin/materi/store/{slug}', [\App\Http\Controllers\MateryController
 
 //Pendaftaran peserta
 Route::post('participant/store/{slug}', [\App\Http\Controllers\ParticipantController::class, 'store'])->name('participant.store');
+Route::get('participant/transaksi/{slug}', [\App\Http\Controllers\ParticipantController::class, 'transaksi'])->name('participant.transaksi');
 
 //Transaksi
+Route::get('transaksi/show/{slug}', [\App\Http\Controllers\TransactionController::class, 'show'])->name('transaction.show');
 Route::post('transaksi/store', [\App\Http\Controllers\TransactionController::class, 'store'])->name('transaction.store');
+
