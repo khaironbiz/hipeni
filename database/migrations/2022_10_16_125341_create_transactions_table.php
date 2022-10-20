@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('nama')->nullable();
             $table->string('email')->nullable();
             $table->string('hp', 25)->nullable();
-            $table->string('invoice')->nullable();
-            $table->string('channel');
+            $table->string('invoice_id')->nullable();
+            $table->string('channel')->nullable();;
             $table->integer('tagihan');
             $table->integer('ppn')->default(0);
             $table->integer('biaya')->default(0);

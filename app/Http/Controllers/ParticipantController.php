@@ -106,7 +106,6 @@ class ParticipantController extends Controller
                     <td>:</td>
                     <td>$event->judul</td>
                 </tr>
-
             </table>
             ";
             $data_email = [
@@ -128,7 +127,14 @@ class ParticipantController extends Controller
     public function transaksi($slug){
         $participan     = Participant::where('slug', $slug)->first();
         $transaction    = Transaction::where('invoice_id', $participan->invoice_id)->first();
-
+        dd($transaction);
+//        $data = [
+//            'title'     => 'Daftar Profesi',
+//            'class'     => 'Profesi',
+//            'sub_class' => 'Show',
+//
+//        ];
+//        return view('landing.events.payment', $data);
     }
 
     /**

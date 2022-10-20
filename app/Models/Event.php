@@ -32,4 +32,7 @@ class Event extends Model
     {
         return $this->belongsTo(Partner::class,'id_penyelenggara','id');
     }
+    public function participant(){
+        return $this->hasMany(Participant::class, 'event_id', 'id');
+    }
 }
