@@ -59,7 +59,7 @@ class UserController extends Controller
         // isi dengan nama folder tempat kemana file diupload
         $tujuan_upload = 'assets/upload/images/user/';
         // upload file
-        $nama_file_baru = uniqid().$file->getClientOriginalName();
+        $nama_file_baru = uniqid().".".$file->getClientOriginalExtension();
         $file->move($tujuan_upload,$nama_file_baru);
 
         $user = new User();
@@ -115,42 +115,34 @@ class UserController extends Controller
         ];
         return view('landing.user.edit', $data);
     }
-    public function profileupdate(UpdateUserRequest $request, $id){
-        $data = $request->all();
-        $data['nama_lengkap']   = $request->gelar_depan." ".$request->nama_depan." ".$request->nama_belakang.", ".$request->gelar_belakang;
-        $data['username']       = uniqid();
-//        dd($data);
-        if($request->file('file') !=''){
-            $file = $request->file('file');
-            // isi dengan nama folder tempat kemana file diupload
+    public function profileupdate(UpdateUserRequest $request, $username){
+        $input  = $request->validated();
+        $data   = User::where('username', $username)->first();
+        $file   = $request->file('file');
+        //jika ada gambar yang diupload
+        if($file !='') {
+            $request->validate(
+                [
+                    'file' => 'mimes:jpg,bmp,png|max:512'
+                ]
+
+
+            );
             $tujuan_upload  = 'assets/upload/images/user/';
-            $resize         = 'assets/upload/images/user/resize/';
-            $file_resize    = $resize.Auth::user()->foto;
-            $file_lama     = $tujuan_upload.Auth::user()->foto;
+            unlink($tujuan_upload.$data->foto);
+            $nama_file_baru = uniqid().".".$file->getClientOriginalExtension();
+            $input['foto']  = $nama_file_baru;
+            $file->move($tujuan_upload,$nama_file_baru);
+            $update         = $data->update($input);
 //                unlink($file_lama);
 //                unlink($file_resize);
-            //resize image
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $img = Image::make($file);
-            if (Image::make($file)->width() > 100) {
-                $img->resize(100, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-            }
-            $img->save(public_path($resize) . $filename);
-            // upload file
-            $nama_file_baru = uniqid().$file->getClientOriginalName();
-            $file->move($tujuan_upload,$nama_file_baru);
-            $data['foto'] = $nama_file_baru;
+        }else{
+            $update = $data->update($input);
         }
-        $update_user = Auth::user()->update($data);
-        if ($update_user) {
-//            dd($update_user);
-            return redirect()->route('profile')->with(['success' => 'Data berhasil diupdate']);
-        } else {
-//            dd('gagal');
-                return redirect()->route('profile.edit')->with(['error' => 'data gagal tersimpan']);
+        if($update){
+            return back()->with(['success' => 'data anda tersimpan']);
         }
+        return  back()->with(['error' => 'data gagal tersimpan']);
     }
 
     public function update(UpdateUserRequest $request, $username){
@@ -161,28 +153,12 @@ class UserController extends Controller
         if($file !='') {
             // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload  = 'assets/upload/images/user/';
-            $resize         = 'assets/upload/images/user/resize/';
-            $file_resize    = $resize . $data->foto;
-            $file_lama      = $tujuan_upload . $data->foto;
+            $nama_file_baru = uniqid().$file->getClientOriginalName();
+            $input['foto']  = $nama_file_baru;
+            $file->move($tujuan_upload,$nama_file_baru);
+            $update         = $data->update($input);
 //                unlink($file_lama);
 //                unlink($file_resize);
-            //resize image
-            $filename       = time() . '.' . $file->getClientOriginalExtension();
-            $req->validate([
-                'file' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
-            ]);
-            $fileModel = new File;
-            if($req->file()) {
-                $fileName = time().'_'.$req->file->getClientOriginalName();
-                $filePath = $req->file('file')->storeAs('uploads', $fileName, 'public');
-                $fileModel->name = time().'_'.$req->file->getClientOriginalName();
-                $fileModel->file_path = '/storage/' . $filePath;
-                $fileModel->save();
-                return back()
-                    ->with('success','File has been uploaded.')
-                    ->with('file', $fileName);
-            }
-
         }else{
             $update = $data->update($input);
         }

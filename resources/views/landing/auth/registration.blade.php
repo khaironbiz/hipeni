@@ -66,9 +66,9 @@
                                     <div class="form-floating">
                                         <select class="form-select @error('jenis_kelamin') is-invalid text-danger @enderror" id="floatingSelect" aria-label="Floating label select example" name="jenis_kelamin">
                                             <option value="">---Pilih---</option>
-                                            <option value="1" {{ old('jk') == 1 ? 'selected' : '' }}>Laki-laki</option>
-                                            <option value="2" {{ old('jk') == 2 ? 'selected' : '' }}>Perempuan</option>
-                                            <option value="3" {{ old('jk') == 3 ? 'selected' : '' }}>Lainnya</option>
+                                            <option value="1" {{ old('jenis_kelamin') == 1 ? 'selected' : '' }}>Laki-laki</option>
+                                            <option value="2" {{ old('jenis_kelamin') == 2 ? 'selected' : '' }}>Perempuan</option>
+                                            <option value="3" {{ old('jenis_kelamin') == 3 ? 'selected' : '' }}>Lainnya</option>
                                         </select>
                                         <label for="floatingSelect">Jenis Kelamin</label>
                                     </div>

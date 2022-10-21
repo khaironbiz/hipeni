@@ -115,11 +115,14 @@
                                         <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="file" class="form-control" id="floatingInput" name="file">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="file" class="form-control @error('file') is-invalid text-danger @enderror" id="floatingInput" name="file">
                                             <label for="floatingInput">Foto</label>
                                         </div>
+                                        @error('file')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
 
                                     </div>
                                 </div>
