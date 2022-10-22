@@ -9,6 +9,7 @@ use App\Models\Participant;
 use App\Http\Requests\StoreParticipantRequest;
 use App\Http\Requests\UpdateParticipantRequest;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -124,10 +125,12 @@ class ParticipantController extends Controller
             return redirect()->route('participant.transaksi', ['slug'=>$participant_detail->slug]);
         }
     }
-    public function transaksi($slug){
-        $participan     = Participant::where('slug', $slug)->first();
-        $transaction    = Transaction::where('invoice_id', $participan->invoice_id)->first();
-        dd($transaction);
+    public function transaksi($id){
+//        $participan     = Participant::where('slug', $slug)->first();
+//        $transaction    = Transaction::where('invoice_id', $participan->invoice_id)->first();
+
+        $get_name = User::get_job($id);
+        dd($get_name);
 //        $data = [
 //            'title'     => 'Daftar Profesi',
 //            'class'     => 'Profesi',

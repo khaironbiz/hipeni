@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -58,6 +59,10 @@ class User extends Authenticatable
     public function materi_type()
     {
         return $this->hasMany(Materi_type::class,'created_at','id');
+    }
+    public static function get_job($id) {
+        $user = DB::table('user_jobs')->where('user_id', $id)->get();
+        return $user;
     }
 
 }
