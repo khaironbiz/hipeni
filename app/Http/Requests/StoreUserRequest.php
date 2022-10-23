@@ -32,8 +32,6 @@ class StoreUserRequest extends FormRequest
             'username'          => 'required|alpha_num',
             'phone_cell'        => 'required|numeric',
             'email'             => 'required|email:rfc,dns',
-            'password'          => 'required',
-            'file'              => 'required',
         ];
     }
 }

@@ -53,36 +53,28 @@ class UserController extends Controller
         return view('landing.user.profile', $data);
     }
     public function store(StoreUserRequest $request){
-
+        $data                   = $request->validated();
+        $data['nama_lengkap']   = $request->gelar_depan." ".$request->nama_depan." ".$request->nama_belakang.", ".$request->gelar_belakang;
+        $data['tgl_lahir']      ="1984-09-06";
+        $data['jenis_kelamin']  = 1;
+        $data['username']       = Str::slug($request->username, '-');
+        $data['password']       = hash::make($request->password);
         // menyimpan data file yang diupload ke variabel $file
         $file = $request->file('file');
+        if( !empty($file)){
+            $tujuan_upload = 'assets/upload/images/user/';
+            // upload file
+            $nama_file_baru = uniqid().".".$file->getClientOriginalExtension();
+            $file->move($tujuan_upload,$nama_file_baru);
+            $data['foto']   = $nama_file_baru;
+        }
         // isi dengan nama folder tempat kemana file diupload
-        $tujuan_upload = 'assets/upload/images/user/';
-        // upload file
-        $nama_file_baru = uniqid().".".$file->getClientOriginalExtension();
-        $file->move($tujuan_upload,$nama_file_baru);
-
-        $user = new User();
-        $user->gelar_depan = $request->gelar_depan;
-        $user->gelar_belakang = $request->gelar_belakang;
-        $user->nama_depan = $request->nama_depan;
-        $user->nama_belakang = $request->nama_belakang;
-        $user->nama_lengkap = $request->gelar_depan." ".$request->nama_depan." ".$request->nama_belakang.", ".$request->gelar_belakang;
-        $user->tgl_lahir ="1984-09-06";
-        $user->jk = 1;
-        $user->username = Str::slug($request->username, '-');
-        $user->email = $request->email;
-        $user->phone_cell = $request->phone_cell;
-        $user->password = hash::make($request->password);
-
-        $user->foto = $nama_file_baru;
-        $user->save();
-
-        if($user){
-
-            return redirect()->route('user')->with(['success'=>'data anda tersimpan']);
+        $user   = new User();
+        $create = $user->create($data);
+        if($create){
+            return back()->with(['success'=>'data anda tersimpan']);
         }else{
-            return redirect()->route('example.data')->with(['error'=>'data gagal tersimpan']);
+            return back()->with(['error'=>'data gagal tersimpan']);
         }
     }
     public function show($username){
@@ -125,11 +117,14 @@ class UserController extends Controller
                 [
                     'file' => 'mimes:jpg,bmp,png|max:512'
                 ]
-
-
             );
             $tujuan_upload  = 'assets/upload/images/user/';
-            unlink($tujuan_upload.$data->foto);
+            if (file_exists($tujuan_upload.$data->foto)){
+                unlink($tujuan_upload.$data->foto);
+
+            }
+
+
             $nama_file_baru = uniqid().".".$file->getClientOriginalExtension();
             $input['foto']  = $nama_file_baru;
             $file->move($tujuan_upload,$nama_file_baru);
@@ -149,23 +144,37 @@ class UserController extends Controller
         $input  = $request->validated();
         $data   = User::where('username', $username)->first();
         $file   = $request->file('file');
+        if( !empty($request->gelar_depan)){
+            $input['gelar_depan']   = $request->gelar_depan;
+        }
+
         //jika ada gambar yang diupload
         if($file !='') {
+            $request->validate(
+                [
+                    'file' => 'mimes:jpg,bmp,png|max:512'
+                ]
+            );
             // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload  = 'assets/upload/images/user/';
-            $nama_file_baru = uniqid().$file->getClientOriginalName();
+            if (file_exists($tujuan_upload.$data->foto)){
+                unlink($tujuan_upload.$data->foto);
+            }
+            $nama_file_baru = uniqid().rand(1000,9999).".".$file->getClientOriginalExtension();
             $input['foto']  = $nama_file_baru;
+
             $file->move($tujuan_upload,$nama_file_baru);
             $update         = $data->update($input);
-//                unlink($file_lama);
-//                unlink($file_resize);
+
         }else{
+
+            $input['nama_lengkap']  = $request->gelar_depan.". ".$request->nama_depan." ".$request->nama_belakang.", ".$request->gelar_belakang;
             $update = $data->update($input);
         }
         if($update){
-            return redirect()->route('user')->with(['success' => 'data anda tersimpan']);
+            return back()->with(['success' => 'data anda tersimpan']);
         }
-        return redirect()->route('user')->with(['error' => 'data gagal tersimpan']);
+        return back()->with(['error' => 'data gagal tersimpan']);
     }
     public function delete($id){
         $user       = User::find($id);

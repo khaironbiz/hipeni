@@ -43,7 +43,7 @@
                                 @endif
                                 <div class="row">
                                     <label class="col-sm-2">Nama</label>
-                                    <div class="col-sm-10">: {{$user->name}}</div>
+                                    <div class="col-sm-10">: {{$user->nama_lengkap}}</div>
                                 </div>
                                     <div class="row">
                                         <label class="col-sm-2">UserName</label>

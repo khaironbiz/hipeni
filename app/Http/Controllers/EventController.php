@@ -177,10 +177,12 @@ class EventController extends Controller
         $file           = $request->file('banner');
         if($file != ''){
             $tujuan_upload  = 'assets/upload/images/event/';
-            $nama_file_baru = uniqid().$file->getClientOriginalName();
+            if (file_exists($tujuan_upload.$event->banner)){
+                unlink($tujuan_upload.$event->banner);
+            }
+            $nama_file_baru = uniqid().".".$file->getClientOriginalExtension();
             $data['banner'] = $nama_file_baru;
             $file->move($tujuan_upload,$nama_file_baru);
-            unlink($tujuan_upload.$event->banner);
         }
         //update data event
 
