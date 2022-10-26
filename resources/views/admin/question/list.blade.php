@@ -122,10 +122,10 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $q->pertanyaan }}</td>
-                                        <td>{{ $q->answer_type_id }}</td>
+                                        <td>{{ $q->answer_type->nama_jawaban }}</td>
                                         <td></td>
                                         <td>
-                                            <a href="" class="btn btn-sm btn-info">Detail</a>
+                                            <a href="{{ route('answer.list', ['slug' => $q->slug]) }}" class="btn btn-sm btn-info">Detail</a>
                                         </td>
                                     </tr>
 

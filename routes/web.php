@@ -260,3 +260,6 @@ Route::post('admin/answertype/store', [\App\Http\Controllers\AnswerTypeControlle
 Route::get('admin/question', [\App\Http\Controllers\QuestionController::class, 'index'])->name('question')->middleware('auth');
 Route::get('admin/question/list/{slug}', [\App\Http\Controllers\QuestionController::class, 'list'])->name('question.list')->middleware('auth');
 Route::post('admin/question/store/{slug}', [\App\Http\Controllers\QuestionController::class, 'store'])->name('question.store')->middleware('auth');
+
+//answer
+Route::get('admin/answer/list/{slug}', [\App\Http\Controllers\AnswerController::class, 'list'])->name('answer.list')->middleware('auth');

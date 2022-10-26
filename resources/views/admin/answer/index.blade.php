@@ -65,27 +65,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($answer_type as $row)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $row->nama_jawaban }}</td>
-                                            <td>
-                                                @if($row->tipe_jawaban != 'select' and $row->tipe_jawaban != 'textarea')
-                                                <input type="{{$row->tipe_jawaban}}">
-                                                @elseif($row->tipe_jawaban == 'textarea')
-                                                <textarea></textarea>
-                                                @elseif($row->tipe_jawaban == 'select')
-                                                <select>
-                                                    <option></option>
-                                                </select>
-                                                @endif
-                                            </td>
-                                            <td>{{ $row->slug }}</td>
-                                            <td></td>
-                                            <td>{{ $row->created_at }}</td>
-                                            <td></td>
-                                        </tr>
-                                    @endforeach
+
                                 </tbody>
                             </table>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
