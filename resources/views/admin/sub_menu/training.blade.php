@@ -11,6 +11,8 @@
                 <a class="nav-link text-white <?php if($class == 'Profesi'){echo 'active';}?>" href="{{route('admin.study.methode')}}">Metode Belajar</a>
                 <a class="nav-link text-white <?php if($class == 'Organisasi'){echo 'active';}?>" href="{{route('admin.kurikulum')}}">Kurikulum</a>
                 <a class="nav-link text-white @if($class == 'website') active text-danger @else text-white @endif" href="{{route('admin.kurikulum.materi')}}">Materi</a>
+                <a class="nav-link text-white @if($class == 'Answer') active text-danger @else text-white @endif" href="{{route('answer_type.index')}}">Tipe Jawaban</a>
+                <a class="nav-link text-white @if($class == 'Answer') active text-danger @else text-white @endif" href="{{route('question')}}">Bank Soal</a>
             </div>
         </div>
     </div>

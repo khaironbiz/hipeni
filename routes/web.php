@@ -252,3 +252,11 @@ Route::get('participant/transaksi/{slug}', [\App\Http\Controllers\ParticipantCon
 Route::get('transaksi/show/{slug}', [\App\Http\Controllers\TransactionController::class, 'show'])->name('transaction.show');
 Route::post('transaksi/store', [\App\Http\Controllers\TransactionController::class, 'store'])->name('transaction.store');
 
+//Answer type
+Route::get('admin/answertype', [\App\Http\Controllers\AnswerTypeController::class, 'index'])->name('answer_type.index')->middleware('auth');
+Route::post('admin/answertype/store', [\App\Http\Controllers\AnswerTypeController::class, 'store'])->name('answer_type.store')->middleware('auth');
+
+//Question
+Route::get('admin/question', [\App\Http\Controllers\QuestionController::class, 'index'])->name('question')->middleware('auth');
+Route::get('admin/question/list/{slug}', [\App\Http\Controllers\QuestionController::class, 'list'])->name('question.list')->middleware('auth');
+Route::post('admin/question/store/{slug}', [\App\Http\Controllers\QuestionController::class, 'store'])->name('question.store')->middleware('auth');
