@@ -132,9 +132,9 @@ class ParticipantController extends Controller
 
 
         // Set kode merchant anda
-        $merchantCode = "D2881";
+        $merchantCode = env('MERCHANT_CODE');
         // Set merchant key anda
-        $apiKey = "e09dd1d01a70d0f4d6953c711d4fa776";
+        $apiKey = env('KEY_DUITKU');
         // catatan: environtment untuk sandbox dan passport berbeda
 
         $datetime = date('Y-m-d H:i:s');
