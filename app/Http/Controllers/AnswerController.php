@@ -97,6 +97,7 @@ class AnswerController extends Controller
         $answer->create($input_c);
         $answer->create($input_d);
         $answer->create($input_e);
+        return back()->with('success', 'Data saved');
 
     }
 

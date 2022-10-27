@@ -120,11 +120,12 @@
                                     </thead>
                                     <tbody>
                                     @foreach($question as $q)
+
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $q->pertanyaan }}</td>
                                             <td>{{ $q->answer_type->nama_jawaban }} -- {{ $q->answer->count() }} Opsi</td>
-                                            <td></td>
+                                            <td>@if($q->jawaban !=NULL) {{ $q->kunci->jawaban }} @else @endif</td>
                                             <td>
                                                 <a href="{{ route('answer.list', ['slug' => $q->slug]) }}" class="btn btn-sm btn-info">Detail</a>
                                             </td>

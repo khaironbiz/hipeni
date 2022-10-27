@@ -67,16 +67,25 @@
                                         <th>Detail</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <form action="{{ route('question.jawaban', ['slug' => $question->slug]) }}" method="post">
+                                    @csrf
+                                    <tbody>
                                     @foreach($answer as $row)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $row->jawaban }}</td>
+                                            <td><input type="radio" value="{{ $row->id }}" name="jawaban" @if($row->id == $question->jawaban) checked @endif> {{ $row->jawaban }}</td>
                                             <td>{{ $row->created_at }}</td>
                                             <td></td>
                                         </tr>
                                     @endforeach
-                                </tbody>
+                                    </tbody>
+                                    <tfooth>
+                                        <td colspan="4" class="text-center">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </td>
+                                    </tfooth>
+                                </form>
+
                             </table>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">

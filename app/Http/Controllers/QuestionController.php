@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateJawabanRequest;
 use App\Models\Answer_type;
 use App\Models\Question;
 use App\Http\Requests\StoreQuestionRequest;
@@ -31,7 +32,7 @@ class QuestionController extends Controller
     {
         //
         $training   = Training::where('slug', $slug)->first();
-        $question   = Question::where('training_id', $training->id);
+        $question   = Question::with('answer')->with('kunci')->where('training_id', $training->id);
         $answer_type= Answer_type::all();
         $data = [
             'title'         => 'Bank Soal : '.$training->nama_training,
@@ -74,6 +75,15 @@ class QuestionController extends Controller
             return back()->with('success', 'Data saved');
         }
         dd('gagal');
+    }
+    public function jawaban(UpdateJawabanRequest $request, $slug)
+    {
+        $data       = $request->validated();
+        $question   = Question::where('slug', $slug)->first();
+        $update     = $question->update($data);
+        if($update){
+            return back()->with('success', 'Update successfully');
+        }
     }
 
     /**
