@@ -17,4 +17,8 @@ class Training extends Model
     {
         return $this->hasManyThrough(Kurikulum_detail::class,Kurikulum::class);
     }
+    public function question()
+    {
+        return $this->hasMany(Question::class,'training_id','id');
+    }
 }

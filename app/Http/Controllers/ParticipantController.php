@@ -117,27 +117,80 @@ class ParticipantController extends Controller
 //            Mail::to($email)->send(new MailRegistrasiAcara($data_email));
             if($add){
                 $tansaksi = Transaction::where('invoice_id', $slug)->first();
-                return redirect()->route('participant.transaksi', ['slug'=>md5($slug)])->with('success', 'Saved data');
+                return redirect()->route('participant.transaksi', ['slug'=>$slug])->with('success', 'Saved data');
             }else{
 
             }
         }else{
-            return redirect()->route('participant.transaksi', ['slug'=>$participant_detail->slug]);
+            return redirect()->route('participant.transaksi', ['slug'=>$participant_detail->invoice_id]);
         }
     }
-    public function transaksi($id){
-//        $participan     = Participant::where('slug', $slug)->first();
-//        $transaction    = Transaction::where('invoice_id', $participan->invoice_id)->first();
+    public function transaksi($slug){
+        $participan     = Participant::where('invoice_id', $slug)->first();
+        $transaction    = Transaction::where('invoice_id', $slug)->first();
+        $event          = Event::find($participan->event_id);
 
-        $get_name = User::get_job($id);
-        dd($get_name);
-//        $data = [
-//            'title'     => 'Daftar Profesi',
-//            'class'     => 'Profesi',
-//            'sub_class' => 'Show',
-//
-//        ];
-//        return view('landing.events.payment', $data);
+
+        // Set kode merchant anda
+        $merchantCode = "D2881";
+        // Set merchant key anda
+        $apiKey = "e09dd1d01a70d0f4d6953c711d4fa776";
+        // catatan: environtment untuk sandbox dan passport berbeda
+
+        $datetime = date('Y-m-d H:i:s');
+        $paymentAmount = $transaction->tagihan;
+        $signature = hash('sha256', $merchantCode . $paymentAmount . $datetime . $apiKey);
+
+        $params = array(
+            'merchantcode' => $merchantCode,
+            'amount' => $paymentAmount,
+            'datetime' => $datetime,
+            'signature' => $signature
+        );
+
+        $params_string = json_encode($params);
+//        https://passport.duitku.com/webapi/api/merchant/v2/inquiry
+        $url = 'https://passport.duitku.com/webapi/api/merchant/paymentmethod/getpaymentmethod';
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($params_string))
+        );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        //execute post
+        $request = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($httpCode == 200) {
+            $results = json_decode($request, true);
+//            dd($results, false);
+        } else {
+            $request = json_decode($request);
+            $error_message = "Server Error " . $httpCode . " " . $request->Message;
+            echo $error_message;
+        }
+
+
+//        $get_name = User::get_job($id);
+//        dd($transaction);
+        $data = [
+            'title'         => 'Checkout',
+            'navbar'        => 'payment',
+            'class'         => 'Profesi',
+            'sub_class'     => 'Show',
+            'transaction'   => $transaction,
+            'event'         => $event,
+            'payment'       => $results['paymentFee']
+
+        ];
+        return view('landing.events.payment', $data);
     }
 
     /**

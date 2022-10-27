@@ -103,35 +103,36 @@
                                                 </div>
 
                                             </form>
-
                                         </div>
                                     </div>
                                 </div>
-                            <table id="example1" class="table table-bordered table-striped table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Soal</th>
-                                        <th>Tipe Jawaban</th>
-                                        <th>Jawaban</th>
-                                        <th>Detail</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($question as $q)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $q->pertanyaan }}</td>
-                                        <td>{{ $q->answer_type->nama_jawaban }}</td>
-                                        <td></td>
-                                        <td>
-                                            <a href="{{ route('answer.list', ['slug' => $q->slug]) }}" class="btn btn-sm btn-info">Detail</a>
-                                        </td>
-                                    </tr>
+                                <hr>
+                                <label>{{ $training->nama_training }}</label>
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Soal</th>
+                                            <th>Tipe Jawaban</th>
+                                            <th>Jawaban</th>
+                                            <th>Detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($question as $q)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $q->pertanyaan }}</td>
+                                            <td>{{ $q->answer_type->nama_jawaban }} -- {{ $q->answer->count() }} Opsi</td>
+                                            <td></td>
+                                            <td>
+                                                <a href="{{ route('answer.list', ['slug' => $q->slug]) }}" class="btn btn-sm btn-info">Detail</a>
+                                            </td>
+                                        </tr>
 
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                         </div>
                         <!-- /.card-body -->
                     </div>

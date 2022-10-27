@@ -60,7 +60,8 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label>Kuota</label><br>
-                                                {{ number_format($event->kuota)}}
+                                                {{ number_format($event->kuota)}} ---
+                                                {{ number_format(($event->kuota)-$event->participant->count()) }} remaind
                                             </div>
                                         </div>
                                         <div class="row">

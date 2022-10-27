@@ -263,3 +263,4 @@ Route::post('admin/question/store/{slug}', [\App\Http\Controllers\QuestionContro
 
 //answer
 Route::get('admin/answer/list/{slug}', [\App\Http\Controllers\AnswerController::class, 'list'])->name('answer.list')->middleware('auth');
+Route::post('admin/answer/store/{slug}', [\App\Http\Controllers\AnswerController::class, 'store'])->name('answer.store')->middleware('auth');

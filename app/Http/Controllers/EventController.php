@@ -37,15 +37,17 @@ class EventController extends Controller
     public function detail($slug)
     {
         $this->log();
-        $event = Event::where('slug', $slug)->first();
-        $data = [
+        $event      = Event::where('slug', $slug)->first();
+        $myregist   = Participant::where('user_id', Auth::id())->where('event_id', $event->id)->get();
+        $data       = [
             'title'     => 'Event',
             'class'     => 'event',
             'sub_class' => 'detail',
             'navbar'    => 'events',
             'event'     => $event,
             'skp'       => Accreditation::where('event_id', $event->id)->get(),
-            'pendaftar' => 29,
+            'myregist'  => $myregist,
+            'pendaftar' => $event->participant->count(),
             'user'      => Auth::user()
         ];
         return view('landing.events.detail', $data);
@@ -134,7 +136,7 @@ class EventController extends Controller
         $event      = Event::where('slug', $slug)->first();
         $kurikulum  = Kurikulum::with('training')->where('training_id', $event->training_id)->get();
         $materi     = Matery::with('kurikulum')->where('event_id', $event->id)->get();
-        $participants   = Participant::where('event_id', $event->id)->get();
+        $participants   = Participant::where('event_id', $event->id)->orderBy('id', 'DESC')->paginate(10);
         $data       = [
             'title'         => 'Detail Event',
             'navbar'        => 'events',

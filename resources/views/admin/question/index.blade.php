@@ -68,7 +68,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->nama_training }}</td>
-                                            <td></td>
+                                            <td>{{ $row->question->count() }}</td>
                                             <td></td>
                                             <td></td>
                                             <td></td>

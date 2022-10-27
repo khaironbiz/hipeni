@@ -31,14 +31,16 @@ class QuestionController extends Controller
     {
         //
         $training   = Training::where('slug', $slug)->first();
-//        dd($training);
+        $question   = Question::where('training_id', $training->id);
+        $answer_type= Answer_type::all();
         $data = [
             'title'         => 'Bank Soal : '.$training->nama_training,
             'class'         => 'Soal',
             'sub_class'     => 'List',
             'training'      => $training,
-            'answer_type_id'=> Answer_type::all(),
-            'question'      => Question::where('training_id', $training->id)->get(),
+            'answer_type_id'=> $answer_type,
+            'question'      => $question->get(),
+            'question_count'=> $question->count(),
         ];
         return view('admin.question.list', $data);
     }
