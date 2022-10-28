@@ -120,7 +120,6 @@
                                     </thead>
                                     <tbody>
                                     @foreach($question as $q)
-
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $q->pertanyaan }}</td>
@@ -130,10 +129,10 @@
                                                 <a href="{{ route('answer.list', ['slug' => $q->slug]) }}" class="btn btn-sm btn-info">Detail</a>
                                             </td>
                                         </tr>
-
                                     @endforeach
                                     </tbody>
                                 </table>
+
                         </div>
                         <!-- /.card-body -->
                     </div>

@@ -50,43 +50,48 @@
                             </div>
                             @endif
                                 @if($count <5)
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                    Tambah
-                            </button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        Tambah Jawaban
+                                    </button>
 
                                 @endif
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop">
+                                    Edit Soal
+                                </button>
                                 <hr>
 
                                 <label>{{ $question->pertanyaan }} ?</label>
-                            <table class="table table-bordered table-striped table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Opsi Jawaban</th>
-                                        <th>Created_at</th>
-                                        <th>Detail</th>
-                                    </tr>
-                                </thead>
-                                <form action="{{ route('question.jawaban', ['slug' => $question->slug]) }}" method="post">
-                                    @csrf
-                                    <tbody>
-                                    @foreach($answer as $row)
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td><input type="radio" value="{{ $row->id }}" name="jawaban" @if($row->id == $question->jawaban) checked @endif> {{ $row->jawaban }}</td>
-                                            <td>{{ $row->created_at }}</td>
-                                            <td></td>
+                                            <th>#</th>
+                                            <th>Opsi Jawaban</th>
+                                            <th>Created_at</th>
+                                            <th>Detail</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                    <tfooth>
-                                        <td colspan="4" class="text-center">
-                                            <button type="submit" class="btn btn-primary">Save</button>
-                                        </td>
-                                    </tfooth>
-                                </form>
+                                    </thead>
+                                    <form action="{{ route('question.jawaban', ['slug' => $question->slug]) }}" method="post">
+                                        @csrf
+                                        <tbody>
+                                        @foreach($answer as $row)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td><input type="radio" value="{{ $row->id }}" name="jawaban" @if($row->id == $question->jawaban) checked @endif> {{ $row->jawaban }}</td>
+                                                <td>{{ $row->created_at }}</td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                        <tfooth>
+                                            <td colspan="4" class="text-center">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </td>
+                                        </tfooth>
+                                    </form>
 
-                            </table>
+                                </table>
+
+{{--                               Modal Tambah Jawaban --}}
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -139,6 +144,60 @@
                                         </div>
                                     </div>
                                 </div>
+{{--                            Modal Edit Soal--}}
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Input Soal</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="" method="post">
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <div class="row mb-1">
+                                                        <div class="col-md-4">
+                                                            <label>Soal</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control" name="pertanyaan" value="{{ $question->pertanyaan }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-1">
+                                                        <div class="col-md-4">
+                                                            <label>Bobot</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input type="number" class="form-control" name="bobot" value="{{ $question->bobot }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label>Tipe Jawaban</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <select name="answer_type_id" class="form-control">
+                                                                <option value="">-----</option>
+                                                                @foreach($answer_type as $row)
+                                                                    <option value="{{$row->id}}" @if($row->id == $question->answer_type_id) selected @endif>{{$row->nama_jawaban}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                         </div>
                         <!-- /.card-body -->
                     </div>

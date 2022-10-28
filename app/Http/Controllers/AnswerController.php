@@ -23,15 +23,18 @@ class AnswerController extends Controller
 
     public function list($slug)
     {
+
         $question   = Question::where('slug', $slug)->first();
         $answer     = Answer::where('question_id', $question->id);
+        $answer_type= Answer_type::all();
         $data = [
             'title'         => 'Jawaban : '.$question->pertanyaan,
             'class'         => 'Answer',
             'sub_class'     => 'Index',
             'answer'        => $answer->inRandomOrder()->get(),
             'count'         => $answer->count(),
-            'question'      => $question
+            'question'      => $question,
+            'answer_type'   => $answer_type
     ];
         return view('admin.answer.index', $data);
     }
