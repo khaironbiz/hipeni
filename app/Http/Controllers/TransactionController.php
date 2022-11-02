@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CallBackRequest;
 use App\Http\Requests\CreateVaRequest;
 use App\Models\Transaction;
 use App\Http\Requests\StoreTransactionRequest;
@@ -158,19 +159,19 @@ class TransactionController extends Controller
 
 
     }
-    public function call_back()
+    public function call_back(Request $request)
     {
         $apiKey             = 'e09dd1d01a70d0f4d6953c711d4fa776'; // API key anda
-        $merchantCode       = isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null;
-        $amount             = isset($_POST['amount']) ? $_POST['amount'] : null;
-        $merchantOrderId    = isset($_POST['merchantOrderId']) ? $_POST['merchantOrderId'] : null;
-        $productDetail      = isset($_POST['productDetail']) ? $_POST['productDetail'] : null;
-        $additionalParam    = isset($_POST['additionalParam']) ? $_POST['additionalParam'] : null;
-        $paymentMethod      = isset($_POST['paymentCode']) ? $_POST['paymentCode'] : null;
-        $resultCode         = isset($_POST['resultCode']) ? $_POST['resultCode'] : null;
-        $merchantUserId     = isset($_POST['merchantUserId']) ? $_POST['merchantUserId'] : null;
-        $reference          = isset($_POST['reference']) ? $_POST['reference'] : null;
-        $signature          = isset($_POST['signature']) ? $_POST['signature'] : null;
+        $merchantCode       = $request->merchantCode;//isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null;
+        $amount             = $request->amount;//isset($_POST['amount']) ? $_POST['amount'] : null;
+        $merchantOrderId    = $request->merchantOrderId;//isset($_POST['merchantOrderId']) ? $_POST['merchantOrderId'] : null;
+        $productDetail      = $request->productDetail;//isset($_POST['productDetail']) ? $_POST['productDetail'] : null;
+        $additionalParam    = $request->additionalParam;//isset($_POST['additionalParam']) ? $_POST['additionalParam'] : null;
+        $paymentMethod      = $request->paymentCode;//isset($_POST['paymentCode']) ? $_POST['paymentCode'] : null;
+        $resultCode         = $request->resultCode;//isset($_POST['resultCode']) ? $_POST['resultCode'] : null;
+        $merchantUserId     = $request->merchantUserId;isset($_POST['merchantUserId']) ? $_POST['merchantUserId'] : null;
+        $reference          = $request->reference;//isset($_POST['reference']) ? $_POST['reference'] : null;
+        $signature          = $request->signature;//isset($_POST['signature']) ? $_POST['signature'] : null;
 
 //log callback untuk debug
 // file_put_contents('callback.txt', "* Callback *\r\n", FILE_APPEND | LOCK_EX);
