@@ -141,7 +141,7 @@ class TransactionController extends Controller
             ];
             $transaksi->update($update);
 //            dd($result);
-//            return redirect($result['paymentUrl']);
+            return redirect($result['paymentUrl']);
 //            header('location: '. $result['paymentUrl']);
 //            echo "paymentUrl :" . $result['paymentUrl'] . "<br />";
 //            echo "merchantCode :" . $result['merchantCode'] . "<br />";
@@ -160,7 +160,6 @@ class TransactionController extends Controller
     }
     public function call_back()
     {
-
         $apiKey             = env('KEY_DUITKU'); // API key anda
         $merchantCode       = isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null;
         $amount             = isset($_POST['amount']) ? $_POST['amount'] : null;
@@ -173,15 +172,12 @@ class TransactionController extends Controller
         $reference          = isset($_POST['reference']) ? $_POST['reference'] : null;
         $signature          = isset($_POST['signature']) ? $_POST['signature'] : null;
 
-
-
 //log callback untuk debug
 // file_put_contents('callback.txt', "* Callback *\r\n", FILE_APPEND | LOCK_EX);
 
         if (!empty($merchantCode) && !empty($amount) && !empty($merchantOrderId) && !empty($signature)) {
             $params = $merchantCode . $amount . $merchantOrderId . $apiKey;
             $calcSignature = md5($params);
-
             if ($signature == $calcSignature) {
                 //Callback tervalidasi
                 //Silahkan rubah status transaksi anda disini
@@ -189,18 +185,15 @@ class TransactionController extends Controller
                 $transaksi = Transaction::where('invoice_id', $merchantOrderId)->first();
                 $update     = $transaksi->update([
                     'status'    => $resultCode,
-
                 ]);
             } else {
                 // file_put_contents('callback.txt', "* Bad Signature *\r\n\r\n", FILE_APPEND | LOCK_EX);
                 throw new Exception('Bad Signature');
-    }
+            }
         } else {
             // file_put_contents('callback.txt', "* Bad Parameter *\r\n\r\n", FILE_APPEND | LOCK_EX);
             throw new Exception('Bad Parameter');
-}
-
-
+        }
     }
     public function create()
     {
