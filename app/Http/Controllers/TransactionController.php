@@ -182,6 +182,7 @@ class TransactionController extends Controller
                 //Callback tervalidasi
                 //Silahkan rubah status transaksi anda disini
                 // file_put_contents('callback.txt', "* Success *\r\n\r\n", FILE_APPEND | LOCK_EX);
+
                 $transaksi = Transaction::where('invoice_id', $merchantOrderId)->first();
                 $update     = $transaksi->update([
                     'status'    => $resultCode,
@@ -194,6 +195,66 @@ class TransactionController extends Controller
             // file_put_contents('callback.txt', "* Bad Parameter *\r\n\r\n", FILE_APPEND | LOCK_EX);
             throw new Exception('Bad Parameter');
         }
+    }
+    public function cek_transaksi($slug)
+    {
+
+        $merchantCode   = env('MERCHANT_CODE'); // dari duitku
+        $apiKey         = env('KEY_DUITKU'); // API key anda
+        ; // dari duitku
+        $merchantOrderId = $slug; // dari anda (merchant), bersifat unik
+
+        $signature = md5($merchantCode . $merchantOrderId . $apiKey);
+
+        $params = array(
+            'merchantCode' => $merchantCode,
+            'merchantOrderId' => $merchantOrderId,
+            'signature' => $signature
+        );
+
+        $params_string = json_encode($params);
+        $url = 'https://passport.duitku.com/webapi/api/merchant/transactionStatus';
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($params_string))
+        );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        //execute post
+        $request = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($httpCode == 200) {
+            $results = json_decode($request, true);
+            $transaksi  = Transaction::where('invoice_id', $slug)->first();
+            $update     = $transaksi->update([
+                'status'    => $results['statusCode'],
+                'biaya'     => $results['fee'],
+                'total'     => $results['amount']
+            ]);
+            if($update){
+                return redirect()->route('event.list')->with('success', 'Payment Successfully');
+            }
+//            print_r($results, false);
+            // echo "merchantOrderId :". $results['merchantOrderId'] . "<br />";
+            // echo "reference :". $results['reference'] . "<br />";
+            // echo "amount :". $results['amount'] . "<br />";
+            // echo "fee :". $results['fee'] . "<br />";
+            // echo "statusCode :". $results['statusCode'] . "<br />";
+            // echo "statusMessage :". $results['statusMessage'] . "<br />";
+        } else {
+            $request = json_decode($request);
+            $error_message = "Server Error " . $httpCode . " " . $request->Message;
+            echo $error_message;
+        }
+
+
     }
     public function create()
     {

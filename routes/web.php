@@ -253,6 +253,7 @@ Route::get('transaksi/show/{slug}', [\App\Http\Controllers\TransactionController
 Route::post('transaksi/store', [\App\Http\Controllers\TransactionController::class, 'store'])->name('transaction.store');
 Route::post('transaksi/payment/{slug}', [\App\Http\Controllers\TransactionController::class, 'create_va'])->name('transaction.payment');
 Route::post('transaksi/payment/callback', [\App\Http\Controllers\TransactionController::class, 'call_back'])->name('transaction.payment.call_back');
+Route::get('transaksi/payment/status/{slug}', [\App\Http\Controllers\TransactionController::class, 'cek_transaksi'])->name('transaction.status');
 
 
 //Answer type

@@ -44,7 +44,7 @@
                             </div>
                             <div class="card-footer">
                                 @if($myregist->count() >0)
-                                    <a href="{{ route('') }}">Anda Sudah Registrasi</a>
+                                    <a href="">Anda Sudah Registrasi</a>
                                 @elseif($event->date_mulai > date('Y-m-d Hi:s') and $event->kuota > $pendaftar)
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                     Daftar
