@@ -19,43 +19,48 @@
                             <div class="card-header">
                                 <b>Checkout</b>
                             </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>:</th>
-                                        <th>{{$transaction->nama}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Email</th>
-                                        <th>:</th>
-                                        <th>{{$transaction->email}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th>HP</th>
-                                        <th>:</th>
-                                        <th>{{$transaction->hp}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Tagihan</th>
-                                        <th>:</th>
-                                        <th>{{ number_format($transaction->tagihan)}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Pembayaran</th>
-                                        <th>:</th>
-                                        <th>
-                                            <select class="form-select">
-                                                @foreach($payment as $payment)
-                                                <option value="{{ $payment['paymentMethod'] }}">{{ $payment['paymentName']." - ".$payment['paymentMethod']." - ".$payment['totalFee'] }}</option>
-                                                @endforeach
-                                            </select>
-                                        </th>
-                                    </tr>
-                                </table>
-                            <div class="card-footer text-center">
-                                <button type="submit" class="btn btn-primary">Bayar</button>
-                            </div>
+                            <form action="{{ route('transaction.payment',['slug'=>$transaction->slug]) }}" method="post">
+                                @csrf
+                                <div class="card-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Nama</th>
+                                            <th>:</th>
+                                            <th>{{$transaction->nama}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>:</th>
+                                            <th>{{$transaction->email}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>HP</th>
+                                            <th>:</th>
+                                            <th>{{$transaction->hp}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Tagihan</th>
+                                            <th>:</th>
+                                            <th>{{ number_format($transaction->tagihan)}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Pembayaran</th>
+                                            <th>:</th>
+                                            <th>
+                                                <select class="form-select" name="payment_method">
+                                                    @foreach($payment as $payment)
+                                                    <option value="{{ $payment['paymentMethod'] }}">{{ $payment['paymentName']." - ".$payment['paymentMethod']." - ".$payment['totalFee'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" class="btn btn-primary">Bayar</button>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
                 </div>

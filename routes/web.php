@@ -251,6 +251,9 @@ Route::get('participant/transaksi/{slug}', [\App\Http\Controllers\ParticipantCon
 //Transaksi
 Route::get('transaksi/show/{slug}', [\App\Http\Controllers\TransactionController::class, 'show'])->name('transaction.show');
 Route::post('transaksi/store', [\App\Http\Controllers\TransactionController::class, 'store'])->name('transaction.store');
+Route::post('transaksi/payment/{slug}', [\App\Http\Controllers\TransactionController::class, 'create_va'])->name('transaction.payment');
+Route::post('transaksi/payment/callback', [\App\Http\Controllers\TransactionController::class, 'call_back'])->name('transaction.payment.call_back');
+
 
 //Answer type
 Route::get('admin/answertype', [\App\Http\Controllers\AnswerTypeController::class, 'index'])->name('answer_type.index')->middleware('auth');
