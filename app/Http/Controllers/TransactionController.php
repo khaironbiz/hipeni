@@ -169,7 +169,7 @@ class TransactionController extends Controller
         $additionalParam    = $request->additionalParam;//isset($_POST['additionalParam']) ? $_POST['additionalParam'] : null;
         $paymentMethod      = $request->paymentCode;//isset($_POST['paymentCode']) ? $_POST['paymentCode'] : null;
         $resultCode         = $request->resultCode;//isset($_POST['resultCode']) ? $_POST['resultCode'] : null;
-        $merchantUserId     = $request->merchantUserId;isset($_POST['merchantUserId']) ? $_POST['merchantUserId'] : null;
+        $merchantUserId     = $request->merchantUserId;//isset($_POST['merchantUserId']) ? $_POST['merchantUserId'] : null;
         $reference          = $request->reference;//isset($_POST['reference']) ? $_POST['reference'] : null;
         $signature          = $request->signature;//isset($_POST['signature']) ? $_POST['signature'] : null;
 
