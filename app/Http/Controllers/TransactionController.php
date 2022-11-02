@@ -32,7 +32,7 @@ class TransactionController extends Controller
         $additionalParam    = ''; // opsional
         $merchantUserInfo   = ''; // opsional
         $customerVaName     = $transaksi->nama; // tampilan nama pada tampilan konfirmasi bank
-        $callbackUrl        = route('transaction.payment.status', ['slug'=>$transaksi->invoice_id]); // url untuk callback
+        $callbackUrl        = route('transaction.status', ['slug'=>$transaksi->invoice_id]); // url untuk callback
         $returnUrl          = 'http://example.com/return'; // url untuk redirect
         $expiryPeriod       = 60; // atur waktu kadaluarsa dalam hitungan menit
         $signature          = md5($merchantCode . $merchantOrderId . $paymentAmount . $apiKey);
