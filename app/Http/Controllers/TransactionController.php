@@ -32,7 +32,7 @@ class TransactionController extends Controller
         $additionalParam    = ''; // opsional
         $merchantUserInfo   = ''; // opsional
         $customerVaName     = $transaksi->nama; // tampilan nama pada tampilan konfirmasi bank
-        $callbackUrl        = route('transaction.status', ['slug'=>$transaksi->invoice_id]); // url untuk callback
+        $callbackUrl        = route('transaction.payment.call_back'); // url untuk callback
         $returnUrl          = 'http://example.com/return'; // url untuk redirect
         $expiryPeriod       = 60; // atur waktu kadaluarsa dalam hitungan menit
         $signature          = md5($merchantCode . $merchantOrderId . $paymentAmount . $apiKey);
@@ -160,7 +160,7 @@ class TransactionController extends Controller
     }
     public function call_back()
     {
-        $apiKey             = env('KEY_DUITKU'); // API key anda
+        $apiKey             = 'e09dd1d01a70d0f4d6953c711d4fa776'; // API key anda
         $merchantCode       = isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null;
         $amount             = isset($_POST['amount']) ? $_POST['amount'] : null;
         $merchantOrderId    = isset($_POST['merchantOrderId']) ? $_POST['merchantOrderId'] : null;
