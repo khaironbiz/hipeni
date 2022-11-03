@@ -188,6 +188,7 @@ class TransactionController extends Controller
                 $update     = $transaksi->update([
                     'status'    => $resultCode,
                 ]);
+                dd('sukses');
             } else {
                 // file_put_contents('callback.txt', "* Bad Signature *\r\n\r\n", FILE_APPEND | LOCK_EX);
                 throw new Exception('Bad Signature');
