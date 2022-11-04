@@ -165,7 +165,7 @@ class TransactionController extends Controller
     }
     public function call_back(CallBackRequest $request)
     {
-//        $apiKey             = 'e09dd1d01a70d0f4d6953c711d4fa776'; // API key anda
+        $apiKey             = env('KEY_DUITKU'); // API key anda
         $merchantCode       = $request->merchantCode;//isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null;
         $amount             = $request->amount;//isset($_POST['amount']) ? $_POST['amount'] : null;
         $merchantOrderId    = $request->merchantOrderId;//isset($_POST['merchantOrderId']) ? $_POST['merchantOrderId'] : null;
