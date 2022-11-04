@@ -79,23 +79,6 @@ class TransactionController extends Controller
             $item1
         );
 
-        /*Khusus untuk metode pembayaran OL dan SL
-        $accountLink = array (
-            'credentialCode' => '7cXXXXX-XXXX-XXXX-9XXX-944XXXXXXX8',
-            'ovo' => array (
-                'paymentDetails' => array (
-                    0 => array (
-                        'paymentType' => 'CASH',
-                        'amount' => 40000,
-                    ),
-                ),
-            ),
-            'shopee' => array (
-                'useCoin' => false,
-                'promoId' => '',
-            ),
-        );*/
-
         $params = array(
             'merchantCode'      => $merchantCode,
             'paymentAmount'     => $paymentAmount,
@@ -160,8 +143,63 @@ class TransactionController extends Controller
 
 
     }
-    public function call_back_request(){
+    public function get_call_back(Request $request, $slug){
+        $merchantCode   = env('MERCHANT_CODE'); // dari duitku
+        $apiKey         = env('KEY_DUITKU'); // API key anda
+        ; // dari duitku
+        $merchantOrderId = $slug; // dari anda (merchant), bersifat unik
 
+        $signature = md5($merchantCode . $merchantOrderId . $apiKey);
+
+        $params = array(
+            'merchantCode' => $merchantCode,
+            'merchantOrderId' => $merchantOrderId,
+            'signature' => $signature
+        );
+
+        $params_string = json_encode($params);
+        $url = 'https://passport.duitku.com/webapi/api/merchant/transactionStatus';
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($params_string))
+        );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        //execute post
+        $request = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($httpCode == 200) {
+            $results        = json_decode($request, true);
+            $transaksi      = Transaction::where('invoice_id', $slug)->first();
+            $data_baru      = [
+                'status'    => $results['statusCode'],
+                'biaya'     => $results['fee'],
+                'total'     => $results['amount']
+            ];
+            $update     = $transaksi->update($data_baru);
+            if($update){
+                return redirect()->route('event.list')->with('success', 'Payment Successfully');
+            }
+//            print_r($results, false);
+            // echo "merchantOrderId :". $results['merchantOrderId'] . "<br />";
+            // echo "reference :". $results['reference'] . "<br />";
+            // echo "amount :". $results['amount'] . "<br />";
+            // echo "fee :". $results['fee'] . "<br />";
+            // echo "statusCode :". $results['statusCode'] . "<br />";
+            // echo "statusMessage :". $results['statusMessage'] . "<br />";
+        } else {
+            $request = json_decode($request);
+            $error_message = "Server Error " . $httpCode . " " . $request->Message;
+            echo $error_message;
+        }
+        // edit profesional
     }
     public function call_back(CallBackRequest $request)
     {
