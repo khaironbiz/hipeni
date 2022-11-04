@@ -12,8 +12,8 @@
                 <a class="nav-link text-white <?php if($class == 'Organisasi'){echo 'active';}?>" href="{{url('admin/organisasi')}}">Organisasi</a>
                 <a class="nav-link text-white @if($class == 'website') active text-danger @else text-white @endif" href="/admin/website">Website</a>
                 <a class="nav-link @if($class == 'categories') active text-danger @else text-white @endif" href="{{route('admin.video.categoty')}}">Video Categories</a>
+                <a class="nav-link @if($class == 'partner') active text-danger @else text-white @endif" href="{{route('admin.partner.list')}}">Partner</a>
                 <a class="nav-link @if($class == 'trainings') active text-danger @else text-white @endif" href="{{route('admin.training')}}">Training</a>
-
             </div>
         </div>
     </div>

@@ -11,4 +11,7 @@ class Video_category extends Model
     protected $fillable = [
         'category', 'created_by', 'slug', 'created_at',
         ];
+    public function video(){
+        return $this->hasMany(Video::class, 'category', 'id');
+    }
 }

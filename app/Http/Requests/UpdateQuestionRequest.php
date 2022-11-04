@@ -13,7 +13,7 @@ class UpdateQuestionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateQuestionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'pertanyaan'    => 'required',
+            'bobot'         => 'required',
+            'answer_type_id'=> 'required'
         ];
     }
 }

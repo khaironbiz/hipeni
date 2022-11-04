@@ -20,7 +20,7 @@ class VideoController extends Controller
         $video_categories = Video_category::all();
         $videos = Video::all();
         $data = [
-            'title'         => 'Video Categories',
+            'title'         => 'Videos',
             'navbar'        => 'video',
             'class'         => 'video',
             'sub_class'     => 'index',

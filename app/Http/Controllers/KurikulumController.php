@@ -28,7 +28,7 @@ class KurikulumController extends Controller
         $training                   = Training::with('kurikulum')->get();
         $data       = [
             'title'         => "Kurikulum",
-            'class'         => 'trainings',
+            'class'         => 'kurikulum',
             'sub_class'     => 'trainings',
             'education_level'=> $education_level,
             'training'      => $training
@@ -42,7 +42,7 @@ class KurikulumController extends Controller
         $materi_type= Materi_type::all();
         $data       = [
             'title'         => "Materi Pembelajaran",
-            'class'         => 'trainings',
+            'class'         => 'materi',
             'sub_class'     => 'trainings',
             'kurikulum'     => $kurikulum,
             'training'      => $training,

@@ -23,7 +23,7 @@ class TrainingController extends Controller
         $data = [
             'title'             => "Training Management",
             'class'             => 'trainings',
-            'sub_class'         => 'trainings',
+            'sub_class'         => 'List',
             'product'           => $product,
             'education_level'   => $education_level
         ];

@@ -21,7 +21,7 @@ class MateriTypeController extends Controller
         $materi_type    = Materi_type::with('user')->get();
         $data = [
             'title'             => "Type of Materi",
-            'class'             => 'trainings',
+            'class'             => 'matery_type',
             'sub_class'         => 'trainings',
             'materi_type'       => $materi_type,
         ];

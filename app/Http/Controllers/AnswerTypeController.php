@@ -16,10 +16,10 @@ class AnswerTypeController extends Controller
      */
     public function index()
     {
-        //
+
         $data = [
             'title'     => 'Tipe Jawaban',
-            'class'     => 'Answer',
+            'class'     => 'answer',
             'sub_class' => 'Index',
             'answer_type'   => Answer_type::all()->sortBy('tipe_jawaban'),
         ];

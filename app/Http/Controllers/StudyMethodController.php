@@ -15,7 +15,7 @@ class StudyMethodController extends Controller
         $methode    = Study_method::all();
         $data       = [
             'title'         => "Metode Pembelajaran",
-            'class'         => 'trainings',
+            'class'         => 'study_method',
             'sub_class'     => 'trainings',
             'methode'       => $methode
         ];

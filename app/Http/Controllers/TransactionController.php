@@ -7,6 +7,7 @@ use App\Http\Requests\CreateVaRequest;
 use App\Models\Transaction;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
+use http\Client\Request;
 
 class TransactionController extends Controller
 {
@@ -159,9 +160,12 @@ class TransactionController extends Controller
 
 
     }
-    public function call_back(Request $request)
+    public function call_back_request(){
+
+    }
+    public function call_back(CallBackRequest $request)
     {
-        $apiKey             = 'e09dd1d01a70d0f4d6953c711d4fa776'; // API key anda
+//        $apiKey             = 'e09dd1d01a70d0f4d6953c711d4fa776'; // API key anda
         $merchantCode       = $request->merchantCode;//isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null;
         $amount             = $request->amount;//isset($_POST['amount']) ? $_POST['amount'] : null;
         $merchantOrderId    = $request->merchantOrderId;//isset($_POST['merchantOrderId']) ? $_POST['merchantOrderId'] : null;
@@ -190,12 +194,14 @@ class TransactionController extends Controller
                 ]);
                 dd('sukses');
             } else {
+                dd('bad Signature');
                 // file_put_contents('callback.txt', "* Bad Signature *\r\n\r\n", FILE_APPEND | LOCK_EX);
-                throw new Exception('Bad Signature');
+//                throw new Exception('Bad Signature');
             }
         } else {
             // file_put_contents('callback.txt', "* Bad Parameter *\r\n\r\n", FILE_APPEND | LOCK_EX);
-            throw new Exception('Bad Parameter');
+//            throw new Exception('Bad Parameter');
+            dd('bad parameter');
         }
     }
     public function cek_transaksi($slug)
@@ -233,13 +239,14 @@ class TransactionController extends Controller
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if ($httpCode == 200) {
-            $results = json_decode($request, true);
-            $transaksi  = Transaction::where('invoice_id', $slug)->first();
-            $update     = $transaksi->update([
+            $results        = json_decode($request, true);
+            $transaksi      = Transaction::where('invoice_id', $slug)->first();
+            $data_baru      = [
                 'status'    => $results['statusCode'],
                 'biaya'     => $results['fee'],
                 'total'     => $results['amount']
-            ]);
+            ];
+            $update     = $transaksi->update($data_baru);
             if($update){
                 return redirect()->route('event.list')->with('success', 'Payment Successfully');
             }
@@ -255,8 +262,7 @@ class TransactionController extends Controller
             $error_message = "Server Error " . $httpCode . " " . $request->Message;
             echo $error_message;
         }
-
-
+        // edit profesional
     }
     public function create()
     {

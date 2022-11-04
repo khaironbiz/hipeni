@@ -253,6 +253,7 @@ Route::get('transaksi/show/{slug}', [\App\Http\Controllers\TransactionController
 Route::post('transaksi/store', [\App\Http\Controllers\TransactionController::class, 'store'])->name('transaction.store');
 Route::post('transaksi/payment/{slug}', [\App\Http\Controllers\TransactionController::class, 'create_va'])->name('transaction.payment');
 Route::post('transaksi/payment/callback', [\App\Http\Controllers\TransactionController::class, 'call_back'])->name('transaction.payment.call_back');
+Route::get('transaksi/payment/callback/request', [\App\Http\Controllers\TransactionController::class, 'get_call_back'])->name('transaction.payment.get_call_back');
 Route::get('transaksi/payment/status/{slug}', [\App\Http\Controllers\TransactionController::class, 'cek_transaksi'])->name('transaction.status');
 
 
@@ -265,6 +266,7 @@ Route::get('admin/question', [\App\Http\Controllers\QuestionController::class, '
 Route::get('admin/question/list/{slug}', [\App\Http\Controllers\QuestionController::class, 'list'])->name('question.list')->middleware('auth');
 Route::post('admin/question/store/{slug}', [\App\Http\Controllers\QuestionController::class, 'store'])->name('question.store')->middleware('auth');
 Route::post('admin/question/jawaban/{slug}', [\App\Http\Controllers\QuestionController::class, 'jawaban'])->name('question.jawaban')->middleware('auth');
+Route::post('admin/question/update/{slug}', [\App\Http\Controllers\QuestionController::class, 'update'])->name('question.update')->middleware('auth');
 
 //answer
 Route::get('admin/answer/list/{slug}', [\App\Http\Controllers\AnswerController::class, 'list'])->name('answer.list')->middleware('auth');

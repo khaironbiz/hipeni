@@ -11,4 +11,7 @@ class Video extends Model
     protected $fillable = [
         'category', 'channel', 'judul', 'id_video', 'slug', 'publish', 'created_by',
     ];
+    public function video_categoty(){
+        return $this->belongsTo(Video_category::class, 'category', 'id');
+    }
 }

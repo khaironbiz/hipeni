@@ -28,7 +28,7 @@
                     <!-- /.card -->
 
                     <div class="card">
-
+                        @include('admin.sub_menu.user')
                         <!-- /.card-header -->
                         <div class="card-body">
                             @if ($errors->any())

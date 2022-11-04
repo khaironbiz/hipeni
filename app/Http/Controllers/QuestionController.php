@@ -115,9 +115,14 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateQuestionRequest $request, Question $question)
+    public function update(UpdateQuestionRequest $request, $slug)
     {
-        //
+        $data = $request->validated();
+        $question   = Question::where('slug', $slug)->first();
+        $update     = $question->update($data);
+        if($update){
+            return back()->with('success', 'Data sukses diupdate');
+        }
     }
 
     /**

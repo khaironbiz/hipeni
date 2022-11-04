@@ -120,7 +120,7 @@
                                     @foreach($videos as $data)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$data->category}}</td>
+                                            <td>{{$data->video_categoty->category}}</td>
                                             <td>{{$data->judul}}</td>
                                             <td>{{$data->channel}}</td>
                                             <td class="w-25"><iframe width="auto" src="https://www.youtube.com/embed/{{$data->id_video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>

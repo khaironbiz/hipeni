@@ -90,6 +90,7 @@
                                     </form>
 
                                 </table>
+                                <a href="{{ route('question.list', $question->training->slug) }}" class="btn btn-danger mt-2">Back</a>
 
 {{--                               Modal Tambah Jawaban --}}
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -155,7 +156,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form action="" method="post">
+                                            <form action="{{ route('question.update', $question->slug) }}" method="post">
                                                 @csrf
                                                 <div class="modal-body">
                                                     <div class="row mb-1">
@@ -187,12 +188,10 @@
                                                             </select>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
-
                                             </form>
                                         </div>
                                     </div>
