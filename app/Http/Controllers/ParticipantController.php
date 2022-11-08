@@ -129,7 +129,7 @@ class ParticipantController extends Controller
     public function transaksi($slug){
         $participan     = Participant::where('invoice_id', $slug)->first();
         $transaction    = Transaction::where('invoice_id', $slug)->first();
-        if($transaction->status == 00){
+        if($transaction->status == "00"){
             return redirect()->route('home.events')->with('success', 'Anda sudah lunas');
         }
         $event          = Event::find($participan->event_id);
