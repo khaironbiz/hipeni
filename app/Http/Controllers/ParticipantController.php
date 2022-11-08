@@ -47,8 +47,8 @@ class ParticipantController extends Controller
         $data               = $request->validated();
         $data['event_id']   = $event->id;
         $data['harga']      = $event->harga;
-        $slug               = uniqid().random_int(1000,9999);
-        $data['slug']       = md5($slug);
+        $slug_baru          = uniqid().random_int(1000,9999);
+        $data['slug']       = md5($slug_baru);
         $event_id           = $event->id;
         $email              = $request->email;
         $partcipant_check   = Participant::where(
@@ -67,7 +67,7 @@ class ParticipantController extends Controller
             }
             $data['user_id']    = $user_id;
 
-            $data['invoice_id'] = $slug;
+            $data['invoice_id'] = $slug_baru;
             $participant        = new Participant();
             $add                = $participant->create($data);
             $transactions       = new Transaction();
@@ -117,7 +117,7 @@ class ParticipantController extends Controller
 //            Mail::to($email)->send(new MailRegistrasiAcara($data_email));
             if($add){
                 $tansaksi = Transaction::where('invoice_id', $slug)->first();
-                return redirect()->route('participant.transaksi', ['slug'=>$slug])->with('success', 'Saved data');
+                return redirect()->route('participant.transaksi', ['slug'=>$slug_baru])->with('success', 'Saved data');
             }else{
 
             }
