@@ -78,6 +78,7 @@ class ParticipantController extends Controller
                 'hp'            => $request->hp,
                 'invoice_id'    => $slug_baru,
                 'tagihan'       => $event->harga,
+                'slug'          => md5($slug_baru)
             ];
             $create_trx         = $transactions->create($data_trx);
             $pesan      = "
