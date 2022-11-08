@@ -76,7 +76,7 @@ class ParticipantController extends Controller
                 'nama'          => $request->nama,
                 'email'         => $request->email,
                 'hp'            => $request->hp,
-                'invoice_id'    => $slug,
+                'invoice_id'    => $slug_baru,
                 'tagihan'       => $event->harga,
             ];
             $create_trx         = $transactions->create($data_trx);
