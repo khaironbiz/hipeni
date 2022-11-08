@@ -34,7 +34,7 @@ class TransactionController extends Controller
         $additionalParam    = ''; // opsional
         $merchantUserInfo   = ''; // opsional
         $customerVaName     = $transaksi->nama; // tampilan nama pada tampilan konfirmasi bank
-        $callbackUrl        = route('transaction.payment.call_back'); // url untuk callback
+        $callbackUrl        = "https://ovon.my.id/callback.php"; // url untuk callback
         $returnUrl          = 'http://example.com/return'; // url untuk redirect
         $expiryPeriod       = 60; // atur waktu kadaluarsa dalam hitungan menit
         $signature          = md5($merchantCode . $merchantOrderId . $paymentAmount . $apiKey);
