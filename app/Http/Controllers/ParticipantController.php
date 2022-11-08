@@ -129,6 +129,9 @@ class ParticipantController extends Controller
     public function transaksi($slug){
         $participan     = Participant::where('invoice_id', $slug)->first();
         $transaction    = Transaction::where('invoice_id', $slug)->first();
+        if($transaction->status == 00){
+            return redirect()->route('home.events')->with('success', 'Anda sudah lunas');
+        }
         $event          = Event::find($participan->event_id);
 
 
@@ -166,8 +169,8 @@ class ParticipantController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 
         //execute post
-        $request = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $request    = curl_exec($ch);
+        $httpCode   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if ($httpCode == 200) {
             $results = json_decode($request, true);
