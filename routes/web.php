@@ -271,3 +271,41 @@ Route::post('admin/question/update/{slug}', [\App\Http\Controllers\QuestionContr
 //answer
 Route::get('admin/answer/list/{slug}', [\App\Http\Controllers\AnswerController::class, 'list'])->name('answer.list')->middleware('auth');
 Route::post('admin/answer/store/{slug}', [\App\Http\Controllers\AnswerController::class, 'store'])->name('answer.store')->middleware('auth');
+
+
+//atm sehat
+//user
+Route::get('/tsi/user',[\App\Http\Controllers\TsiController::class,'user'])->name('tsi.user')->middleware('auth');
+Route::get('/tsi/user/{id}',[\App\Http\Controllers\TsiController::class,'user_show'])->name('tsi.user.show')->middleware('auth');
+
+//wallet
+Route::get('/tsi/wallet',[\App\Http\Controllers\TsiController::class,'wallet'])->name('tsi.wallet')->middleware('auth');
+Route::get('/tsi/wallet/{id}',[\App\Http\Controllers\TsiController::class,'show_wallet'])->name('tsi.wallet.show')->middleware('auth');
+
+//device
+Route::get('/tsi/device',[\App\Http\Controllers\TsiController::class,'device'])->name('tsi.device')->middleware('auth');
+Route::get('/tsi/device/{id}',[\App\Http\Controllers\TsiController::class,'show_device'])->name('tsi.device.show')->middleware('auth');
+
+//doctor
+Route::get('/tsi/doctor',[\App\Http\Controllers\TsiController::class,'doctor'])->name('tsi.doctor')->middleware('auth');
+Route::get('/tsi/doctor/{id}',[\App\Http\Controllers\TsiController::class,'show_doctor'])->name('tsi.doctor.show')->middleware('auth');
+
+//testing
+Route::get('/tsi/observation',[\App\Http\Controllers\TsiController::class,'observation'])->name('tsi.observation')->middleware('auth');
+Route::get('/tsi/observation/{id}',[\App\Http\Controllers\TsiController::class,'show_observation'])->name('tsi.observation.show')->middleware('auth');
+
+//observer
+Route::get('/tsi/observer',[\App\Http\Controllers\TsiController::class,'observer'])->name('tsi.observer')->middleware('auth');
+Route::get('/tsi/observer/{id}',[\App\Http\Controllers\TsiController::class,'show_observer'])->name('tsi.observer.show')->middleware('auth');
+
+//ping
+Route::get('/tsi/ping',[\App\Http\Controllers\TsiController::class,'ping'])->name('tsi.ping')->middleware('auth');
+Route::get('/tsi/ping/{id}',[\App\Http\Controllers\TsiController::class,'show_ping'])->name('tsi.ping.show')->middleware('auth');
+
+//status
+Route::get('/tsi/status',[\App\Http\Controllers\TsiController::class,'status'])->name('tsi.ping')->middleware('auth');
+Route::get('/tsi/status/{id}',[\App\Http\Controllers\TsiController::class,'show_status'])->name('tsi.ping.show')->middleware('auth');
+
+//device_user
+Route::get('/tsi/deviceuser',[\App\Http\Controllers\TsiController::class,'device_user'])->name('tsi.device_user')->middleware('auth');
+Route::get('/tsi/deviceuser/{id}',[\App\Http\Controllers\TsiController::class,'show_device_user'])->name('tsi.device_user.show')->middleware('auth');
