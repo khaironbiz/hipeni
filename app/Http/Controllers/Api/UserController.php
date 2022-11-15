@@ -65,7 +65,24 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::where('username', $id)->first();
+        $user_detail = [
+            'nama'  => [
+                'nama_depan'    => $user->nama_depan,
+                'nama_belakang' => $user->nama_belakang,
+            ],
+            'gelar' => [
+                'gelar_depan'    => $user->gelar_depan,
+                'gelar_belakang'    => $user->gelar_belakang,
+            ]
+
+        ];
+        $data = [
+            'status' => 'status',
+            'user'  => $user_detail
+        ];
+
+        return response()->json($data);
     }
 
     /**

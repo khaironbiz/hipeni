@@ -34,6 +34,17 @@ class TsiController extends Controller
         $wallet = $this->database->getReference('wallet')->getChild($id)->getvalue();
         dd($wallet);
     }
+    public function consultation()
+    {
+        $users = $this->database->getReference('consultation')->getValue();
+        dd( $users );
+    }
+    public function show_consultation($id)
+    {
+        //
+        $user = $this->database->getReference('consultation')->getChild($id)->getvalue();
+        dd($user);
+    }
     public function device()
     {
         $wallet = $this->database->getReference('atm_sehat/device')->getValue();

@@ -290,6 +290,11 @@ Route::get('/tsi/device/{id}',[\App\Http\Controllers\TsiController::class,'show_
 Route::get('/tsi/doctor',[\App\Http\Controllers\TsiController::class,'doctor'])->name('tsi.doctor')->middleware('auth');
 Route::get('/tsi/doctor/{id}',[\App\Http\Controllers\TsiController::class,'show_doctor'])->name('tsi.doctor.show')->middleware('auth');
 
+//user
+Route::get('/tsi/consultation',[\App\Http\Controllers\TsiController::class,'consultation'])->name('tsi.consultation')->middleware('auth');
+Route::get('/tsi/consultation/{id}',[\App\Http\Controllers\TsiController::class,'show_consultation'])->name('tsi.consultation.show')->middleware('auth');
+
+
 //testing
 Route::get('/tsi/observation',[\App\Http\Controllers\TsiController::class,'observation'])->name('tsi.observation')->middleware('auth');
 Route::get('/tsi/observation/{id}',[\App\Http\Controllers\TsiController::class,'show_observation'])->name('tsi.observation.show')->middleware('auth');
