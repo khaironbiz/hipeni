@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -13,33 +15,66 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function users()
     {
         $user = User::all();
+        if(!$user){
+            return response()
+                ->json([
+                    'message' => 'Unauthorized'],
+                    401);
+        }
 
         $data = [
-            'status' => 'status',
+            'status' => 'success',
             'user'  => $user
         ];
 
-        return response()->json($data);
+        return response()->json($data,200);
     }
 
     public function login(Request $request)
     {
-        if (!Auth::attempt($request->only('email', 'password')))
-        {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'device_name' => 'required',
+        ]);
+        $user = User::where('email', $request->email)->first();
+        if( !$user | !Hash::check($request->password, $user->password)){
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
         }
-
-        $user = User::where('email', $request['email'])->firstOrFail();
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
+        $token = $user->createToken($request->device_name)->plainTextToken;
         return response()
-            ->json(['message' => 'Hi '.$user->name.', welcome to home','access_token' => $token, 'token_type' => 'Bearer', ]);
+            ->json([
+                'message'       => 'Success',
+                'access_token'  => $token,
+                'token_type'    => 'Bearer',
+                'device_name'   => $request->device_name,
+                'data'          => $user
+                ],
+                200
+            );
     }
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        if(!$user){
+            return response()
+                ->json([
+                    'message' => 'Unauthorized'],
+                    401);
+        }
+        $request->user()->currentAccessToken()->delete();
+        $data = [
+            'message' => 'success',
+            'user'  => $user
+        ];
+
+        return response()->json($data,200);
+    }
+
 
     public function create()
     {
