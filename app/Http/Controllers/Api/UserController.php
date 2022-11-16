@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    public function users()
+    public function users(Request $request)
     {
-        $user = UserResource::collection(User::limit(5)->get());
+        $limit = $request->limit;
+        $user = UserResource::collection(User::limit($limit)->orderBy('nama_depan')->get());
         if(!$user){
             return response()
                 ->json([
