@@ -87,12 +87,12 @@ class AuthController extends Controller
     }
     public function register(RegisterRequest $request){
         $this->log();
-        $data = $request->validated();
+        $data                   = $request->validated();
         $data['nama_lengkap']   = $request->gelar_depan." ".$request->nama_depan." ".$request->nama_belakang." ".$request->gelar_belakang;
         $data['gelar_depan']    = $request->gelar_depan;
         $data['gelar_belakang'] = $request->gelar_belakang;
         $data['username']       = md5(uniqid());
-        $add_user = User::create($data);
+        $add_user               = User::create($data);
         if($add_user){
             $lik = route('activate', ['username'=> $data['username']]);
             $data_email = [

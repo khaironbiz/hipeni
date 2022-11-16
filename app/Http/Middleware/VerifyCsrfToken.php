@@ -14,6 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'transaksi/payment/callback',
         'http://127.0.0.1:8000/transaksi/payment/callback',
+        'http://127.0.0.1:8000/api/users',
         'http://127.0.0.1:8000/transaksi/payment/status/*',
         'https://ovon.my.id/transaksi/payment/callback/request/*'
     ];
