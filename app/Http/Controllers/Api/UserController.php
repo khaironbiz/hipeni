@@ -122,7 +122,24 @@ class UserController extends Controller
             'gelar' => [
                 'gelar_depan'    => $user->gelar_depan,
                 'gelar_belakang' => $user->gelar_belakang,
-            ]
+            ],
+            'contact'   =>[
+                'email' => $user->email,
+                'hp'    => $user->phone_cell
+            ],
+            'sex'           => $user->jenis_kelamin,
+            'alamat'        => [
+                'provinsi'  => '',
+                'kota'      => '',
+                'kecamatan' => '',
+                'kelurahan' => '',
+                'rt'        => '',
+                'rw'        => '',
+                'no_rumah'  => '',
+                'jalan'     => '',
+                'kode_pos'  => ''
+            ],
+            'foto'  => $user->foto
 
         ];
         $data = [
@@ -138,7 +155,6 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'email' => 'required|email',
-            'foto'  => 'required|file'
         ]);
         $user = User::where('username', $id)->first();
         if( !$user){

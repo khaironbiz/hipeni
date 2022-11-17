@@ -275,8 +275,8 @@ Route::post('admin/answer/store/{slug}', [\App\Http\Controllers\AnswerController
 
 //atm sehat
 //user
-Route::get('/tsi/user',[\App\Http\Controllers\TsiController::class,'user'])->name('tsi.user')->middleware('auth');
-Route::get('/tsi/user/{id}',[\App\Http\Controllers\TsiController::class,'user_show'])->name('tsi.user.show')->middleware('auth');
+Route::get('/tsi/user',[\App\Http\Controllers\TsiController::class,'user'])->name('tsi.user');
+Route::get('/tsi/user/{id}',[\App\Http\Controllers\TsiController::class,'user_show'])->name('tsi.user.show');
 
 //wallet
 Route::get('/tsi/wallet',[\App\Http\Controllers\TsiController::class,'wallet'])->name('tsi.wallet')->middleware('auth');
