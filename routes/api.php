@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
+Route::get('/mytoken', [\App\Http\Controllers\Api\UserController::class, 'mytoken']);
+Route::get('/login', [\App\Http\Controllers\Api\UserController::class, 'index'])->name('api.login');
 Route::post('/login', [\App\Http\Controllers\Api\UserController::class, 'login']);
-Route::get('/users', [\App\Http\Controllers\Api\UserController::class, 'users'])->middleware('auth:sanctum');
 Route::post('/users', [\App\Http\Controllers\Api\UserController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/users', [\App\Http\Controllers\Api\UserController::class, 'users'])->middleware('auth:sanctum');
 Route::post('/user/{id}/update', [\App\Http\Controllers\Api\UserController::class, 'update'])->middleware('auth:sanctum');
 Route::get('/logout', [\App\Http\Controllers\Api\UserController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/user/{id}', [\App\Http\Controllers\Api\UserController::class, 'show'])->middleware('auth:sanctum');
