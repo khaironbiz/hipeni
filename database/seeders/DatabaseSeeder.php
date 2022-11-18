@@ -47,7 +47,8 @@ class DatabaseSeeder extends Seeder
             StudyMethodSeeder::class,
             KurikulumSeeder::class,
             OrganisasiProfesiSeeder::class,
-            AnswerTypeSeeder::class
+            AnswerTypeSeeder::class,
+            ConsultantRoleSeeder::class
         ]);
     }
 }

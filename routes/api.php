@@ -23,4 +23,12 @@ Route::get('/logout', [\App\Http\Controllers\Api\UserController::class, 'logout'
 Route::get('/user/{id}', [\App\Http\Controllers\Api\UserController::class, 'show'])->middleware('auth:sanctum');
 Route::post('/user/{id}/delete', [\App\Http\Controllers\Api\UserController::class, 'destroy'])->middleware('auth:sanctum');
 
-//
+//konsultan
+Route::get('consultants',[\App\Http\Controllers\Api\ConsultantController::class,'index'])->name('consultants')->middleware('auth:sanctum');
+
+
+//konsultasi
+Route::get('consultation',[\App\Http\Controllers\Api\ConsultationController::class,'index'])->name('consultation')->middleware('auth:sanctum');
+//Route::get('consultation/{id}',[\App\Http\Controllers\Api\ConsultationController::class,'show'])->name('consultation.show')->middleware('auth:sanctum');
+Route::post('consultation/{id_konsultan}',[\App\Http\Controllers\Api\ConsultationController::class,'store'])->name('consultation.store')->middleware('auth:sanctum');
+//Route::get('myconsultation',[\App\Http\Controllers\Api\ConsultationController::class,'myconsultation'])->name('consultation.mine')->middleware('auth:sanctum');

@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('doctor_id');
+            $table->foreignId('consultant_id');
             $table->integer('price');
-            $table->dateTime('date_transaction');
+            $table->dateTime('last_replay')->nullable();
             $table->boolean('active');
+            $table->string('slug');
             $table->timestamps();
         });
     }

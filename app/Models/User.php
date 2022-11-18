@@ -61,6 +61,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(Materi_type::class,'created_at','id');
     }
+    public function consultant()
+    {
+        return $this->hasMany(Consultant::class,'user_id','id');
+    }
+    public function consultation()
+    {
+        return $this->hasManyThrough(Consultation::class,Consultant::class,  'user_id','consultant_id','id','id');
+    }
+    public function chat_sender()
+    {
+        return $this->hasMany(Chat::class,'id_sender','id');
+    }
+    public function chat_receiver()
+    {
+        return $this->hasMany(Chat::class,'id_receiver','id');
+    }
+
     public static function get_job($id) {
         $user = DB::table('user_jobs')->where('user_id', $id)->get();
         return $user;

@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('chats', function (Blueprint $table) {
+        Schema::create('consultant_roles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('consultation_id');
-            $table->integer('id_sender');
-            $table->integer('id_receiver');
-            $table->text('message_text');
-            $table->boolean('user_msg');
-            $table->dateTimeTz('read_at');
+            $table->string('consultant_role');
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chats');
+        Schema::dropIfExists('consultant_roles');
     }
 };
