@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\ConsultantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ConsultantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,9 @@ Route::get('consultations',[\App\Http\Controllers\Api\ConsultationController::cl
 Route::get('consultation/{id}',[\App\Http\Controllers\Api\ConsultationController::class,'show'])->name('consultation.show')->middleware('auth:sanctum');
 Route::post('consultation/{id_konsultan}',[\App\Http\Controllers\Api\ConsultationController::class,'store'])->name('consultation.store')->middleware('auth:sanctum');
 //Route::get('myconsultation',[\App\Http\Controllers\Api\ConsultationController::class,'myconsultation'])->name('consultation.mine')->middleware('auth:sanctum');
+
+//konsultan
+//Route::resource('consultants', ConsultantController::class);
+
+//chats
+Route::resource('/chats', ChatController::class)->middleware('auth:sanctum'); // tambahkan ini

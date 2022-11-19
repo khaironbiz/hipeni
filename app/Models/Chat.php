@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class Chat extends Model
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory;
+
+    protected $guarded=[];
+
     public function consultation()
     {
         return $this->belongsTo(Consultation::class,'consultation_id','id');
