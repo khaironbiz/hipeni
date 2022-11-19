@@ -13,7 +13,7 @@ class UpdateConsultantRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,19 @@ class UpdateConsultantRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id'   => 'required|numeric',
+            'price'     => 'required|numeric',
+            'role'      => 'required|numeric',
+            'is_nakes'  => 'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'user_id.required'  => 'User Id harus diisi',
+            'user_id.numeric'   => 'User Id harus diisi',
+            'price.required'    => 'Harga harus diisi!',
+            'password.required' => 'Password is required!'
         ];
     }
 }

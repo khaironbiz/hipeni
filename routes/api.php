@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ConsultantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::post('/user/{id}/delete', [\App\Http\Controllers\Api\UserController::clas
 Route::get('consultants',[\App\Http\Controllers\Api\ConsultantController::class,'index'])->name('consultants')->middleware('auth:sanctum');
 Route::post('consultants',[\App\Http\Controllers\Api\ConsultantController::class,'store'])->name('consultants.store');
 Route::get('consultants/{id}',[\App\Http\Controllers\Api\ConsultantController::class,'show'])->name('consultants.show');
-Route::post('consultants/{id}/update',[\App\Http\Controllers\Api\ConsultantController::class,'update'])->name('consultants.update');
+Route::post('consultants/{id}/update',[ConsultantController::class,'update'])->name('consultants.update')->middleware('auth:sanctum');
 
 
 //konsultasi

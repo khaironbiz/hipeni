@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConsultantRequest;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ConsultantResource;
 use App\Models\Consultant;
 use Illuminate\Http\Request;
@@ -19,12 +20,23 @@ class ConsultantController extends Controller
         ];
         return response()->json($data,200);
     }
-    public function store(StoreConsultantRequest $request)
+    public function store(Request $request)
     {
-        $consultant         = new Consultant();
-        $data_consultant    = $request->validated();
+        $consultant     = new Consultant();
+        $validator      = Validator::make($request->all(), [
+            'user_id'   => 'required|numeric',
+            'price'     => 'required|numeric',
+            'role'      => 'required|numeric',
+            'is_nakes'  => 'required',
+        ]);
+        $data_consultant    = $request->all();
         $data_consultant['slug']=md5(uniqid()).random_int(1000,9999);
         $data_consultant['is_active']=1;
+        if ($validator->fails()){
+            return response()->json([
+                "message"   => $validator->errors()
+            ],203);
+        }
         $consultant_check   = Consultant::where([
             "user_id"   => $data_consultant['user_id'],
             "role"      => $data_consultant['role']
@@ -76,13 +88,25 @@ class ConsultantController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $data_show = [
-          "nama"    => $request->nama,
+        $consultant = Consultant::where('slug', $id)->first();
+        $data_validasi = [
+            'user_id'   => 'required|numeric',
+            'price'     => 'required|numeric',
+            'role'      => 'required|numeric',
+            'is_nakes'  => 'required'
         ];
-        return response()->json([
-            "status"    => "update",
-            "id"        => $id,
-            "data"      => $data_show,
-        ],200);
+        $validator = Validator::make($request->all(),$data_validasi);
+        $data_consultant = $request->all();
+        $data_consultant['is_active']=1;
+
+        if($validator->fails()){
+            return response()->json([
+                'id'            => $id,
+                'consultant'    => $consultant,
+                'data_post'     => $data_consultant,
+                'message'       => $validator->errors(),
+                'success'       => false,
+            ],203);
+        }
     }
 }
