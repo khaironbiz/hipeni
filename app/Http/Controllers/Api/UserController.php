@@ -113,7 +113,7 @@ class UserController extends Controller
                     'message'       => 'gagal',
                 ],
                     300
-                );
+                )->with(['pesan' => 'Gagal login']);
         }
     }
     public function logout(Request $request)

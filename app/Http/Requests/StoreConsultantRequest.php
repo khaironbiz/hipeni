@@ -13,7 +13,7 @@ class StoreConsultantRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StoreConsultantRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id'   => 'required|numeric',
+            'price'     => 'required|numeric',
+            'role'      => 'required|numeric',
+            'is_nakes'  => 'required',
         ];
     }
 }

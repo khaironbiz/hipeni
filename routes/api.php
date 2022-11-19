@@ -25,10 +25,13 @@ Route::post('/user/{id}/delete', [\App\Http\Controllers\Api\UserController::clas
 
 //konsultan
 Route::get('consultants',[\App\Http\Controllers\Api\ConsultantController::class,'index'])->name('consultants')->middleware('auth:sanctum');
+Route::post('consultants',[\App\Http\Controllers\Api\ConsultantController::class,'store'])->name('consultants.store');
+Route::get('consultants/{id}',[\App\Http\Controllers\Api\ConsultantController::class,'show'])->name('consultants.show');
+Route::post('consultants/{id}/update',[\App\Http\Controllers\Api\ConsultantController::class,'update'])->name('consultants.update');
 
 
 //konsultasi
-Route::get('consultation',[\App\Http\Controllers\Api\ConsultationController::class,'index'])->name('consultation')->middleware('auth:sanctum');
-//Route::get('consultation/{id}',[\App\Http\Controllers\Api\ConsultationController::class,'show'])->name('consultation.show')->middleware('auth:sanctum');
+Route::get('consultations',[\App\Http\Controllers\Api\ConsultationController::class,'index'])->name('consultation')->middleware('auth:sanctum');
+Route::get('consultation/{id}',[\App\Http\Controllers\Api\ConsultationController::class,'show'])->name('consultation.show')->middleware('auth:sanctum');
 Route::post('consultation/{id_konsultan}',[\App\Http\Controllers\Api\ConsultationController::class,'store'])->name('consultation.store')->middleware('auth:sanctum');
 //Route::get('myconsultation',[\App\Http\Controllers\Api\ConsultationController::class,'myconsultation'])->name('consultation.mine')->middleware('auth:sanctum');
