@@ -50,9 +50,11 @@ class ChatController extends Controller
             'message_text'      => 'required',
         ]);
         $data_chat              = $request->all();
+        $data_chat['id']        = time().random_int(10000,99999).random_int(10000,80000);
         if ($validator->fails()){
             return response()->json([
                 "error"     => $validator->errors(),
+                "created"   => time(),
                 "chat"      => $data_chat
             ],203);
         }
@@ -60,6 +62,7 @@ class ChatController extends Controller
         $add    = $chat->create($data_chat);
         return response()->json([
             "error" => $validator->errors(),
+            "created"   => time(),
             "chat"  => $data_chat
         ],200);
     }

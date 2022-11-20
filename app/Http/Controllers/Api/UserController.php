@@ -7,19 +7,14 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 
 class UserController extends Controller
 {
-    public function index(){
-        $data   = [
-            'email'     => '',
-            'password'  => ''
-        ];
-        return response()->json($data,200);
-    }
 
-    public function users(Request $request)
+
+    public function index(Request $request)
     {
         $limit = $request->limit;
         $user = UserResource::collection(User::limit($limit)->orderBy('nama_depan')->get());
@@ -39,82 +34,81 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
-        if($request->validate([
+        $data_validasi = [
             'nama_depan'    => 'required',
             'nama_belakang' => 'required',
-            'jenis_kelamin' => 'required',
-            'tgl_lahir'     => 'required|date',
+            'nik'           => 'numeric|unique:users,nik|digits_between:16,16',
+            'jenis_kelamin' => 'required|numeric',
+            'tgl_lahir'     => 'required|date|date_format:Y-m-d',
             'email'         => 'required|email:rfc,dns|unique:users,email',
             'phone_cell'    => 'required|unique:users,phone_cell',
-        ])){
-            $data   =[
-                'gelar_depan'   => $request->gelar_depan,
-                'gelar_belakang'=> $request->gelar_belakang,
-                'nama_depan'    => $request->nama_depan,
-                'nama_belakang' => $request->nama_belakang,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'tgl_lahir'     => $request->tgl_lahir,
-                'email'         => $request->email,
-                'phone_cell'    => $request->phone_cell,
-                'nama_lengkap'  => $request->gelar_depan." ".$request->nama_depan." ".$request->nama_belakang." ".$request->gelar_belakang,
-                'username'      => md5(uniqid()),
-            ];
-
-//        dd($data);
-            $user   = new User();
-            $add    = $user->create($data);
-            if($add){
-                return response()->json([
-                    'message' => 'success',
-                    'user'  => $data
-                ]);
-            }
+            'foto'          => 'mimes:jpg,bmp,png|max:1000'
+        ];
+        $validator = Validator::make($request->all(),$data_validasi);
+        if ($validator->fails()){
             return response()->json([
-                'message' => 'faild'
+                "error"     => $validator->errors(),
+                "created"   => time(),
+                "user"      => $request->all(),
+                'foto'      => [
+                    'extention' => $request->file('foto')->getClientOriginalExtension(),
+                    'size' => $request->file('foto')->getSize(),
+                    'name' => $request->file('foto')->getClientOriginalName(),
+                ]
+            ],203);
+        }
+        $data_input                 = $request->all();
+        $data_input['nama_lengkap'] = $request->gelar_depan." ".$request->nama_depan." ".$request->nama_belakang." ".$request->gelar_belakang;
+        $data_input['username']     = md5(uniqid());
+        $user   = new User();
+        $add    = $user->create($data_input);
+        if($add){
+            return response()->json([
+                'message' => 'success',
+                'user'  => $data_input
             ]);
-
         }
         return response()->json([
-            'message' => 'gagal validasi'
+            'message' => 'faild'
         ]);
-
-
-
     }
 
     public function login(Request $request)
     {
-        if(
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required',
-            ]))
-        {
-            $user = User::where('email', $request->email)->first();
-
-            if(!$user || !Hash::check($request->password, $user->password)){
-                return response()->json([
-                        'message' => 'Unauthorized'
-                    ], 401);
-            }
-            $token = $user->createToken('user')->plainTextToken;
-            $inser_token = $user->update(['remember_token' => $token]);
+        $data_validasi = [
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+        $validator = Validator::make($request->all(),$data_validasi);
+        if ($validator->fails()){
             return response()->json([
-                    'message'       => 'Success',
-                    'access_token'  => $token,
-                    'token_type'    => 'Bearer',
-                    'device_name'   => $request->device_name,
-                    'data'          => $user,
-                    'remember_token'=> $inser_token
-                ],200);
-        }else{
-            return response()->json(
-                [
-                    'message'       => 'gagal',
-                ],
-                    300
-                )->with(['pesan' => 'Gagal login']);
+                'status'        => 'Unauthorized',
+                'status_code'   => 401,
+                "error"         => $validator->errors(),
+                'data'          => $request->all()
+            ], 401);
         }
+        $user = User::where('email', $request->email)->first();
+
+        if(!$user || !Hash::check($request->password, $user->password)){
+            return response()->json([
+                'status'        => 'Unauthorized',
+                'status_code'   => 401,
+                "error"         => $validator->errors(),
+                'data'          => $request->all()
+            ], 401);
+        }
+        $token = $user->createToken('user')->plainTextToken;
+        return response()->json([
+            'status'        => 'Success',
+            'status_code'   => 200,
+            'access_token'  => $token,
+            'token_type'    => 'Bearer',
+            'device_name'   => $request->device_name,
+            'data'          => $user
+        ],200);
+
+
     }
     public function logout(Request $request)
     {
@@ -181,9 +175,19 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
+
+        $data = [
             'email' => 'required|email',
-        ]);
+            'phone_cell'    => 'required'
+        ];
+        $validator = Validator::make($request->all(),$data);
+        if ($validator->fails()){
+            return response()->json([
+                "error"     => $validator->errors(),
+                "created"   => time(),
+                "chat"      => $request->all()
+            ],203);
+        }
         $user = User::where('username', $id)->first();
         if( !$user){
             return response()->json([
@@ -196,8 +200,7 @@ class UserController extends Controller
             'message'   => 'Success',
             'code'      => 200,
             'update'    => $update,
-            'user'      => User::find($user->id),
-            'data'      => $data
+            'user'      => User::find($user->id)
         ]);
     }
     public function destroy($id)
@@ -214,18 +217,29 @@ class UserController extends Controller
             'code'      => 200
         ],200);
     }
-    public function mytoken(Request $request){
-        $user = $request->user();
-        if(!$user){
-            return response()->json([
-                'message' => 'Unauthorized'],
-                203);
+    public function upload_foto(Request $request, $id){
+        $user = User::find($id);
+        $file = $request->file('file');
+        if( !empty($file)){
+            $tujuan_upload  = 'assets/upload/images/user/';
+            if(file_exists($tujuan_upload.$user['foto'])){
+            unlink($tujuan_upload.$user['foto']);
+            }
+//
+            // upload file
+            $nama_file_baru = uniqid().".".$file->getClientOriginalExtension();
+            $file->move($tujuan_upload,$nama_file_baru);
+            $data['foto']   = $nama_file_baru;
+
+            $update = $user->update([
+                'foto'  => $data['foto'],
+            ]);
         }
-        $token = $request->user()->currentAccessToken();
-        $data = [
-            'message' => 'success',
-            'token'  => $token
-        ];
-        return response()->json($data,200);
+        return response()->json([
+            'message'   => 'Success',
+            'user'      => $user,
+            'code'      => 200
+        ],200);
+
     }
 }

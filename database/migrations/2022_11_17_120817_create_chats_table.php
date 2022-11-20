@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('consultation_id');
+            $table->integer('consultation_id')->default(0);
             $table->integer('id_sender');
             $table->integer('id_receiver');
             $table->text('message_text');
-            $table->boolean('user_msg');
-            $table->dateTimeTz('read_at');
+            $table->boolean('user_msg')->nullable();
+            $table->dateTimeTz('read_at')->nullable();
             $table->timestamps();
         });
     }

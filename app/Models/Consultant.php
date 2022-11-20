@@ -9,6 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Consultant extends Model
 {
     use HasApiTokens, HasFactory;
+
     protected $guarded=[];
 
     public function consultation()
