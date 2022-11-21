@@ -278,6 +278,12 @@ Route::post('admin/answer/store/{slug}', [\App\Http\Controllers\AnswerController
 Route::get('/tsi/user',[\App\Http\Controllers\TsiController::class,'user'])->name('tsi.user');
 Route::get('/tsi/user/{id}',[\App\Http\Controllers\TsiController::class,'user_show'])->name('tsi.user.show');
 
+//user
+Route::get('/tsi/pemeriksaan',[\App\Http\Controllers\TsiController::class,'pemeriksaan'])->name('tsi.pemeriksaan');
+Route::get('/tsi/user/{id}',[\App\Http\Controllers\TsiController::class,'user_show'])->name('tsi.user.show');
+
+
+
 //wallet
 Route::get('/tsi/wallet',[\App\Http\Controllers\TsiController::class,'wallet'])->name('tsi.wallet')->middleware('auth');
 Route::get('/tsi/wallet/{id}',[\App\Http\Controllers\TsiController::class,'show_wallet'])->name('tsi.wallet.show')->middleware('auth');

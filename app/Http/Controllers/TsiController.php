@@ -17,7 +17,7 @@ class TsiController extends Controller
     public function user()
     {
         $users = $this->database->getReference('user')->getValue();
-//        dd( $users );
+        dd( $users );
         $data = [
             'title'     => 'Data Nasabah',
             'class'     => 'customer',
@@ -30,6 +30,12 @@ class TsiController extends Controller
     {
         //
         $user = $this->database->getReference('user')->getChild($id)->getvalue();
+        dd($user);
+    }
+    public function pemeriksaan()
+    {
+        //
+        $user = $this->database->getReference('atm_sehat/log_checking')->getvalue();
         dd($user);
     }
     public function wallet()
