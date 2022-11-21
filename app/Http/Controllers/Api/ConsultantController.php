@@ -20,6 +20,7 @@ class ConsultantController extends Controller
         $data = [
             'status'        => 'success',
             'status_code'   => 200,
+            'request_time'  => time(),
             'consultants'   => ConsultantResource::collection(Consultant::all()),
         ];
         return response()->json($data,200);
@@ -53,9 +54,11 @@ class ConsultantController extends Controller
         $data_consultant    = $request->all();
         $data_consultant['slug']=md5(uniqid()).random_int(1000,9999);
         $data_consultant['is_active']=1;
+        $data_consultant['id']  = time().random_int(10000,99999);
         if ($validator->fails()){
             return response()->json([
-                "message"   => $validator->errors()
+                "message"   => $validator->errors(),
+                "data"      => $request->all()
             ],203);
         }
         $consultant_check   = Consultant::where([
@@ -93,10 +96,21 @@ class ConsultantController extends Controller
     public function show(Consultant $consultant)
     {
         if($consultant){
+            $data_consultant= [
+                'nama'      => $consultant->user->nama_lengkap,
+                'email'     => $consultant->user->email,
+                'hp'        => $consultant->user->phone_cell,
+                'role'      => [
+                    'price' => $consultant->price,
+                    'role'  => $consultant->consultant_role->consultant_role
+                ],
+                'is_nakes'  => $consultant->is_nakes
+            ];
             $data = [
                 'status'        => 'success',
                 'status_code'   => 200,
-                'consultants'   => $consultant,
+                'request_time'  => time(),
+                'consultants'   => $data_consultant,
             ];
             return response()->json($data,200);
         }
@@ -105,7 +119,7 @@ class ConsultantController extends Controller
             'status_code'   => 404,
             'consultants'   => $consultant,
         ];
-        return response()->json($data,404);
+        return response()->json($data,400);
 
     }
 
@@ -141,9 +155,8 @@ class ConsultantController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                'consultant'    => $consultant,
-                'data_post'     => $data_consultant,
-                'message'       => $validator->errors(),
+                'data_send'     => $data_consultant,
+                'error'         => $validator->errors(),
                 'success'       => false,
             ],203);
         }
@@ -151,8 +164,8 @@ class ConsultantController extends Controller
         if($update){
             return response()->json([
                 'consultant'    => $consultant,
-                'data_post'     => $data_consultant,
-                'message'       => $validator->errors(),
+                'data_send'     => $data_consultant,
+                'error'         => $validator->errors(),
                 'success'       => true,
             ],200);
 
@@ -165,8 +178,18 @@ class ConsultantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Consultant $consultant)
     {
-        //
+        $delete = $consultant->delete();
+        if($delete){
+            return response()->json([
+                'status'       => "success",
+                'status_code'   => 200
+            ],200);
+        }
+        return response()->json([
+            'status'       => "gagal delete",
+            'status_code'   => 200
+        ],200);
     }
 }

@@ -20,6 +20,7 @@ class ChatController extends Controller
         $data = [
             'status'        => 'success',
             'status_code'   => 200,
+            'request_time'  => time(),
             'chats'         => ChatResource::collection(Chat::all()),
         ];
         return response()->json($data,200);
@@ -50,7 +51,7 @@ class ChatController extends Controller
             'message_text'      => 'required',
         ]);
         $data_chat              = $request->all();
-        $data_chat['id']        = time().random_int(10000,99999).random_int(10000,80000);
+        $data_chat['id']        = time().random_int(10000,99999);
         if ($validator->fails()){
             return response()->json([
                 "error"     => $validator->errors(),

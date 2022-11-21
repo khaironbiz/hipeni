@@ -16,7 +16,7 @@ class ConsultantResource extends JsonResource
     {
         return
             [
-                'id'            => $this->slug,
+                'id'            => $this->id,
                 'nama'          => $this->user->nama_lengkap,
                 'email'         => $this->user->email,
                 'hp'            => $this->user->phone_cell,
@@ -24,6 +24,7 @@ class ConsultantResource extends JsonResource
                 'price'         => $this->price,
                 'is_active'     => $this->is_active,
                 'is_nakes'      => $this->is_nakes,
+                'slug'          => $this->slug
             ];
     }
 }

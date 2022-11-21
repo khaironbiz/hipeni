@@ -1,4 +1,4 @@
-@extends('admin.app')
+@extends('admin.tsi')
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -56,102 +56,40 @@
                                 <thead>
                                 <tr>
                                     <th>No.</th>
+                                    <th>Key</th>
                                     <th>Nama</th>
                                     <th>Email</th>
-                                    <th>Aksi</th>
+                                    <th>TL</th>
+                                    <th>Gender</th>
+                                    <th>Telp</th>
+                                    <th>Username</th>
+                                    <th>ID Wallet</th>
+                                    <th>ID Pengeluaran</th>
+                                    <th>Foto</th>
+                                    <th>Pemeriksaan</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php $x=1; ?>
-                                @foreach($user as $exp)
+                                @foreach($users as $key => $row)
                                 <tr>
-                                    <td>{{$x++}}</td>
-                                    <td>{{  $exp->nama_lengkap }}
-                                    </td>
-                                    <td>{{$exp->email}} </td>
-                                    <td>
-                                        <a href= "{{ url('/admin/user/show/' . $exp->username)}}" type="button" class="btn btn-primary btn-sm">Detail</a>
-                                    </td>
+                                    <td>{{  $loop->iteration}}</td>
+                                    <td>{{ $key }}</td>
+                                    <td>{{ $row['nama'] }}</td>
+                                    <td>{{ $row['email'] }}</td>
+                                    <td>{{ $row['birth_date'] }}</td>
+                                    <td>@if(isset($row['gender'])){{ $row['gender'] }}@endif</td>
+                                    <td>{{ $row['nomor_telepon'] }}</td>
+                                    <td>@if(isset($row['username'])){{ $row['username'] }}@endif</td>
+                                    <td>@if(isset($row['wallet_id'])){{ $row['wallet_id'] }}@endif</td>
+                                    <td>@if(isset($row['wallet_id'])){{ $row['wearable_id'] }}@endif</td>
+                                    <td>@if(isset($row['foto'])){{ $row['foto'] }}@endif</td>
+                                    <td>@if(isset($row['health_overview'])){{ count($row['health_overview']) }}@endif</td>
 
                                 </tr>
                                 @endforeach
                             </table>
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-primary">
-                                                <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <form form id="quickForm" action="{{ url('/admin/user/store') }}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                            <div class="modal-body">
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2 col-form-label">Gelar Depan</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text"class="form-control" name="gelar_depan">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2 col-form-label">Gelar Belakang</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text"class="form-control" name="gelar_belakang">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2 col-form-label">Nama Depan</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text"class="form-control" name="nama_depan">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2 col-form-label">Nama Belakang</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text"class="form-control" name="nama_belakang">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2 col-form-label">User Name</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text"class="form-control" name="username">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2 col-form-label">Email</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text"class="form-control" name="email">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2 col-form-label">Phone</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text"class="form-control" name="phone_cell">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2 col-form-label">Password</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="password"class="form-control" name="password">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-2 col-form-label">Foto</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="file"class="form-control" name="file">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save</button>
-                                            </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+
                         </div>
                         <!-- /.card-body -->
                     </div>

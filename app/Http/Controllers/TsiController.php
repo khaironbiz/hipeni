@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Database;
 
@@ -11,11 +12,19 @@ class TsiController extends Controller
     public function __construct(Database $database)
     {
         $this->database = $database;
+
     }
     public function user()
     {
         $users = $this->database->getReference('user')->getValue();
-        dd( $users );
+//        dd( $users );
+        $data = [
+            'title'     => 'Data Nasabah',
+            'class'     => 'customer',
+            'sub_class' => 'all',
+            'users'     => $users,
+        ];
+        return view('admin.tsi.index', $data);
     }
     public function user_show($id)
     {

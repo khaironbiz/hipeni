@@ -30,13 +30,6 @@ Route::get('/user/{id}', [\App\Http\Controllers\Api\UserController::class, 'show
 Route::delete('/user/{id}/delete', [\App\Http\Controllers\Api\UserController::class, 'destroy'])->middleware('auth:sanctum');
 Route::post('/user/{id}/foto', [\App\Http\Controllers\Api\UserController::class, 'upload_foto'])->middleware('auth:sanctum');
 
-//konsultan
-//Route::get('consultants',[\App\Http\Controllers\Api\ConsultantController::class,'index'])->name('consultants')->middleware('auth:sanctum');
-//Route::post('consultants',[\App\Http\Controllers\Api\ConsultantController::class,'store'])->name('consultants.store');
-//Route::get('consultants/{id}',[\App\Http\Controllers\Api\ConsultantController::class,'show'])->name('consultants.show');
-//Route::post('consultants/{id}/update',[ConsultantController::class,'update'])->name('consultants.update')->middleware('auth:sanctum');
-
-
 //konsultasi
 Route::get('consultations',[\App\Http\Controllers\Api\ConsultationController::class,'index'])->name('consultation')->middleware('auth:sanctum');
 Route::get('consultation/{id}',[\App\Http\Controllers\Api\ConsultationController::class,'show'])->name('consultation.show')->middleware('auth:sanctum');
@@ -44,7 +37,7 @@ Route::post('consultation/{id_konsultan}',[\App\Http\Controllers\Api\Consultatio
 //Route::get('myconsultation',[\App\Http\Controllers\Api\ConsultationController::class,'myconsultation'])->name('consultation.mine')->middleware('auth:sanctum');
 
 //konsultan
-Route::resource('consultants', ConsultantController::class);
+Route::resource('/consultants', ConsultantController::class);
 
 //chats
 Route::resource('/chats', ChatController::class)->middleware('auth:sanctum'); // tambahkan ini
