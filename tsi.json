@@ -1,0 +1,110 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Tsi RestFulApi",
+        "description": "Tsi",
+        "version": "1.0.0",
+        "contact": {
+            "name": "kahiron",
+            "email": "Khaironbiz@gmail.com",
+            "phone": "081213798746"
+        }
+    },
+    "servers": [
+        {
+            "description": "TSI RESTFul API Server",
+            "url": "https://{environment}.tsi.co.id/api/v1",
+            "variables": {
+                "environment": {
+                    "description": "Server Environment",
+                    "default": "dev",
+                    "enum": [
+                        "dev",
+                        "qa",
+                        "prod"
+                    ]
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "summary": "Get all users",
+                "description": "Get all users active by default",
+                "parameters": [
+                    {
+                        "name": "include_done",
+                        "in": "query",
+                        "required": false,
+                        "description": "Is include done users",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
+                        "description": "Filter user by name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+
+                }
+
+            },
+            "post": {
+                "summary": "Create new User",
+                "description": "Create new user to database",
+                "responses": {
+
+                }
+
+            }
+        },
+        "/user/{id}": {
+            "delete": {
+                "summary": "Delete existing user",
+                "description": "Delete existing user by user id in database",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "User id for deleted",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+
+                ],
+                "responses": {
+
+                }
+            },
+            "put": {
+                "summary": "Update existing user",
+                "description": "Update existing user by user id in database",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "User Id for updated",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+
+                }
+            }
+
+        }
+    }
+}
