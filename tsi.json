@@ -7,7 +7,7 @@
         "contact": {
             "name": "kahiron",
             "email": "Khaironbiz@gmail.com",
-            "phone": "081213798746"
+            "url": "https://ppni.or.id"
         }
     },
     "servers": [
@@ -28,7 +28,9 @@
         }
     ],
     "paths": {
+
         "/users": {
+
             "get": {
                 "summary": "Get all users",
                 "description": "Get all users active by default",
