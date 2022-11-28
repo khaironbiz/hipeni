@@ -12,6 +12,7 @@
     },
     "servers": [
         {
+
             "description": "TSI RESTFul API Server",
             "url": "https://{environment}.tsi.co.id/api/v1",
             "variables": {
@@ -28,10 +29,9 @@
         }
     ],
     "paths": {
-
         "/users": {
-
             "get": {
+                "tags": ["User"],
                 "summary": "Get all users",
                 "description": "Get all users active by default",
                 "parameters": [
@@ -50,16 +50,61 @@
                         "required": false,
                         "description": "Filter user by name",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true,
+                            "minLength": 1,
+                            "maxLength": 100
+                        },
+                        "examples": {
+                            "java": {
+                                "description": "Example name Java",
+                                "value": "Java"
+                            },
+                            "php": {
+                                "description": "Example name PHP",
+                                "value": "PHP"
+                            }
                         }
                     }
+
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Success get all users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
 
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Example success get all users",
+                                        "value": [
+                                            {
+                                                "id": "1",
+                                                "name": "Java",
+                                                "priority": 3,
+                                                "tags": ["Java","Programming"]
+                                            },
+                                            {
+                                                "id": "2",
+                                                "name": "PHP",
+                                                "priority": 5,
+                                                "tags": ["PHP","Programming"]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
             },
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Create new User",
                 "description": "Create new user to database",
                 "responses": {
@@ -69,7 +114,11 @@
             }
         },
         "/user/{id}": {
+
             "delete": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Delete existing user",
                 "description": "Delete existing user by user id in database",
                 "parameters": [
@@ -89,6 +138,9 @@
                 }
             },
             "put": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Update existing user",
                 "description": "Update existing user by user id in database",
                 "parameters": [

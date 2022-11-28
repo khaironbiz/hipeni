@@ -1,0 +1,441 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "ATM Sehat RESTful API",
+        "version": "1",
+        "description": "OpenAPI for ATM Sehat",
+        "termsOfService": "https://tsi.co.id",
+        "contact": {
+            "name": "Khairon, S.Kep., Ners, S.Kom",
+            "email": "khaironbiz@gmail.com",
+            "url": "https://www.khairon.my.id"
+        },
+        "license": {
+            "name": "APACHE 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "servers": [
+        {
+            "description": "ATM Sehat RESTful API Server",
+            "url": "https://{environment}.tsi.co.id/api/v1",
+            "variables": {
+                "environment": {
+                    "description": "Server Environment",
+                    "default": "dev",
+                    "enum": [
+                        "dev",
+                        "qa",
+                        "prod"
+                    ]
+                }
+            }
+        }
+    ],
+    "externalDocs": {
+        "description": "Youtube Tele Sehat Indonesia",
+        "url": "https://www.youtube.com/@telehealthindonesia8220"
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "security": [
+                    {
+                        "TodolistAuth": []
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get all users",
+                "description": "Get all active users",
+                "parameters": [
+                    {
+                        "name": "Is_active",
+                        "in": "query",
+                        "required": false,
+                        "description": "Is include active",
+                        "schema": {
+                            "type": "boolean",
+                            "nullable": true,
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
+                        "description": "Filter users by name",
+                        "schema": {
+                            "type": "string",
+                            "nullable": true,
+                            "minLength": 1,
+                            "maxLength": 100
+                        },
+                        "examples": {
+                            "Khairon": {
+                                "description": "Example name Khairon",
+                                "value": "Khairon"
+                            },
+                            "Anisa Fitri": {
+                                "description": "Example name Anisa Fitri",
+                                "value": "Anisa Fitri"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success get all users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArrayTodolist"
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Example success get all users",
+                                        "value": [
+                                            {
+                                                "id": "1",
+                                                "name": "Khairon Anas",
+                                                "email": "khaironbiz@gmail.com",
+                                                "phone": "081213798746",
+                                                "nik": "1234567891123456"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "name": "Anisa Fitri Laila",
+                                                "email": "anisa.fitri@gmail.com",
+                                                "phone": "0817250909",
+                                                "nik": "1234567891123456"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "TodolistAuth": []
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create new todolist",
+                "description": "Create new todolist to database",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateOrUpdateTodolist"
+                            },
+                            "examples": {
+                                "java": {
+                                    "description": "Example create todolist Java",
+                                    "value": {
+                                        "name": "Java",
+                                        "priority": 3,
+                                        "tags": [
+                                            "Java",
+                                            "Programming"
+                                        ]
+                                    }
+                                },
+                                "php": {
+                                    "description": "Example create todolist PHP",
+                                    "value": {
+                                        "name": "PHP",
+                                        "priority": 5,
+                                        "tags": [
+                                            "PHP",
+                                            "Programming"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success create todolist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Todolist"
+                                },
+                                "examples": {
+                                    "java": {
+                                        "description": "Success create java todolist",
+                                        "value": {
+                                            "id": "1",
+                                            "name": "Java",
+                                            "priority": 3,
+                                            "tags": [
+                                                "Java",
+                                                "Programming"
+                                            ]
+                                        }
+                                    },
+                                    "php": {
+                                        "description": "Success create php todolist",
+                                        "value": {
+                                            "id": "2",
+                                            "name": "PHP",
+                                            "priority": 5,
+                                            "tags": [
+                                                "PHP",
+                                                "Programming"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userId}": {
+            "put": {
+                "security": [
+                    {
+                        "UserAuth": []
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update existing users",
+                "description": "Update existing users in database",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateOrUpdateUsers"
+                            },
+                            "examples": {
+                                "Khairon": {
+                                    "description": "Example create user Khairon",
+                                    "value": {
+                                        "name": "Khairon",
+                                        "priority": 3,
+                                        "tags": [
+                                            "Java",
+                                            "Programming"
+                                        ]
+                                    }
+                                },
+                                "Anisa Fitri": {
+                                    "description": "Example create User Anisa Fitri Laila",
+                                    "value": {
+                                        "name": "Anisa Fitri",
+                                        "priority": 5,
+                                        "tags": [
+                                            "PHP",
+                                            "Programming"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success update users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Users"
+                                },
+                                "examples": {
+                                    "Khairon": {
+                                        "description": "Success create khairon users",
+                                        "value": {
+                                            "id": "1",
+                                            "name": "Khairon",
+                                            "nik": "1234567891123456",
+                                            "email": "khaironbiz@gmail.com"
+
+                                        }
+                                    },
+                                    "Anisa Fitri": {
+                                        "description": "Success create Anisa Fitri users",
+                                        "value": {
+                                            "id": "1",
+                                            "name": "Anisa Fitri Laila",
+                                            "nik": "1234567891123456",
+                                            "email": "anisa.fitri@gmail.com"
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "TodolistAuth": []
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete existing todolist",
+                "description": "Delete existing todolist in database",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/UserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success delete todolist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Success delete todolist",
+                                        "value": {
+                                            "success": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed delete not found todolist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "failed": {
+                                        "description": "Failed delete todolist",
+                                        "value": {
+                                            "success": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "TodolistAuth": {
+                "description": "Authentication for Todolist RESTful API",
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-API-Key"
+            }
+        },
+        "parameters": {
+            "UserId": {
+                "name": "userId",
+                "in": "path",
+                "required": true,
+                "description": "User id for updated",
+                "schema": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "examples": {
+                    "Khairon": {
+                        "description": "Sample user id for Khairon",
+                        "value": "1"
+                    },
+                    "Anisa": {
+                        "description": "Sample todolist id for Anisa Fitri",
+                        "value": "2"
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "Users": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "nik": {
+                        "type": "number",
+                        "format": "int64"
+                    },
+                    "phone": {
+                        "type": "number",
+                        "format": "int64"
+                    }
+
+                }
+            },
+            "CreateOrUpdateUsers": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "priority": {
+                        "type": "number",
+                        "format": "int32"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ArrayTodolist": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Users"
+                }
+            }
+        }
+    }
+}
