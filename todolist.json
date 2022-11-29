@@ -37,11 +37,114 @@
         "url": "https://www.youtube.com/@telehealthindonesia8220"
     },
     "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login account",
+                "description": "Login user with email and password",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/login"
+                            },
+                            "examples": {
+                                "Khairon": {
+                                    "description": "Example login for Khairon",
+                                    "value": {
+                                        "email": "khaironbiz@gmail.com",
+                                        "password": "Rahasia"
+                                    }
+                                },
+                                "Anisa Fitri Laila": {
+                                    "description": "Example login for Anisa Fitri Laila",
+                                    "value": {
+                                        "email": "anisa.fitri@gmail.com",
+                                        "password": "RahasiaBanget"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succes Login User",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Users"
+                                },
+                                "examples": {
+                                    "khairon": {
+                                        "description": "Example login users Khairon",
+                                        "value": {
+                                            "status": "Success",
+                                            "status code": 200,
+                                            "content": {
+                                                "id": 1,
+                                                "name": "khairon",
+                                                "nik": 1234567891123123,
+                                                "email": "khaironbiz@gmail.com"
+                                            }
+
+                                        }
+                                    },
+                                    "anisa": {
+                                        "description": "Example login users Anisa Fitri Laila",
+                                        "value": {
+                                            "status": "Success",
+                                            "status code": 200,
+                                            "content":{
+                                                "id": 2,
+                                                "name": "Anisa Fitri Laila",
+                                                "nik": 1234567891123456,
+                                                "email": "anisa.fitri@gmail.com"
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    "401": {
+                        "description": "User Not Authorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "failed": {
+                                        "description": "Not Authorized",
+                                        "value": {
+                                            "success": false,
+                                            "message": "Not Authorized"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+
+                }
+            }
+        },
         "/users": {
             "get": {
                 "security": [
                     {
-                        "TodolistAuth": []
+                        "TsiAuth": []
                     }
                 ],
                 "tags": [
@@ -53,12 +156,12 @@
                     {
                         "name": "Is_active",
                         "in": "query",
-                        "required": false,
+                        "required": true,
                         "description": "Is include active",
                         "schema": {
                             "type": "boolean",
-                            "nullable": true,
-                            "default": false
+                            "nullable": false,
+                            "default": true
                         }
                     },
                     {
@@ -90,7 +193,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ArrayTodolist"
+                                    "$ref": "#/components/schemas/ArrayUsers"
                                 },
                                 "examples": {
                                     "success": {
@@ -121,7 +224,7 @@
             "post": {
                 "security": [
                     {
-                        "TodolistAuth": []
+                        "TsiAuth": []
                     }
                 ],
                 "tags": [
@@ -134,29 +237,23 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateOrUpdateTodolist"
+                                "$ref": "#/components/schemas/CreateOrUpdateUsers"
                             },
                             "examples": {
-                                "java": {
-                                    "description": "Example create todolist Java",
+                                "khairon": {
+                                    "description": "Example create users Khairon",
                                     "value": {
-                                        "name": "Java",
-                                        "priority": 3,
-                                        "tags": [
-                                            "Java",
-                                            "Programming"
-                                        ]
+                                        "name": "khairon",
+                                        "nik": 1234567891123456,
+                                        "email": "khaironbiz@gmail.com"
                                     }
                                 },
-                                "php": {
-                                    "description": "Example create todolist PHP",
+                                "anisa": {
+                                    "description": "Example create users Anisa Fitri Laila",
                                     "value": {
-                                        "name": "PHP",
-                                        "priority": 5,
-                                        "tags": [
-                                            "PHP",
-                                            "Programming"
-                                        ]
+                                        "name": "Anisa Fitri Laila",
+                                        "nik": 1234567891123456,
+                                        "email": "anisa.fitri@gmail.com"
                                     }
                                 }
                             }
@@ -164,36 +261,30 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Success create todolist",
+                    "201": {
+                        "description": "Success create users",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Todolist"
+                                    "$ref": "#/components/schemas/Users"
                                 },
                                 "examples": {
-                                    "java": {
-                                        "description": "Success create java todolist",
+                                    "khairon": {
+                                        "description": "Example create users Khairon",
                                         "value": {
-                                            "id": "1",
-                                            "name": "Java",
-                                            "priority": 3,
-                                            "tags": [
-                                                "Java",
-                                                "Programming"
-                                            ]
+                                            "id": 1,
+                                            "name": "khairon",
+                                            "nik": 1234567891123456,
+                                            "email": "khaironbiz@gmail.com"
                                         }
                                     },
-                                    "php": {
-                                        "description": "Success create php todolist",
+                                    "anisa": {
+                                        "description": "Example create users Anisa Fitri Laila",
                                         "value": {
-                                            "id": "2",
-                                            "name": "PHP",
-                                            "priority": 5,
-                                            "tags": [
-                                                "PHP",
-                                                "Programming"
-                                            ]
+                                            "id": 2,
+                                            "name": "Anisa Fitri Laila",
+                                            "nik": 1234567891123456,
+                                            "email": "anisa.fitri@gmail.com"
                                         }
                                     }
                                 }
@@ -207,7 +298,7 @@
             "put": {
                 "security": [
                     {
-                        "UserAuth": []
+                        "TsiAuth": []
                     }
                 ],
                 "tags": [
@@ -229,25 +320,21 @@
                             },
                             "examples": {
                                 "Khairon": {
-                                    "description": "Example create user Khairon",
+                                    "description": "Example update user Khairon",
                                     "value": {
+                                        "id": 1,
                                         "name": "Khairon",
-                                        "priority": 3,
-                                        "tags": [
-                                            "Java",
-                                            "Programming"
-                                        ]
+                                        "nik": 1234567891123456,
+                                        "email": "khaironbiz@gmail.com"
                                     }
                                 },
                                 "Anisa Fitri": {
-                                    "description": "Example create User Anisa Fitri Laila",
+                                    "description": "Example update User Anisa Fitri Laila",
                                     "value": {
-                                        "name": "Anisa Fitri",
-                                        "priority": 5,
-                                        "tags": [
-                                            "PHP",
-                                            "Programming"
-                                        ]
+                                        "id": 2,
+                                        "name": "Anisa Fitri Laila",
+                                        "nik": 1234567891123456,
+                                        "email": "anisa.fitri@gmail.com"
                                     }
                                 }
                             }
@@ -270,7 +357,6 @@
                                             "name": "Khairon",
                                             "nik": "1234567891123456",
                                             "email": "khaironbiz@gmail.com"
-
                                         }
                                     },
                                     "Anisa Fitri": {
@@ -280,7 +366,6 @@
                                             "name": "Anisa Fitri Laila",
                                             "nik": "1234567891123456",
                                             "email": "anisa.fitri@gmail.com"
-
                                         }
                                     }
                                 }
@@ -292,14 +377,14 @@
             "delete": {
                 "security": [
                     {
-                        "TodolistAuth": []
+                        "TsiAuth": []
                     }
                 ],
                 "tags": [
                     "User"
                 ],
-                "summary": "Delete existing todolist",
-                "description": "Delete existing todolist in database",
+                "summary": "Delete existing users",
+                "description": "Delete existing users in database",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/UserId"
@@ -307,7 +392,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success delete todolist",
+                        "description": "Success delete users",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -320,7 +405,7 @@
                                 },
                                 "examples": {
                                     "success": {
-                                        "description": "Success delete todolist",
+                                        "description": "Success delete users",
                                         "value": {
                                             "success": true
                                         }
@@ -330,7 +415,7 @@
                         }
                     },
                     "404": {
-                        "description": "Failed delete not found todolist",
+                        "description": "Failed delete not found users",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -343,7 +428,7 @@
                                 },
                                 "examples": {
                                     "failed": {
-                                        "description": "Failed delete todolist",
+                                        "description": "Failed delete users",
                                         "value": {
                                             "success": false
                                         }
@@ -358,8 +443,8 @@
     },
     "components": {
         "securitySchemes": {
-            "TodolistAuth": {
-                "description": "Authentication for Todolist RESTful API",
+            "TsiAuth": {
+                "description": "Authentication for Users RESTful API",
                 "type": "apiKey",
                 "in": "header",
                 "name": "X-API-Key"
@@ -389,6 +474,20 @@
             }
         },
         "schemas": {
+            "login": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "minLength": 8
+                    }
+                }
+            },
             "Users": {
                 "type": "object",
                 "properties": {
@@ -430,10 +529,30 @@
                     }
                 }
             },
-            "ArrayTodolist": {
+            "ArrayUsers": {
                 "type": "array",
                 "items": {
                     "$ref": "#/components/schemas/Users"
+                }
+            }
+        },
+        "examples": {
+            "khairon": {
+                "description": "Example create users Khairon",
+                "value": {
+                    "id": 1,
+                    "name": "khairon",
+                    "nik": 1234567891123456,
+                    "email": "khaironbiz@gmail.com"
+                }
+            },
+            "anisa": {
+                "description": "Example create users Anisa Fitri Laila",
+                "value": {
+                    "id": 2,
+                    "name": "Anisa Fitri Laila",
+                    "nik": 1234567891123456,
+                    "email": "anisa.fitri@gmail.com"
                 }
             }
         }
