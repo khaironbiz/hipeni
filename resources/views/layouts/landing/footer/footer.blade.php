@@ -5,7 +5,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-info">
-                        <h3>Medicio</h3>
+                        <h3>{{ ucwords(strtolower(env('APP_NAME'))) }}</h3>
                         <p>
                             A108 Adam Street <br>
                             NY 535022, USA<br><br>
@@ -59,7 +59,7 @@
 
     <div class="container">
         <div class="copyright">
-            &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>{{ env('APP_NAME') }}</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
             <!-- All the links in the footer should remain intact. -->

@@ -17,8 +17,8 @@
                 <div class="col-md-8 d-flex">
                     <div class="card p-2 w-100">
                         <div class="row justify-content-center p-3">
-                            <div class="col-6 text-center">
-                                <img src="{{asset('assets/upload/images/landing/ppni.png')}}" class="w-50">
+                            <div class="col-8 text-center">
+                                <img src="{{asset('assets/upload/images/landing/'.env('APP_LOGO'))}}" class="w-25">
                             </div>
                         </div>
                         <form action="{{route('auth')}}" method="post">
@@ -36,6 +36,7 @@
                                             </ul>
                                         </div>
                                     @endif
+                                    <h3 class="text-center">{{ env('APP_NAME') }}</h3>
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="email" name="email" value="{{old('email')}}">
                                         <label for="floatingInput">Email address</label>

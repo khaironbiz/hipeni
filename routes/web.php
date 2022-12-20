@@ -320,3 +320,4 @@ Route::get('/tsi/status/{id}',[\App\Http\Controllers\TsiController::class,'show_
 //device_user
 Route::get('/tsi/deviceuser',[\App\Http\Controllers\TsiController::class,'device_user'])->name('tsi.device_user')->middleware('auth');
 Route::get('/tsi/deviceuser/{id}',[\App\Http\Controllers\TsiController::class,'show_device_user'])->name('tsi.device_user.show')->middleware('auth');
+

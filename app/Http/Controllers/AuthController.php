@@ -6,6 +6,7 @@ use App\Http\Requests\ActivationRequest;
 use App\Http\Requests\ForgetRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdatePasswordRequest;
+use App\Jobs\SendEmailJob;
 use App\Mail\MailActivation;
 use App\Mail\MailLoginNotification;
 use App\Mail\MailNotification;
@@ -52,15 +53,20 @@ class AuthController extends Controller
             $data['username']   = md5(uniqid());
             $user->update($data);
             $data_email = [
-                'penerima'  => Auth::user()->nama_lengkap,
-                'server'    => [
+                'nama_penerima'     => Auth::user()->nama_lengkap,
+                'email_penerima'    => Auth::user()->email,
+                'judul_email'       => "Notifikasi Login",
+                'server'            => [
                     'ip'        => $request->ip(),
                     'browser'   => $_SERVER['HTTP_USER_AGENT'],
                     'time'      => time()
                 ]
             ];
 
-            Mail::to($request->email)->send(new MailLoginNotification($data_email));
+            $send_mail = Auth::user()->email;
+
+//            Mail::to($request->email)->send(new MailLoginNotification($data_email));
+            $sending_mail = dispatch(new SendEmailJob($data_email));
             if(Auth::user()->id == 1){
                 return redirect()->route('profile');
             }else{
