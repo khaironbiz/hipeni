@@ -37,7 +37,9 @@ class SendEmailJob implements ShouldQueue
     {
         //
         $data_email = $this->data_email;
-        $email = new SendEmailDemo($data_email);
+        $email      = new SendEmailDemo($data_email);
         Mail::to($data_email['email_penerima'])->send($email);
     }
+    //awal
+
 }
