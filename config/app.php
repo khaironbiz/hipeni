@@ -185,7 +185,7 @@ return [
          * Package Service Providers...
          */
 //        Jenssegers\Mongodb\MongodbServiceProvider::class,
-        Kreait\Laravel\Firebase\ServiceProvider::class,
+//        Kreait\Laravel\Firebase\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
