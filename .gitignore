@@ -7,7 +7,7 @@
 .env.backup
 .phpunit.result.cache
 Homestead.json
-atmsehat-firebase.json
+firebase-atm-sehat.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
