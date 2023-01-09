@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User\Education;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class UpdateEducation_userRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class UpdateEducation_userRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'program_studi'     => 'required',
+            'education_level_id'  => 'required',
+            'institusi'         => 'required',
+            'tahun_lulus'       => 'required',
+            'nomor_ijazah'      => 'required',
+            'ttd_ijazah'        => 'required',
+            'pendidikan_terahir'=> 'required',
         ];
     }
 }
